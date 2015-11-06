@@ -1,3 +1,7 @@
-aaaaa
-vbgbg
-fgbng
+#include <stdio.h>
+
+main(void){
+    printf("aaaa");
+
+    return(0);
+}
