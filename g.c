@@ -2,7 +2,7 @@
 
 int main(){
 
-    printf("g\n");
+    printf("goodbye\n");
 
     return 0;
 
