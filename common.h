@@ -26,6 +26,8 @@
 #define RIGHT_COMMAND	'R'				/* rightコマンド */
 #define LEFT_COMMAND    'L'                             /*leftコマンド*/
 
+#define CDRAW           'C'                             /*charadrawコマンド*/
+
 /* クライアントを表す構造体 */
 typedef struct{
 	int		fd;
