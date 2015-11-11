@@ -29,17 +29,6 @@ int ExecuteCommand(char command)
     case END_COMMAND:
         endFlag = 0;
         break;
-    case WIN_COMMAND:
-        WinDisplay();
-        endFlag = 0;
-        break;
-    case LOSE_COMMAND:
-        LoseDisplay();
-        endFlag = 0;
-        break;
-    case DRAW_COMMAND:
-        DrawDisplay();
-        break;
     }
     return endFlag;
 }
