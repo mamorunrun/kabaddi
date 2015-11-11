@@ -23,9 +23,17 @@ int main(int argc,char *argv[])
     /* 引き数チェック */
     if(argc == 2){
     	serverName = localHostName;
+        if (wiimote_connect(&wiimote, argv[1]) < 0) {	// コマンド引数に指定したWiiリモコン識別情報を渡して接続
+            printf("unable to open wiimote: %s\n", wiimote_get_error());
+            exit(1);
+    }
     }
     else if(argc == 3){
     	serverName = argv[1];
+        if (wiimote_connect(&wiimote, argv[2]) < 0) {	// コマンド引数に指定したWiiリモコン識別情報を渡して接続
+            printf("unable to open wiimote: %s\n", wiimote_get_error());
+            exit(1);
+    }
     }
     else{
 		fprintf(stderr, "Usage: %s, Cannot find a Server Name.\n", argv[0]);
@@ -42,6 +50,9 @@ int main(int argc,char *argv[])
 		fprintf(stderr,"setup failed : InitWindows\n");
 		return -1;
 	}
+
+        wiimote.mode.acc = 1;
+    /*wiiリモコンの入力受付開始*/
 
     /* メインイベントループ */
     while(endFlag){
