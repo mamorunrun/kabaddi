@@ -44,72 +44,102 @@ int ExecuteCommand(char command)
     return endFlag;
 }
 
+/****************************************************************
+　　　　　　　　　上下左右のデータを送る関数に変更
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+ ****************************************************************/
+
+
 /*****************************************************************
-関数名	: SendROCKCommand
-機能	: グーのデータをサーバーにデータを送る
+関数名	: SendUpCommand
+機能	: 上のデータをサーバーにデータを送る
 引数	: なし
 出力	: なし
 *****************************************************************/
-void SendRockCommand(void)
+void SendUpCommand(void)
 {   
     unsigned char	data[MAX_DATA];
     int			dataSize;
 
 #ifndef NDEBUG
     printf("#####\n");
-    printf("SendRockCommand()\n");
+    printf("SendUpCommand()\n");
 #endif
     dataSize = 0;
     /* コマンドのセット */
-    SetCharData2DataBlock(data,ROCK_COMMAND,&dataSize);
+    SetCharData2DataBlock(data,UP_COMMAND,&dataSize);
 
     /* データの送信 */
     SendData(data,dataSize);
 }
 
 /*****************************************************************
-関数名	: SendPaperCommand
-機能	: パーのデータをサーバーにデータを送る
+関数名	: SendDownCommand
+機能	: 下のデータをサーバーにデータを送る
 引数	: なし
 出力	: なし
 *****************************************************************/
-void SendPaperCommand(void)
+void SendDownCommand(void)
 {
     unsigned char	data[MAX_DATA];
     int			dataSize;
 
 #ifndef NDEBUG
     printf("#####\n");
-    printf("SendPaperCommand()\n");
+    printf("SendDownCommand()\n");
 #endif
 
     dataSize = 0;
     /* コマンドのセット */
-    SetCharData2DataBlock(data,PAPER_COMMAND,&dataSize);
+    SetCharData2DataBlock(data,DOWN_COMMAND,&dataSize);
 
     /* データの送信 */
     SendData(data,dataSize);
 }
 
 /*****************************************************************
-関数名	: SendScissorsCommand
-機能	: チョキのデータをサーバーにデータを送る
+関数名	: SendRightCommand
+機能	: 右のデータをサーバーにデータを送る
 引数	: なし
 出力	: なし
 *****************************************************************/
-void SendScissorsCommand(void)
+void SendRightCommand(void)
 {
     unsigned char	data[MAX_DATA];
     int			dataSize;
 
 #ifndef NDEBUG
     printf("#####\n");
-    printf("SendPaperCommand()\n");
+    printf("SendRightCommand()\n");
 #endif
 
     dataSize = 0;
     /* コマンドのセット */
-    SetCharData2DataBlock(data,SCISSORS_COMMAND,&dataSize);
+    SetCharData2DataBlock(data,RIGHT_COMMAND,&dataSize);
+
+    /* データの送信 */
+    SendData(data,dataSize);
+}
+
+/*****************************************************************
+関数名	: SendRightCommand
+機能	: 左のデータをサーバーにデータを送る
+引数	: なし
+出力	: なし
+*****************************************************************/
+void SendLeftCommand(void)
+{
+    unsigned char	data[MAX_DATA];
+    int			dataSize;
+
+#ifndef NDEBUG
+    printf("#####\n");
+    printf("SendLeftCommand()\n");
+#endif
+
+    dataSize = 0;
+    /* コマンドのセット */
+    SetCharData2DataBlock(data,LEFT_COMMAND,&dataSize);
 
     /* データの送信 */
     SendData(data,dataSize);

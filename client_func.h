@@ -8,6 +8,10 @@
 
 #include"common.h"
 
+//wiiリモコン
+#include <libcwiimote/wiimote.h>// Wiiリモコンを用いるために必要なヘッダファイル
+#include <libcwiimote/wiimote_api.h>// Wiiリモコンを用いるために必要なヘッダファイル
+
 /* client_net.c */
 extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][MAX_NAME_SIZE]);
 extern void CloseSoc(void);
@@ -22,9 +26,13 @@ extern void WindowEvent(int num);
 
 /* client_command.c */
 extern int ExecuteCommand(char command);
-extern void SendRockCommand(void);
-extern void SendPaperCommand(void);
-extern void SendScissorsCommand(void);
+
+/*上下左右のコマンドを送る関数*/
+extern void SendUpCommand(void);
+extern void SendDownCommand(void);
+extern void SendRightCommand(void);
+extern void SendLeftCommand(void);
+
 extern void SendEndCommand(void);
 
 #endif
