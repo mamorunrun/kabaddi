@@ -21,12 +21,10 @@
 #define MAX_DATA		200				/* 送受信するデータの最大値 */
 
 #define END_COMMAND		'E'		  		/* プログラム終了コマンド */
-#define ROCK_COMMAND	'R'				/* rockコマンド */
-#define PAPER_COMMAND	'P'				/* paperコマンド */
-#define SCISSORS_COMMAND	'S'				/* scissorsコマンド */
-#define WIN_COMMAND 'W'    /*勝利コマンド*/
-#define LOSE_COMMAND 'L'   /*敗北コマンド*/
-#define DRAW_COMMAND 'D'   /*引き分けコマンド*/
+#define UP_COMMAND	'U'				/* upコマンド */
+#define DOWN_COMMAND	'D'				/* downコマンド */
+#define RIGHT_COMMAND	'R'				/* rightコマンド */
+#define LEFT_COMMAND    'L'                             /*leftコマンド*/
 
 /* クライアントを表す構造体 */
 typedef struct{
