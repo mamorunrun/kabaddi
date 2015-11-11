@@ -13,6 +13,11 @@
 #include<assert.h>
 #include<math.h>
 
+#include <SDL/SDL.h>	// SDLを用いるために必要なヘッダファイル
+#include <SDL/SDL_gfxPrimitives.h>	// 描画関係のヘッダファイル
+#include <libcwiimote/wiimote.h>	// Wiiリモコンを用いるために必要なヘッダファイル
+#include <libcwiimote/wiimote_api.h>	// Wiiリモコンを用いるために必要なヘッダファイル
+
 #define PORT			(u_short)8888	/* ポート番号 */
 
 #define MAX_CLIENTS		2				/* クライアント数の最大値 */
