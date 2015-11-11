@@ -6,6 +6,11 @@
 #include"common.h"
 #include"client_func.h"
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_gfxPrimitives.h>
+#include <libcwiimote/wiimote.h>
+#include <libcwiimote/wiimote_api.h>
+
 int main(int argc,char *argv[])
 {
     int		num;
@@ -56,7 +61,6 @@ int main(int argc,char *argv[])
 
     /* メインイベントループ */
     while(endFlag){
-		WindowEvent(num);
 		endFlag = SendRecvManager();
     };
 

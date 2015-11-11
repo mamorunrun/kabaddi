@@ -22,7 +22,6 @@ extern int SendRecvManager(void);
 /* client_win.c */
 extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
-extern void WindowEvent(int num);
 extern void DrawChara(int n, int x, int y);
 
 /* client_command.c */

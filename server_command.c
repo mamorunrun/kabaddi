@@ -48,28 +48,28 @@ int ExecuteCommand(char command,int pos)
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
+        SendData(ALL_CLIENTS, data, dataSize);
         break;
     case DOWN_COMMAND:           /*クライアントからDOWNコマンドが送られた*/
         gClients[pos].poi.y++;
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
+        SendData(ALL_CLIENTS, data, dataSize);
 	break;
     case RIGHT_COMMAND:          /*クライアントからRIGHTコマンドが送られた*/
         gClients[pos].poi.x++;
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
+        SendData(ALL_CLIENTS, data, dataSize);
 	break;
     case LEFT_COMMAND:           /*クライアントからLEFTコマンドが送られた*/
         gClients[pos].poi.x--;
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
+        SendData(ALL_CLIENTS, data, dataSize);
 	break;
     default:
         /* 未知のコマンドが送られてきた */

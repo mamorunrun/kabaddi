@@ -9,6 +9,7 @@
 #include<netinet/in.h>
 #include<netdb.h>
 
+CLIENT	gClients[MAX_CLIENTS];	/* クライアント */
 static int	gClientNum;				/* クライアント数 */
 
 static fd_set	gMask;					/* select()用のマスク */

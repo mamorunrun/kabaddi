@@ -3,6 +3,7 @@ OBJS2	=	client_main.o client_net.o client_command.o client_win.o
 TARGET1	=	server
 TARGET2	=	client
 CFLAGS	=	-c -DNDEBUG
+WII     =       -lcwiimote -D_ENABLE_TILT -D_ENABLE_FORCE -L/usr/lib
 
 .c.o:
 	gcc $(CFLAGS) $<
@@ -10,9 +11,9 @@ CFLAGS	=	-c -DNDEBUG
 all: $(TARGET1) $(TARGET2)
 
 $(TARGET1):	$(OBJS1)
-	gcc -o $(TARGET1) $(OBJS1) -lm -lSDL
+	gcc -o $(TARGET1) $(OBJS1) -lm -lSDL $(WII)
 $(TARGET2):	$(OBJS2)
-	gcc -o $(TARGET2) $(OBJS2) -lm -lSDL -lSDL_image -lSDL_gfx $(LDFLAGS)
+	gcc -o $(TARGET2) $(OBJS2) -lm -lSDL -lSDL_image -lSDL_gfx $(WII) $(LDFLAGS)
 
 clean:
 	rm *.o $(TARGET1) $(TARGET2)

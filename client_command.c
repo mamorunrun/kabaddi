@@ -30,7 +30,7 @@ int ExecuteCommand(char command)
         endFlag = 0;
         break;
 /*キャラを描画*/
-    case CDROW:
+    case CDRAW:
         RecCharaData();
         break;
     }
