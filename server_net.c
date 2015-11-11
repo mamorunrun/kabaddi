@@ -9,10 +9,10 @@
 #include<netinet/in.h>
 #include<netdb.h>
 
-static int	gClientNum;					/* クライアント数 */
+static int	gClientNum;				/* クライアント数 */
 
 static fd_set	gMask;					/* select()用のマスク */
-static int	gWidth;						/* gMask中のチェックすべきビット数 */
+static int	gWidth;					/* gMask中のチェックすべきビット数 */
 
 static int MultiAccept(int request_soc,int num);
 static void Enter(int pos, int fd);
@@ -82,7 +82,7 @@ int SetUpServer(int num)
 
 /*****************************************************************
 関数名	: SendRecvManager
-機能	: サーバーから送られてきたデータを処理する
+機能	: クライアントから送られてきたデータを処理する
 引数	: なし
 出力	: プログラム終了コマンドが送られてきた時0を返す．
 		  それ以外は1を返す

@@ -9,10 +9,6 @@
 static void SetIntData2DataBlock(void *data,int intData,int *dataSize);
 static void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 
-
-static void Judge(int i,int pos);
-static void SendJudge(int pos);
-
 /*****************************************************************
 関数名	: ExecuteCommand
 機能	: クライアントから送られてきたコマンドを元に，
@@ -25,7 +21,7 @@ static void SendJudge(int pos);
 int ExecuteCommand(char command,int pos)
 {
     unsigned char	data[MAX_DATA];
-    int			dataSize,intData;
+    int			dataSize = 0;
     int			endFlag = 1;
 
     /* 引き数チェック */
@@ -47,14 +43,33 @@ int ExecuteCommand(char command,int pos)
 
         endFlag = 0;
         break;
-    case ROCK_COMMAND:
-        Judge(0,pos);
+    case UP_COMMAND:             /*クライアントからUPコマンドが送られた*/
+        gClients[pos].poi.y--;
+        SetIntData2DataBlock(data,pos,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
+        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
         break;
-    case PAPER_COMMAND:
-        Judge(1,pos);
+    case DOWN_COMMAND:           /*クライアントからDOWNコマンドが送られた*/
+        gClients[pos].poi.y++;
+        SetIntData2DataBlock(data,pos,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
+        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
 	break;
-    case SCISSORS_COMMAND:
-        Judge(2,pos);
+    case RIGHT_COMMAND:          /*クライアントからRIGHTコマンドが送られた*/
+        gClients[pos].poi.x++;
+        SetIntData2DataBlock(data,pos,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
+        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
+	break;
+    case LEFT_COMMAND:           /*クライアントからLEFTコマンドが送られた*/
+        gClients[pos].poi.x--;
+        SetIntData2DataBlock(data,pos,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
+        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
+        SendData(ALL_CLIENTS, gClients[pos].poi, dataSize);
 	break;
     default:
         /* 未知のコマンドが送られてきた */
@@ -108,109 +123,4 @@ static void SetCharData2DataBlock(void *data,char charData,int *dataSize)
     *(char *)(data + (*dataSize)) = charData;
     /* データサイズを増やす */
     (*dataSize) += sizeof(char);
-}
-
-/*****************************************************************
-関数名	: Judge
-機能	: どっちのクライアントが勝ったのかを判断
-引数	: int hand :出した手がhand0=Rock,1=Paper,2=Scissors
-          int pos  :コマンドを送ったクライアント番号
-出力	: なし
-*****************************************************************/
-static void Judge(int hand,int pos)//hand0=Rock,1=Paper,2=Scissors
-{
-    static int hand0 = -1,hand1 = -1;
-
-    if(pos==0)
-    {
-    hand0 = hand;
-    }
-    else if(pos==1)
-    {
-    hand1 = hand;
-    }
-
-    if( hand0 != -1 && hand1 != -1){
-        if(hand0 == hand1){
-            SendJudge(ALL_CLIENTS);//引き分け
-        }
-        else if(hand0 == 0 && hand1 == 1){//pos=1 win
-            SendJudge(1);
-        }
-        else if(hand0 == 1 && hand1 == 2){//pos=1 win
-            SendJudge(1);
-        }
-        else if(hand0 == 2 && hand1 == 0){//pos=1 win
-            SendJudge(1);
-        }
-        else if(hand0 == 1 && hand1 == 0){//pos=0 win
-            SendJudge(0);
-        }
-        else if(hand0 == 2 && hand1 == 1){//pos=0 win
-            SendJudge(0);
-        }
-        else if(hand0 == 0 && hand1 == 2){//pos=0 win
-            SendJudge(0);
-        }
-    hand0 = -1;
-    hand1 = -1;
-    }
-}
-
-/*****************************************************************
-関数名	: SendJudge
-機能	: 勝者のデータをクライアントに送る
-引数	: int	pos	勝者の(3の場合は引き分け)
-出力	: なし
-*****************************************************************/
-void SendJudge(int pos)
-{
-    unsigned char	data1[MAX_DATA];
-    unsigned char	data2[MAX_DATA];
-    unsigned char	data3[MAX_DATA];
-    int			dataSize;
-
-#ifndef NDEBUG
-    printf("#####\n");
-    printf("SendJudgeCommand()\n");
-#endif
-
-    if(pos == 1)
-    {
-        dataSize = 0;
-        /* コマンドのセット */
-        SetCharData2DataBlock(data2,LOSE_COMMAND,&dataSize);
-        /* データの送信 */
-        SendData(0,data2,dataSize);
-
-        dataSize = 0;
-        /* コマンドのセット */
-        SetCharData2DataBlock(data1,WIN_COMMAND,&dataSize);
-        /* データの送信 */
-        SendData(1,data1,dataSize);
-        
-    }
-    else if(pos == 0)
-    {
-        dataSize = 0;
-        /* コマンドのセット */
-        SetCharData2DataBlock(data2,LOSE_COMMAND,&dataSize);
-        /* データの送信 */
-        SendData(1,data2,dataSize);
-
-        dataSize = 0;
-        /* コマンドのセット */
-        SetCharData2DataBlock(data1,WIN_COMMAND,&dataSize);
-        /* データの送信 */
-        SendData(0,data1,dataSize);
-
-    }
-    else if(pos == ALL_CLIENTS)
-    {
-        dataSize = 0;
-        /* コマンドのセット */
-        SetCharData2DataBlock(data3,DRAW_COMMAND,&dataSize);
-        /* データの送信 */
-        SendData(ALL_CLIENTS,data3,dataSize);
-    }
 }
