@@ -23,9 +23,11 @@ extern int SendRecvManager(void);
 extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
 extern void WindowEvent(int num);
+extern void DrawChara(int n, int x, int y);
 
 /* client_command.c */
 extern int ExecuteCommand(char command);
+
 
 /*上下左右のコマンドを送る関数*/
 extern void SendUpCommand(void);

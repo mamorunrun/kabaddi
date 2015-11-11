@@ -8,7 +8,7 @@
 
 static void SetIntData2DataBlock(void *data,int intData,int *dataSize);
 static void SetCharData2DataBlock(void *data,char charData,int *dataSize);
-
+static void RecCharaData(void);
 /*****************************************************************
 関数名	: ExecuteCommand
 機能	: サーバーから送られてきたコマンドを元に，
@@ -28,6 +28,10 @@ int ExecuteCommand(char command)
     switch(command){
     case END_COMMAND:
         endFlag = 0;
+        break;
+/*キャラを描画*/
+    case CDROW:
+        RecCharaData();
         break;
     }
     return endFlag;
@@ -203,4 +207,23 @@ static void SetCharData2DataBlock(void *data,char charData,int *dataSize)
     *(char *)(data + (*dataSize)) = charData;
     /* データサイズを増やす */
     (*dataSize) += sizeof(char);
+}
+
+
+/*****************************************************************
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+　　　　　　　　　　charaのデータを受け取る
+******************************************************************/
+
+static void RecCharaData(void)
+{
+    int	n,x,y;
+
+    /* 円コマンドに対する引き数を受信する */
+    RecvIntData(&n);
+    RecvIntData(&x);
+    RecvIntData(&y);
+
+    /* キャラを表示する */
+    DrawChara(n,x,y);
 }

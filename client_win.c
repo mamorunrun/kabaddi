@@ -160,63 +160,10 @@ static int CheckButtonNO(int x,int y,int num)
  	return -1;
 }
 
-void WinDisplay(void)
+void DrawChara(int n, int x, int y)
 {
-    /* 画像データへのポインタ */
-    SDL_Surface *Win_image;
-
-    /* 画像サイズ */
-    SDL_Rect src_rect = { 0, 0, 300, 150 };
-
-    /* 貼り付け位置 */ 
-    SDL_Rect dst_rect = { 50, 80};
-
-    /* 画像の読み込み */
-    Win_image = IMG_Load("win.png");
-
-    SDL_BlitSurface(Win_image, &src_rect, gMainWindow, &dst_rect);
-
+    rectangleColor(gMainWindow,x,y,x+30, y+height,0x000000ff);
     SDL_Flip(gMainWindow);
-    SDL_Delay(2000);
 
 }
 
-void LoseDisplay(void)
-{
-    /* 画像データへのポインタ */
-    SDL_Surface *Lose_image;
-
-    /* 画像サイズ */
-    SDL_Rect src_rect = { 0, 0, 300, 150 };
-
-    /* 貼り付け位置 */ 
-    SDL_Rect dst_rect = { 50, 80};
-
-    /* 画像の読み込み */
-    Lose_image = IMG_Load("lose.png");
-
-    SDL_BlitSurface(Lose_image, &src_rect, gMainWindow, &dst_rect);
-
-    SDL_Flip(gMainWindow);
-    SDL_Delay(2000);
-
-}
-
-void DrawDisplay(void)
-{
-    /* 画像データへのポインタ */
-    SDL_Surface *Draw_image;
-
-    /* 画像サイズ */
-    SDL_Rect src_rect = { 0, 0, 300, 150 };
-
-    /* 貼り付け位置 */ 
-    SDL_Rect dst_rect = { 50, 80};
-
-    /* 画像の読み込み */
-    Draw_image = IMG_Load("draw.png");
-
-    SDL_BlitSurface(Draw_image, &src_rect, gMainWindow, &dst_rect);
-    
-    SDL_Flip(gMainWindow);
-}
