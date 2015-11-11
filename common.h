@@ -30,7 +30,7 @@
 typedef struct{
 	int		fd;
 	char	name[MAX_NAME_SIZE];
-        SDL_Rect pos;
+        SDL_Rect poi;
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];

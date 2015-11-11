@@ -15,11 +15,16 @@ int main(int argc,char *argv[])
     char	*serverName;
     int		clientID;
 
+
+    // Wiiリモコンを用いるための構造体を宣言（初期化）
+    wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
+    wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
+
     /* 引き数チェック */
-    if(argc == 1){
+    if(argc == 2){
     	serverName = localHostName;
     }
-    else if(argc == 2){
+    else if(argc == 3){
     	serverName = argv[1];
     }
     else{
