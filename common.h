@@ -27,4 +27,15 @@
 #define WIN_COMMAND 'W'    /*勝利コマンド*/
 #define LOSE_COMMAND 'L'   /*敗北コマンド*/
 #define DRAW_COMMAND 'D'   /*引き分けコマンド*/
+
+/* クライアントを表す構造体 */
+typedef struct{
+	int		fd;
+	char	name[MAX_NAME_SIZE];
+        SDL_Rect pos;
+}CLIENT;
+
+extern CLIENT	gClients[MAX_CLIENTS];
+
+
 #endif
