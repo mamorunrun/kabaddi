@@ -6,6 +6,8 @@
 #include<SDL/SDL.h>
 #include"server_common.h"
 
+aaaaa
+
 int main(int argc,char *argv[])
 {
 	int	num=2;
