@@ -8,7 +8,7 @@
 
 int main(int argc,char *argv[])
 {
-	int	num=3;
+	int	num=2;
 	int	endFlag = 1;
 
 		

@@ -11,6 +11,9 @@
 //wiiリモコン
 #include <libcwiimote/wiimote.h>// Wiiリモコンを用いるために必要なヘッダファイル
 #include <libcwiimote/wiimote_api.h>// Wiiリモコンを用いるために必要なヘッダファイル
+extern wiimote_t wiimote;
+extern wiimote_report_t report;
+
 
 /* client_net.c */
 extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][MAX_NAME_SIZE]);
@@ -23,6 +26,7 @@ extern int SendRecvManager(void);
 extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
 extern void DrawChara(int n, int x, int y);
+extern void WindowEvent(int num);
 
 /* client_command.c */
 extern int ExecuteCommand(char command);
@@ -35,5 +39,7 @@ extern void SendRightCommand(void);
 extern void SendLeftCommand(void);
 
 extern void SendEndCommand(void);
+
+
 
 #endif

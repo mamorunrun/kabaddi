@@ -11,6 +11,10 @@
 #include <libcwiimote/wiimote.h>
 #include <libcwiimote/wiimote_api.h>
 
+    // Wiiリモコンを用いるための構造体を宣言（初期化）
+wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
+wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
+
 int main(int argc,char *argv[])
 {
     int		num;
@@ -19,11 +23,6 @@ int main(int argc,char *argv[])
     char	localHostName[]="localhost";
     char	*serverName;
     int		clientID;
-
-
-    // Wiiリモコンを用いるための構造体を宣言（初期化）
-    wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
-    wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
 
     /* 引き数チェック */
     if(argc == 2){
@@ -61,7 +60,8 @@ int main(int argc,char *argv[])
 
     /* メインイベントループ */
     while(endFlag){
-		endFlag = SendRecvManager();
+        WindowEvent(num);
+        endFlag = SendRecvManager();
     };
 
     /* 終了処理 */
