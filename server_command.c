@@ -45,6 +45,7 @@ int ExecuteCommand(char command,int pos)
         break;
     case UP_COMMAND:             /*クライアントからUPコマンドが送られた*/
         gClients[pos].poi.y--;
+        SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
@@ -52,6 +53,7 @@ int ExecuteCommand(char command,int pos)
         break;
     case DOWN_COMMAND:           /*クライアントからDOWNコマンドが送られた*/
         gClients[pos].poi.y++;
+        SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
@@ -59,6 +61,7 @@ int ExecuteCommand(char command,int pos)
 	break;
     case RIGHT_COMMAND:          /*クライアントからRIGHTコマンドが送られた*/
         gClients[pos].poi.x++;
+        SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
@@ -66,6 +69,7 @@ int ExecuteCommand(char command,int pos)
 	break;
     case LEFT_COMMAND:           /*クライアントからLEFTコマンドが送られた*/
         gClients[pos].poi.x--;
+        SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
