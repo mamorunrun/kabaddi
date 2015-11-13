@@ -122,6 +122,10 @@ void DrawChara(int n, int x, int y)
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
 
+    for(i=0;i<num;i++){
+        printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
+            }
+
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){
         SDL_FillRect(buffer,&gClients[i].poi,0x000000ff);
