@@ -215,6 +215,8 @@ static void SetMask(void)
 *****************************************************************/
 int RecvData(void *data,int dataSize)
 {
+    int n;
+
     /* 引き数チェック */
     assert(data != NULL);
     assert(0 < dataSize);

@@ -45,8 +45,10 @@ int ExecuteCommand(char command,int pos)
         endFlag = 0;
         break;
     case POS_COMMAND:             /*クライアントからUPコマンドが送られた*/
-        gClients[pos].poi.x=RecvIntData(pos,&intData);
-        gClients[pos].poi.y=RecvIntData(pos,&intData);
+        RecvIntData(pos,&intData);
+        gClients[pos].poi.x=intData;
+        RecvIntData(pos,&intData);
+        gClients[pos].poi.y=intData;
         SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);

@@ -11,6 +11,7 @@
 #include <libcwiimote/wiimote.h>
 #include <libcwiimote/wiimote_api.h>
 
+
     // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
 wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
@@ -63,6 +64,7 @@ int main(int argc,char *argv[])
     /* メインイベントループ */
     while(endFlag){
         WindowEvent(clientID);
+        nanosleep(100);
         endFlag = SendRecvManager();
     };
 

@@ -107,6 +107,7 @@ int SendRecvManager(void)
 	    	/* クライアントからデータが届いていた */
 	    	/* コマンドを読み込む */
 			RecvData(i,&command,sizeof(char));
+                        // printf("%s,%d\n",command,command);
 	    	/* コマンドに対する処理を行う */
 	    	endFlag = ExecuteCommand(command,i);
 	    	if(endFlag == 0)break;
@@ -278,6 +279,7 @@ static int RecvData(int pos,void *data,int dataSize)
     assert(0<dataSize);
 
     n = read(gClients[pos].fd,data,dataSize);
+    printf("%s,%d\n",data,data);
     
     return n;
 }
