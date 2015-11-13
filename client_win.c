@@ -34,11 +34,11 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	}
 	
 	/* メインのウインドウを作成する */
-	if((gMainWindow = SDL_SetVideoMode(400,240, 32, SDL_SWSURFACE)) == NULL) {
+	if((gMainWindow = SDL_SetVideoMode(1000,600, 32, SDL_SWSURFACE)) == NULL) {
 		printf("failed to initialize videomode.\n");
 		return -1;
 	}
-        if((buffer = SDL_CreateRGBSurface(SDL_SWSURFACE,400,240,32,0,0,0,0))==NULL){
+        if((buffer = SDL_CreateRGBSurface(SDL_SWSURFACE,1000,600,32,0,0,0,0))==NULL){
             printf("failed to initialize videomode.\n");
             exit(-1);
         }
@@ -76,8 +76,12 @@ void DestroyWindow(void)
 	SDL_Quit();
 }
 
-void WindowEvent(int num)
+void WindowEvent(int clientID)
 {
+    unsigned char	data[MAX_DATA];
+    int			dataSize = 0;
+
+
     while (wiimote_is_open(&wiimote)){
         if (wiimote_update(&wiimote) < 0) {
             wiimote_disconnect(&wiimote);
@@ -89,18 +93,39 @@ void WindowEvent(int num)
             wiimote_disconnect(&wiimote);
             SendEndCommand();
         }
-        if(wiimote.keys.up){
+        else if(wiimote.keys.up){
             printf("up\n");
-            SendRightCommand();
+            gClients[clientID].poi.x--;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            //SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            SendData(data, dataSize);
+
         }
-        if (wiimote.keys.down){
-            SendLeftCommand();
+        else if (wiimote.keys.down){
+            gClients[clientID].poi.x++;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            //SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            SendData(data, dataSize);
         }
-        if(wiimote.keys.left){
-            SendUpCommand();
+        else if(wiimote.keys.left){
+            gClients[clientID].poi.y++;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            //SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            SendData(data, dataSize);
         }
-        if(wiimote.keys.right){
-            SendDownCommand();
+        else if(wiimote.keys.right){
+            gClients[clientID].poi.y--;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            // SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            SendData(data, dataSize);
         }
         
         break;

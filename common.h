@@ -26,11 +26,7 @@
 #define MAX_DATA		200				/* 送受信するデータの最大値 */
 
 #define END_COMMAND		'E'		  		/* プログラム終了コマンド */
-#define UP_COMMAND	'U'				/* upコマンド */
-#define DOWN_COMMAND	'D'				/* downコマンド */
-#define RIGHT_COMMAND	'R'				/* rightコマンド */
-#define LEFT_COMMAND    'L'                             /*leftコマンド*/
-
+#define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
 
 /* クライアントを表す構造体 */

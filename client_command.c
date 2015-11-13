@@ -6,8 +6,6 @@
 #include"common.h"
 #include"client_func.h"
 
-static void SetIntData2DataBlock(void *data,int intData,int *dataSize);
-static void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 static void RecCharaData(void);
 /*****************************************************************
 関数名	: ExecuteCommand
@@ -19,6 +17,9 @@ static void RecCharaData(void);
 *****************************************************************/
 int ExecuteCommand(char command)
 {
+
+
+
     int	endFlag = 1;
 #ifndef NDEBUG
     printf("#####\n");
@@ -37,106 +38,6 @@ int ExecuteCommand(char command)
     return endFlag;
 }
 
-/****************************************************************
-　　　　　　　　　上下左右のデータを送る関数に変更
-↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
- ****************************************************************/
-
-
-/*****************************************************************
-関数名	: SendUpCommand
-機能	: 上のデータをサーバーにデータを送る
-引数	: なし
-出力	: なし
-*****************************************************************/
-void SendUpCommand(void)
-{   
-    unsigned char	data[MAX_DATA];
-    int			dataSize;
-
-#ifndef NDEBUG
-    printf("#####\n");
-    printf("SendUpCommand()\n");
-#endif
-    dataSize = 0;
-    /* コマンドのセット */
-    SetCharData2DataBlock(data,UP_COMMAND,&dataSize);
-
-    /* データの送信 */
-    SendData(data,dataSize);
-}
-
-/*****************************************************************
-関数名	: SendDownCommand
-機能	: 下のデータをサーバーにデータを送る
-引数	: なし
-出力	: なし
-*****************************************************************/
-void SendDownCommand(void)
-{
-    unsigned char	data[MAX_DATA];
-    int			dataSize;
-
-#ifndef NDEBUG
-    printf("#####\n");
-    printf("SendDownCommand()\n");
-#endif
-
-    dataSize = 0;
-    /* コマンドのセット */
-    SetCharData2DataBlock(data,DOWN_COMMAND,&dataSize);
-
-    /* データの送信 */
-    SendData(data,dataSize);
-}
-
-/*****************************************************************
-関数名	: SendRightCommand
-機能	: 右のデータをサーバーにデータを送る
-引数	: なし
-出力	: なし
-*****************************************************************/
-void SendRightCommand(void)
-{
-    unsigned char	data[MAX_DATA];
-    int			dataSize;
-
-#ifndef NDEBUG
-    printf("#####\n");
-    printf("SendRightCommand()\n");
-#endif
-
-    dataSize = 0;
-    /* コマンドのセット */
-    SetCharData2DataBlock(data,RIGHT_COMMAND,&dataSize);
-
-    /* データの送信 */
-    SendData(data,dataSize);
-}
-
-/*****************************************************************
-関数名	: SendRightCommand
-機能	: 左のデータをサーバーにデータを送る
-引数	: なし
-出力	: なし
-*****************************************************************/
-void SendLeftCommand(void)
-{
-    unsigned char	data[MAX_DATA];
-    int			dataSize;
-
-#ifndef NDEBUG
-    printf("#####\n");
-    printf("SendLeftCommand()\n");
-#endif
-
-    dataSize = 0;
-    /* コマンドのセット */
-    SetCharData2DataBlock(data,LEFT_COMMAND,&dataSize);
-
-    /* データの送信 */
-    SendData(data,dataSize);
-}
 
 /*****************************************************************
 関数名	: SendEndCommand
@@ -173,7 +74,7 @@ static
 		  int		*dataSize	: 送信用データの現在のサイズ
 出力	: なし
 *****************************************************************/
-static void SetIntData2DataBlock(void *data,int intData,int *dataSize)
+void SetIntData2DataBlock(void *data,int intData,int *dataSize)
 {
     int tmp;
 
@@ -197,7 +98,7 @@ static void SetIntData2DataBlock(void *data,int intData,int *dataSize)
 		  int		*dataSize	: 送信用データの現在のサイズ
 出力	: なし
 *****************************************************************/
-static void SetCharData2DataBlock(void *data,char charData,int *dataSize)
+void SetCharData2DataBlock(void *data,char charData,int *dataSize)
 {
     /* 引き数チェック */
     assert(data!=NULL);

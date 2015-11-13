@@ -55,12 +55,14 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
+        printf("%d\n",clientID);
+
         wiimote.mode.acc = 1;
     /*wiiリモコンの入力受付開始*/
 
     /* メインイベントループ */
     while(endFlag){
-        WindowEvent(num);
+        WindowEvent(clientID);
         endFlag = SendRecvManager();
     };
 

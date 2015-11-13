@@ -26,20 +26,17 @@ extern int SendRecvManager(void);
 extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
 extern void DrawChara(int n, int x, int y);
-extern void WindowEvent(int num);
+extern void WindowEvent(int clientID);
 
 /* client_command.c */
 extern int ExecuteCommand(char command);
 
 
 /*上下左右のコマンドを送る関数*/
-extern void SendUpCommand(void);
-extern void SendDownCommand(void);
-extern void SendRightCommand(void);
-extern void SendLeftCommand(void);
 
 extern void SendEndCommand(void);
 
-
+extern void SetIntData2DataBlock(void *data,int intData,int *dataSize);
+extern void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 
 #endif

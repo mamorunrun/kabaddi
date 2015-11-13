@@ -22,6 +22,7 @@ int ExecuteCommand(char command,int pos)
 {
     unsigned char	data[MAX_DATA];
     int			dataSize = 0;
+    int intData;
     int			endFlag = 1;
 
     /* 引き数チェック */
@@ -43,38 +44,15 @@ int ExecuteCommand(char command,int pos)
 
         endFlag = 0;
         break;
-    case UP_COMMAND:             /*クライアントからUPコマンドが送られた*/
-        gClients[pos].poi.y--;
+    case POS_COMMAND:             /*クライアントからUPコマンドが送られた*/
+        gClients[pos].poi.x=RecvIntData(pos,&intData);
+        gClients[pos].poi.y=RecvIntData(pos,&intData);
         SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
         SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
         SendData(ALL_CLIENTS, data, dataSize);
         break;
-    case DOWN_COMMAND:           /*クライアントからDOWNコマンドが送られた*/
-        gClients[pos].poi.y++;
-        SetCharData2DataBlock(data,CDRAW,&dataSize);
-        SetIntData2DataBlock(data,pos,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, data, dataSize);
-	break;
-    case RIGHT_COMMAND:          /*クライアントからRIGHTコマンドが送られた*/
-        gClients[pos].poi.x++;
-        SetCharData2DataBlock(data,CDRAW,&dataSize);
-        SetIntData2DataBlock(data,pos,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, data, dataSize);
-	break;
-    case LEFT_COMMAND:           /*クライアントからLEFTコマンドが送られた*/
-        gClients[pos].poi.x--;
-        SetCharData2DataBlock(data,CDRAW,&dataSize);
-        SetIntData2DataBlock(data,pos,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
-        SendData(ALL_CLIENTS, data, dataSize);
-	break;
     default:
         /* 未知のコマンドが送られてきた */
         fprintf(stderr,"0x%02x is not command!\n",command);
