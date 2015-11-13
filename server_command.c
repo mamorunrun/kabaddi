@@ -20,9 +20,10 @@ static void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 *****************************************************************/
 int ExecuteCommand(char command,int pos)
 {
+
     unsigned char	data[MAX_DATA];
     int			dataSize = 0;
-    int intData;
+    int intData = 0;
     int			endFlag = 1;
 
     /* 引き数チェック */
@@ -46,11 +47,13 @@ int ExecuteCommand(char command,int pos)
         break;
     case POS_COMMAND:             /*クライアントからUPコマンドが送られた*/
         gClients[pos].poi.x=RecvIntData(pos,&intData);
+        printf("server内gClients[pos].poi.x = %d",RecvIntData(pos,&intData));
         gClients[pos].poi.y=RecvIntData(pos,&intData);
+        printf("server内gClients[pos].poi.y = %d",RecvIntData(pos,&intData));
         SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
-        SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
+        //SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
+        //SetIntData2DataBlock(data,gClients[pos].poi.y,&dataSize);
         SendData(ALL_CLIENTS, data, dataSize);
         break;
     default:

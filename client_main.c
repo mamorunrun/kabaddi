@@ -55,7 +55,8 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
-        printf("%d\n",clientID);
+        printf("clientID = %d\n",clientID);
+        printf("%client num = %d\n",num);
 
         wiimote.mode.acc = 1;
     /*wiiリモコンの入力受付開始*/
