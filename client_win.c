@@ -80,9 +80,10 @@ void WindowEvent(int clientID)
 {
     unsigned char	data[MAX_DATA];
     int			dataSize = 0;
-
+    int i;
 
     while (wiimote_is_open(&wiimote)){
+        //memset(data,'NULL',MAX_DATA);
         if (wiimote_update(&wiimote) < 0) {
             wiimote_disconnect(&wiimote);
             break;
@@ -101,6 +102,7 @@ void WindowEvent(int clientID)
             printf("gClients[clientID].poi.x = %d\n",gClients[clientID].poi.x);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            //printf("%s,%d\n",data,data);
             SendData(data, dataSize);
 
         }
@@ -128,7 +130,12 @@ void WindowEvent(int clientID)
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
             SendData(data, dataSize);
         }
-        
+
+        printf("%d %d %d\n",clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+        /*for(i=0;i<2;i++){
+        printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
+        }*/
+
         break;
        
     }
@@ -145,12 +152,14 @@ void DrawChara(int n, int x, int y)
     int i;
     int num=2;
 
+    printf("%d %d %d\n",n,x,y);
+
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
 
-    for(i=0;i<num;i++){
+    /* for(i=0;i<num;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
-            }
+        }*/
 
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){

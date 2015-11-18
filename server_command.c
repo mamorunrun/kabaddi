@@ -46,10 +46,17 @@ int ExecuteCommand(char command,int pos)
         endFlag = 0;
         break;
     case POS_COMMAND:             /*クライアントからUPコマンドが送られた*/
+<<<<<<< HEAD
         gClients[pos].poi.x=RecvIntData(pos,&intData);
         printf("server内gClients[pos].poi.x = %d",RecvIntData(pos,&intData));
         gClients[pos].poi.y=RecvIntData(pos,&intData);
         printf("server内gClients[pos].poi.y = %d",RecvIntData(pos,&intData));
+=======
+        RecvIntData(pos,&intData);
+        gClients[pos].poi.x=intData;
+        RecvIntData(pos,&intData);
+        gClients[pos].poi.y=intData;
+>>>>>>> b6de6b27feef30e6daaa29dc1d1e2d0cd777406b
         SetCharData2DataBlock(data,CDRAW,&dataSize);
         SetIntData2DataBlock(data,pos,&dataSize);
         //SetIntData2DataBlock(data,gClients[pos].poi.x,&dataSize);
