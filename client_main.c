@@ -11,11 +11,6 @@
 #include <libcwiimote/wiimote.h>
 #include <libcwiimote/wiimote_api.h>
 
-/* 変数 */
-int gWaitTime;
-
-/* 関数 */
-extern void TimerEvent( int time );
 
     // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
@@ -61,11 +56,10 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
-        printf("clientID = %d\n",clientID);
-        printf("%client num = %d\n",num);
+        printf("%d\n",clientID);
 
-    /*wiiリモコンの入力受付開始*/
         wiimote.mode.acc = 1;
+    /*wiiリモコンの入力受付開始*/
 
     /* メインイベントループ */
     while(endFlag){
@@ -73,9 +67,9 @@ int main(int argc,char *argv[])
         endFlag = SendRecvManager();
     };
 
-    /*終了処理*/
-    DestroyWindow();
-    CloseSoc();
+    /* 終了処理 */
+	DestroyWindow();
+	CloseSoc();
 
-        return 0;
+    return 0;
 }

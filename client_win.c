@@ -94,12 +94,11 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             SendEndCommand();
         }
-        if(wiimote.keys.up){
+        else if(wiimote.keys.up){
             printf("up\n");
             gClients[clientID].poi.x--;
             SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
             //SetIntData2DataBlock(data,clientID,&dataSize);
-            printf("gClients[clientID].poi.x = %d\n",gClients[clientID].poi.x);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
             //printf("%s,%d\n",data,data);

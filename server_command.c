@@ -20,10 +20,9 @@ static void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 *****************************************************************/
 int ExecuteCommand(char command,int pos)
 {
-
     unsigned char	data[MAX_DATA];
     int			dataSize = 0;
-    int intData = 0;
+    int intData;
     int			endFlag = 1;
 
     /* 引き数チェック */
