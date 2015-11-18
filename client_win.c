@@ -131,7 +131,7 @@ void WindowEvent(int clientID)
             SendData(data, dataSize);
         }
 
-        printf("%d %d %d\n",clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+        // printf("%d %d %d\n",clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
         /*for(i=0;i<2;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
         }*/
@@ -152,14 +152,14 @@ void DrawChara(int n, int x, int y)
     int i;
     int num=2;
 
-    printf("%d %d %d\n",n,x,y);
+    /*printf("%d %d %d\n",n,x,y);*/
 
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
 
-    /* for(i=0;i<num;i++){
+    for(i=0;i<num;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
-        }*/
+        }
 
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){

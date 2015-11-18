@@ -5,7 +5,6 @@
 
 #include"common.h"
 #include"client_func.h"
-#include "system.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
@@ -68,41 +67,15 @@ int main(int argc,char *argv[])
     /*wiiリモコンの入力受付開始*/
         wiimote.mode.acc = 1;
 
-     /* タイマー */
-        Uint32 interval = SDL_GetTicks() + 100;
-
-     /* ゲーム内時刻：約0.1秒で1カウント */
-        int time = 0;
-
-        Uint32 now;
     /* メインイベントループ */
-        while(endFlag){
-    WindowEvent(clientID);
-            /* タイマー検出 */
-            now = SDL_GetTicks();
-            if( now >= interval ){
-                TimerEvent( ++time );
-                /* 0.05秒ごとにタイマー処理するため，0.05秒後を設定 */
-                interval = now + 50
-                    }
-            
-        };
-        
-        /* 終了処理 */
-	DestroyWindow();
-	CloseSoc();
-        
+    while(endFlag){
+        WindowEvent(clientID);
+        endFlag = SendRecvManager();
+    };
+
+    /*終了処理*/
+    DestroyWindow();
+    CloseSoc();
+
         return 0;
-}
-
-
-/* タイマー処理
- *
- * 引数
- *   time: カウンタ値
- */
-void TimerEvent( int time )
-{
-    endFlag = SendRecvManager();
-   
 }
