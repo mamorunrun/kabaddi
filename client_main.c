@@ -64,7 +64,6 @@ int main(int argc,char *argv[])
     /* メインイベントループ */
     while(endFlag){
         WindowEvent(clientID);
-        nanosleep(100);
         endFlag = SendRecvManager();
     };
 
