@@ -85,7 +85,7 @@ int SetUpClient(char *hostName,int *clientID,int *num,char clientNames[][MAX_NAM
 出力	: プログラム終了コマンドが送られてきた時0を返す．
 		  それ以外は1を返す
 *****************************************************************/
-int SendRecvManager(void)
+int SendRecvManager(int num)
 {
     fd_set	readOK;
     char	command;
@@ -98,15 +98,16 @@ int SendRecvManager(void)
     timeout.tv_usec = 20;
 
     readOK = gMask;
-    /* サーバーからデータが届いているか調べる */
-    select(gWidth,&readOK,NULL,NULL,&timeout);
-    if(FD_ISSET(gSocket,&readOK)){
-		/* サーバーからデータが届いていた */
-    	/* コマンドを読み込む */
-		RecvData(&command,sizeof(char));
-    	/* コマンドに対する処理を行う */
-		endFlag = ExecuteCommand(command);
-    }
+        /* サーバーからデータが届いているか調べる */
+        select(gWidth,&readOK,NULL,NULL,&timeout);
+        if(FD_ISSET(gSocket,&readOK)){
+            /* サーバーからデータが届いていた */
+            /* コマンドを読み込む */
+            RecvData(&command,sizeof(char));
+            /* コマンドに対する処理を行う */
+            endFlag = ExecuteCommand(command);
+        }
+
     return endFlag;
 }
 

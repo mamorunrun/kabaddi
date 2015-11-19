@@ -34,6 +34,9 @@ int ExecuteCommand(char command)
     case CDRAW:
         RecCharaData();
         break;
+    case DISPLAY:
+        DrawChara();
+        break;
     }
     return endFlag;
 }
@@ -125,6 +128,9 @@ static void RecCharaData(void)
     RecvIntData(&x);
     RecvIntData(&y);
 
+    gClients[n].poi.x=x;
+    gClients[n].poi.y=y;
+
     /* キャラを表示する */
-    DrawChara(n,x,y);
+    // DrawChara(n,x,y);
 }

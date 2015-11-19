@@ -10,6 +10,7 @@
 
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
+static dflag=0;
 CLIENT gClients[MAX_CLIENTS];
 
 /*****************************************************************
@@ -88,6 +89,8 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             break;
         }
+
+        if(dflag==0){
         if (wiimote.keys.home) {
             printf("home\n");
             wiimote_speaker_free(&wiimote);
@@ -134,18 +137,18 @@ void WindowEvent(int clientID)
         /*for(i=0;i<2;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
         }*/
-
+        dflag=1;
         break;
        
+        }
     }
-    
 }
 
 /*****
 static
 *****/
 
-void DrawChara(int n, int x, int y)
+void DrawChara(void)
 {
 
     int i;
@@ -153,8 +156,8 @@ void DrawChara(int n, int x, int y)
 
     /*printf("%d %d %d\n",n,x,y);*/
 
-    gClients[n].poi.x=x;
-    gClients[n].poi.y=y;
+    /*gClients[n].poi.x=x;
+      gClients[n].poi.y=y;*/
 
     for(i=0;i<num;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
@@ -168,5 +171,6 @@ void DrawChara(int n, int x, int y)
     
     SDL_Flip(gMainWindow);
     
+    dflag=0;
 }
 

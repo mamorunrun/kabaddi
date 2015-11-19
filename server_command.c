@@ -7,7 +7,7 @@
 #include"server_func.h"
 
 static void SetIntData2DataBlock(void *data,int intData,int *dataSize);
-static void SetCharData2DataBlock(void *data,char charData,int *dataSize);
+void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 
 /*****************************************************************
 関数名	: ExecuteCommand
@@ -97,7 +97,7 @@ static void SetIntData2DataBlock(void *data,int intData,int *dataSize)
 		  int		*dataSize	: 送信用データの現在のサイズ
 出力	: なし
 *****************************************************************/
-static void SetCharData2DataBlock(void *data,char charData,int *dataSize)
+void SetCharData2DataBlock(void *data,char charData,int *dataSize)
 {
     /* 引き数チェック */
     assert(data!=NULL);

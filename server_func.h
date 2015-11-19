@@ -17,5 +17,5 @@ extern int SendRecvManager(void);
 
 /* server_command.c */
 extern int ExecuteCommand(char command,int pos);
-
+extern void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 #endif

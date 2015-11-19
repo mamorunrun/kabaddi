@@ -28,6 +28,7 @@
 #define END_COMMAND		'E'		  		/* プログラム終了コマンド */
 #define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
+#define DISPLAY         'D'
 
 /* クライアントを表す構造体 */
 typedef struct{

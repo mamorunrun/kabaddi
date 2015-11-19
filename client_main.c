@@ -64,7 +64,7 @@ int main(int argc,char *argv[])
     /* メインイベントループ */
     while(endFlag){
         WindowEvent(clientID);
-        endFlag = SendRecvManager();
+        endFlag = SendRecvManager(num);
     };
 
     /* 終了処理 */

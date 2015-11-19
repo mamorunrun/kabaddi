@@ -6,12 +6,21 @@
 #include<SDL/SDL.h>
 #include"server_common.h"
 
+/*Uint32 callbackfunc(Uint32 interval,void *param){
+
+    param=SendRecvManager();
+    return interval;
+
+    }*/
+
+
+
 int main(int argc,char *argv[])
 {
 	int	num=2;
 	int	endFlag = 1;
 
-        SDL_TimerID timer_id;
+        int timer=0;
 
 
 		
@@ -27,10 +36,14 @@ int main(int argc,char *argv[])
 		exit(-1);
 	}
 
-	timer_id=SDL_AddTimer(100, callbackfunc, &animation);
 	/* メインイベントループ */
 	while(endFlag){
-		endFlag = SendRecvManager();
+            if(timer%10==0){
+            endFlag=SendRecvManager();
+            printf("a\n");
+            }
+            timer++;
+            printf("%d\n",timer);
 	};
 
 	/* 終了処理 */

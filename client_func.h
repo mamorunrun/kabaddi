@@ -20,12 +20,12 @@ extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][M
 extern void CloseSoc(void);
 extern int RecvIntData(int *intData);
 extern void SendData(void *data,int dataSize);
-extern int SendRecvManager(void);
+extern int SendRecvManager(int num);
 
 /* client_win.c */
 extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
-extern void DrawChara(int n, int x, int y);
+extern void DrawChara(void);
 extern void WindowEvent(int clientID);
 
 /* client_command.c */

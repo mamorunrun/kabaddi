@@ -90,6 +90,9 @@ int SetUpServer(int num)
 *****************************************************************/
 int SendRecvManager(void)
 {
+
+    unsigned char	data[MAX_DATA];
+    int			dataSize = 0;
     char	command;
     fd_set	readOK;
     int		i;
@@ -113,6 +116,8 @@ int SendRecvManager(void)
 	    	if(endFlag == 0)break;
 		}
     }
+    SetCharData2DataBlock(data,DISPLAY,&dataSize);
+    SendData(ALL_CLIENTS,data,dataSize);
     return endFlag;
 }
 
