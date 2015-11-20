@@ -23,7 +23,6 @@ CLIENT gClients[MAX_CLIENTS];
 int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 {
     cID = clientID;
-    dflag = 0;
 	int i;
 	char *s,title[10];
 
@@ -97,7 +96,6 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             SendEndCommand();
         }
-        if (dflag == 0){
         if(wiimote.keys.up){
             printf("up\n");
             gClients[clientID].poi.x--;
@@ -139,7 +137,6 @@ void WindowEvent(int clientID)
         /*for(i=0;i<2;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
         }*/
-        }
         break;
        
     }
@@ -167,8 +164,6 @@ void DrawChara(int n)
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
-
-    dflag = 0;
     
 }
 
