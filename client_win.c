@@ -10,6 +10,7 @@
 
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
+static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
 /*****************************************************************
@@ -21,6 +22,8 @@ CLIENT gClients[MAX_CLIENTS];
 *****************************************************************/
 int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 {
+    cID = clientID;
+    dflag = 0;
 	int i;
 	char *s,title[10];
 
@@ -94,7 +97,8 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             SendEndCommand();
         }
-        else if(wiimote.keys.up){
+        if (dflag == 0){
+        if(wiimote.keys.up){
             printf("up\n");
             gClients[clientID].poi.x--;
             SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
@@ -129,15 +133,17 @@ void WindowEvent(int clientID)
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
             SendData(data, dataSize);
         }
+        //  DrawChara(clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
 
         // printf("%d %d %d\n",clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
         /*for(i=0;i<2;i++){
         printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
         }*/
-
+        }
         break;
        
     }
+    DrawChara(clientID);
     
 }
 
@@ -145,20 +151,14 @@ void WindowEvent(int clientID)
 static
 *****/
 
-void DrawChara(int n, int x, int y)
+void DrawChara(int n)
 {
-
     int i;
     int num=2;
 
-    /*printf("%d %d %d\n",n,x,y);*/
-
-    gClients[n].poi.x=x;
-    gClients[n].poi.y=y;
-
-    for(i=0;i<num;i++){
-        printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
-        }
+    //   for(i=0;i<num;i++){
+        //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
+    //  }
 
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){
@@ -167,6 +167,16 @@ void DrawChara(int n, int x, int y)
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
+
+    dflag = 0;
     
 }
 
+void UpdatePos(int n,int x,int y)
+{
+    if(cID == n)
+        return;
+
+    gClients[n].poi.x=x;
+    gClients[n].poi.y=y;
+}

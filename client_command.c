@@ -125,6 +125,8 @@ static void RecCharaData(void)
     RecvIntData(&x);
     RecvIntData(&y);
 
-    /* キャラを表示する */
-    DrawChara(n,x,y);
+    printf("n=%d, x= %d, y=%d\n",n,x,y);
+
+    /* キャラを更新する */
+    UpdatePos(n,x,y);
 }
