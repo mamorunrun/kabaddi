@@ -13,6 +13,7 @@
 #include <libcwiimote/wiimote_api.h>// Wiiリモコンを用いるために必要なヘッダファイル
 extern wiimote_t wiimote;
 extern wiimote_report_t report;
+extern int dflag;
 
 
 /* client_net.c */

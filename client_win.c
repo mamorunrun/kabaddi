@@ -13,6 +13,8 @@ static SDL_Surface *buffer;
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
+int dflag;
+
 /*****************************************************************
 関数名	: InitWindows
 機能	: メインウインドウの表示，設定を行う
@@ -97,18 +99,18 @@ void WindowEvent(int clientID)
             SendEndCommand();
         }
         if(wiimote.keys.up){
-            printf("up\n");
-            gClients[clientID].poi.x--;
+            dflag = 1;
+            gClients[clientID].poi.x = gClients[clientID].poi.x-2;
             SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
             //SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
             //printf("%s,%d\n",data,data);
             SendData(data, dataSize);
-
         }
         else if (wiimote.keys.down){
-            gClients[clientID].poi.x++;
+            dflag = 1;
+            gClients[clientID].poi.x = gClients[clientID].poi.x+2;
             SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
             //SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
@@ -116,7 +118,8 @@ void WindowEvent(int clientID)
             SendData(data, dataSize);
         }
         else if(wiimote.keys.left){
-            gClients[clientID].poi.y++;
+            dflag = 1;
+            gClients[clientID].poi.y = gClients[clientID].poi.y+2;
             SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
             //SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
@@ -124,7 +127,8 @@ void WindowEvent(int clientID)
             SendData(data, dataSize);
         }
         else if(wiimote.keys.right){
-            gClients[clientID].poi.y--;
+            dflag = 1;
+            gClients[clientID].poi.y = gClients[clientID].poi.y-2;
             SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
             // SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);

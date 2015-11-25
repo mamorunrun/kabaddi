@@ -23,6 +23,7 @@ Uint32 now,//現在時間
        lev;//経過時間
 }timers;
 extern timers timer;
+extern int dflag;
 
 // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
@@ -86,19 +87,34 @@ int main(int argc,char *argv[])
 
     // SDL_GetTicks関数を用いる時間管理
 	Uint32 next_frame=SDL_GetTicks();	// SDLライブラリの初期化からの経過ミリ秒数を取得
-
+        
+        dflag = 0;
     /* メインイベントループ */
     while(endFlag){
-        WindowEvent(clientID);
-        endFlag = SendRecvManager();
 
+        endFlag = SendRecvManager();
         timer.now=SDL_GetTicks();//現在時間を取得
         timer.wit=timer.now-timer.lev;//待ち時間を計算
+
+        if(dflag == 0)
+        {
+            WindowEvent(clientID);
+            //timer.lev=SDL_GetTicks();//経過時間を更新
+        }
+        else if(timer.wit > 16){
+            WindowEvent(clientID);
+            dflag = 0;
+            timer.lev=SDL_GetTicks();//経過時間を更新
+        }
+
+       
+        // timer.now=SDL_GetTicks();//現在時間を取得
+        //timer.wit=timer.now-timer.lev;//待ち時間を計算
         
-        if(timer.wit<8)
-            SDL_Delay(8-timer.wit);//16以下ならCPUを休ませる
+        // if(timer.wit<16)
+            //    SDL_Delay(16-timer.wit);//16以下ならCPUを休ませる
         
-        timer.lev=SDL_GetTicks();//経過時間を更新
+        //timer.lev=SDL_GetTicks();//経過時間を更新
 
     };
 
