@@ -1,6 +1,6 @@
 /*****************************************************************
-е╒ебедеы╠╛	: client_win.c
-╡б╟╜		: епещедевеєе╚д╬ецб╝е╢б╝едеєе┐б╝е╒езб╝е╣╜ш═¤
+уГХуВбуВдуГлхРН	: client_win.c
+цйЯшГ╜		: уВпуГйуВдуВвуГ│уГИуБоуГжуГ╝уВ╢уГ╝уВдуГ│уВ┐уГ╝уГХуВзуГ╝уВ╣хЗжчРЖ
 *****************************************************************/
 
 #include<SDL/SDL.h>
@@ -11,16 +11,17 @@
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static int cID;
+static void Move(int clientID);
 CLIENT gClients[MAX_CLIENTS];
 
 int dflag;
 
 /*****************************************************************
-┤╪┐Ї╠╛	: InitWindows
-╡б╟╜	: еседеєежедеєе╔ежд╬╔╜╝ибд└▀─ъдЄ╣╘дж
-░·┐Ї	: int	clientID		: епещедевеєе╚╚╓╣ц
-		  int	num				: ┴┤епещедевеєе╚┐Ї
-╜╨╬╧	: └╡╛яд╦└▀─ъд╟днд┐д╚дн0бд╝║╟╘д╖д┐д╚дн-1
+щЦвцХ░хРН	: InitWindows
+цйЯшГ╜	: уГбуВдуГ│уВжуВдуГ│уГЙуВжуБошбичд║я╝МшинхоЪуВТшбМуБЖ
+х╝ХцХ░	: int	clientID		: уВпуГйуВдуВвуГ│уГИчХкхП╖
+		  int	num				: хЕиуВпуГйуВдуВвуГ│уГИцХ░
+хЗ║хКЫ	: цнгх╕╕уБлшинхоЪуБзуБНуБЯуБиуБН0я╝Мхд▒цХЧуБЧуБЯуБиуБН-1
 *****************************************************************/
 int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 {
@@ -28,16 +29,16 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	int i;
 	char *s,title[10];
 
-        /* ░·дн┐Їе┴езе├еп */
+        /* х╝ХуБНцХ░уГБуВзуГГуВп */
         assert(0<num && num<=MAX_CLIENTS);
 	
-	/* SDLд╬╜щ┤№▓╜ */
+	/* SDLуБохИЭцЬЯхМЦ */
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("failed to initialize SDL.\n");
 		return -1;
 	}
 	
-	/* еседеєд╬ежедеєе╔еждЄ║ю└од╣ды */
+	/* уГбуВдуГ│уБоуВжуВдуГ│уГЙуВжуВТф╜ЬцИРуБЩуВЛ */
 	if((gMainWindow = SDL_SetVideoMode(1000,600, 32, SDL_SWSURFACE)) == NULL) {
 		printf("failed to initialize videomode.\n");
 		return -1;
@@ -47,12 +48,12 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
             exit(-1);
         }
 
-	/* ежедеєе╔ежд╬е┐еде╚еыдЄе╗е├е╚ */
+	/* уВжуВдуГ│уГЙуВжуБоуВ┐уВдуГИуГлуВТуВ╗уГГуГИ */
 	sprintf(title,"Kabaddi[%d]",clientID);
 	SDL_WM_SetCaption(title,NULL);
 
 	
-	/* ╟╪╖╩дЄ╟Єд╦д╣ды */
+	/* шГМцЩпуВТчЩ╜уБлуБЩуВЛ */
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
         for(i=0;i<num;i++){
@@ -70,10 +71,10 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 }
 
 /*****************************************************************
-┤╪┐Ї╠╛	: DestroyWindow
-╡б╟╜	: SDLдЄ╜к╬╗д╣ды
-░·┐Ї	: д╩д╖
-╜╨╬╧	: д╩д╖
+щЦвцХ░хРН	: DestroyWindow
+цйЯшГ╜	: SDLуВТч╡Вф║ЖуБЩуВЛ
+х╝ХцХ░	: уБкуБЧ
+хЗ║хКЫ	: уБкуБЧ
 *****************************************************************/
 void DestroyWindow(void)
 {
@@ -82,9 +83,7 @@ void DestroyWindow(void)
 
 void WindowEvent(int clientID)
 {
-    unsigned char	data[MAX_DATA];
-    int			dataSize = 0;
-    int i;
+    int a = 2;
 
     while (wiimote_is_open(&wiimote)){
         //memset(data,'NULL',MAX_DATA);
@@ -98,51 +97,27 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             SendEndCommand();
         }
+
+        if(wiimote.keys.one){
+            a = 4;
+        }
         if(wiimote.keys.up){
-            dflag = 1;
-            gClients[clientID].poi.x = gClients[clientID].poi.x-2;
-            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
-            //SetIntData2DataBlock(data,clientID,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            //printf("%s,%d\n",data,data);
-            SendData(data, dataSize);
+            gClients[clientID].poi.x = gClients[clientID].poi.x-a;
+            Move(clientID);
         }
         else if (wiimote.keys.down){
-            dflag = 1;
-            gClients[clientID].poi.x = gClients[clientID].poi.x+2;
-            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
-            //SetIntData2DataBlock(data,clientID,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            SendData(data, dataSize);
+            gClients[clientID].poi.x = gClients[clientID].poi.x+a;
+            Move(clientID);
         }
         else if(wiimote.keys.left){
-            dflag = 1;
-            gClients[clientID].poi.y = gClients[clientID].poi.y+2;
-            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
-            //SetIntData2DataBlock(data,clientID,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            SendData(data, dataSize);
+            gClients[clientID].poi.y = gClients[clientID].poi.y+a;
+            Move(clientID);
         }
         else if(wiimote.keys.right){
-            dflag = 1;
-            gClients[clientID].poi.y = gClients[clientID].poi.y-2;
-            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
-            // SetIntData2DataBlock(data,clientID,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
-            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            SendData(data, dataSize);
+            gClients[clientID].poi.y = gClients[clientID].poi.y-a;
+            Move(clientID);
         }
-        //  DrawChara(clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
-
-        // printf("%d %d %d\n",clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
-        /*for(i=0;i<2;i++){
-        printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
-        }*/
         break;
-       
     }
     DrawChara(clientID);
     
@@ -155,7 +130,7 @@ static
 void DrawChara(int n)
 {
     int i;
-    int num=3;
+    int num=2;
 
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
@@ -179,3 +154,17 @@ void UpdatePos(int n,int x,int y)
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
 }
+
+void Move(int clientID)
+{
+    unsigned char	data[MAX_DATA];
+    int			dataSize = 0;
+
+    dflag = 1;
+
+    SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+    SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+    SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+    SendData(data, dataSize);
+}
+
