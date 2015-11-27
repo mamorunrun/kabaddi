@@ -221,6 +221,15 @@ void Move(int clientID)
 
     dflag = 1;
 
+    if(gClients[clientID].poi.x <= 0)
+        gClients[clientID].poi.x = 0;
+    else if(gClients[clientID].poi.x + 30 >= 1000)
+        gClients[clientID].poi.x = 1000 - 30;
+    if(gClients[clientID].poi.y <= 0)
+        gClients[clientID].poi.y = 0;
+    else if(gClients[clientID].poi.y + 30 >= 600)
+        gClients[clientID].poi.y = 600 -30;
+
     SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
     SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
     SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
