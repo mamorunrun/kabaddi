@@ -1,4 +1,4 @@
-OBJS1	=	server_main.o server_net.o server_command.o
+OBJS1	=	server_main.o 
 OBJS2	=	client_main.o client_net.o client_command.o client_win.o
 TARGET1	=	server
 TARGET2	=	client
@@ -18,9 +18,7 @@ $(TARGET2):	$(OBJS2)
 clean:
 	rm *.o $(TARGET1) $(TARGET2)
 
-server_main.o: server_main.c server_common.h server_func.h common.h
-server_net.o: server_net.c server_common.h server_func.h common.h
-server_command.o: server_command.c server_common.h server_func.h common.h
+server_main.o: server_main.c  common.h
 client_main.o: client_main.c client_func.h common.h
 client_net.o: client_net.c client_func.h common.h
 client_command.o: client_command.c client_func.h common.h

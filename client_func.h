@@ -20,7 +20,7 @@ extern int dflag;
 extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][MAX_NAME_SIZE]);
 extern void CloseSoc(void);
 extern int RecvIntData(int *intData);
-extern void SendData(void *data,int dataSize);
+extern void SendData(char *data);
 extern int SendRecvManager(void);
 
 /* client_win.c */

@@ -60,7 +60,7 @@ void SendEndCommand(void)
     SetCharData2DataBlock(data,END_COMMAND,&dataSize);
 
     /* データの送信 */
-    SendData(data,dataSize);
+    SendData(data);
 }
 
 /*****

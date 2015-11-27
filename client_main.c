@@ -24,18 +24,26 @@ Uint32 now,//現在時間
 }timers;
 extern timers timer;
 extern int dflag;
+static int endFlag=1;
 
 // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
 wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
 
+SDL_Thread *thr_net;
+
+static int thread_net(void *data)
+{
+    while(endFlag){
+	endFlag = SendRecvManager();
+    }
+}
 int main(int argc,char *argv[])
 {
     timers timer;
 
     int		num;
     char	name[MAX_CLIENTS][MAX_NAME_SIZE];
-    int		endFlag=1;
     char	localHostName[]="localhost";
     char	*serverName;
     int		clientID;
@@ -89,10 +97,12 @@ int main(int argc,char *argv[])
 	Uint32 next_frame=SDL_GetTicks();	// SDLライブラリの初期化からの経過ミリ秒数を取得
         
         dflag = 0;
+
+        thr_net=SDL_CreateThread(thread_net,NULL);
+
     /* メインイベントループ */
     while(endFlag){
 
-        endFlag = SendRecvManager();
         timer.now=SDL_GetTicks();//現在時間を取得
         timer.wit=timer.now-timer.lev;//待ち時間を計算
 

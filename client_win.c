@@ -106,7 +106,7 @@ void WindowEvent(int clientID)
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
             //printf("%s,%d\n",data,data);
-            SendData(data, dataSize);
+            // SendData(data, dataSize);
         }
         else if (wiimote.keys.down){
             dflag = 1;
@@ -115,7 +115,7 @@ void WindowEvent(int clientID)
             //SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            SendData(data, dataSize);
+            //SendData(data, dataSize);
         }
         else if(wiimote.keys.left){
             dflag = 1;
@@ -124,7 +124,7 @@ void WindowEvent(int clientID)
             //SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            SendData(data, dataSize);
+            //SendData(data, dataSize);
         }
         else if(wiimote.keys.right){
             dflag = 1;
@@ -133,7 +133,7 @@ void WindowEvent(int clientID)
             // SetIntData2DataBlock(data,clientID,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
             SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-            SendData(data, dataSize);
+            //SendData(data, dataSize);
         }
         //  DrawChara(clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
 

@@ -3,34 +3,81 @@
 機能		: サーバーのメインルーチン
 *****************************************************************/
 
-#include<SDL/SDL.h>
-#include"server_common.h"
+
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
 
 int main(int argc,char *argv[])
 {
-	int	num=2;
-	int	endFlag = 1;
+    int sendsock,recvsock;
+    struct sockaddr_in recv_addr, send_addr;
+    char buf[2048];
+    int yes = 1;
+    int state=0;
+    char client_name[3][128];
+    int client_num;
+    int connection_num=0;
+    int i;
 
-		
-	/* SDLの初期化 */
-	if(SDL_Init(SDL_INIT_TIMER) < 0) {
-		printf("failed to initialize SDL.\n");
-		exit(-1);
-	}
+    if(argc==2){
+        client_num=atoi(argv[1]);
+    }
+    else exit(1);
 
-	/* クライアントとの接続 */
-	if(SetUpServer(num) == -1){
-		fprintf(stderr,"Cannot setup server\n");
-		exit(-1);
-	}
-	
-	/* メインイベントループ */
-	while(endFlag){
-		endFlag = SendRecvManager();
-	};
+    
+    sendsock = socket(AF_INET, SOCK_DGRAM, 0);
+    recvsock = socket(AF_INET, SOCK_DGRAM, 0);
+    
+    send_addr.sin_family = AF_INET;
+    send_addr.sin_port = htons(30000);
+    send_addr.sin_addr.s_addr = inet_addr("255.255.255.255");
+        
+    recv_addr.sin_family = AF_INET;
+    recv_addr.sin_port = htons(20000);
+    recv_addr.sin_addr.s_addr = INADDR_ANY;
+    
+    bind(recvsock, (struct sockaddr *)&recv_addr, sizeof(recv_addr));
+    memset(buf, 0, sizeof(buf));
+    
+    setsockopt(sendsock,SOL_SOCKET, SO_BROADCAST, (char *)&yes, sizeof(yes));
 
-	/* 終了処理 */
-	Ending();
+    printf("wait\n");
 
-	return 0;
+    while(1) {
+        recv(recvsock, buf, sizeof(buf), 0);
+        
+        printf("%s\n",buf);
+        if(state==0){
+            strcpy(client_name[connection_num],buf);
+            
+            sprintf(buf,"kabaddi,%s,%d\0",client_name[connection_num],connection_num);
+            connection_num++;
+            printf("%s\n",buf);
+            sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+
+            printf("%d,%d\n",connection_num,client_num);
+
+            if(connection_num==client_num){
+                state=1;
+                sprintf(buf,"kabaddi,u%d,",connection_num);
+                for(i=0;i<connection_num;i++){
+                    strcat(buf,client_name[i]);
+                    strcat(buf,",");
+                }
+                strcat(buf,"\0");
+            printf("%s\n",buf);
+ sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+            }
+
+        }
+    }
+    
+    close(recvsock);
+    close(sendsock);
+
+    return 0;
 }

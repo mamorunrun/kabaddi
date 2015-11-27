@@ -6,6 +6,8 @@
 #include"common.h"
 #include"client_func.h"
 #include<sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 #include<netdb.h>
 
 #define	BUF_SIZE	100
@@ -18,6 +20,10 @@ static void GetAllName(int *clientID,int *num,char clientNames[][MAX_NAME_SIZE])
 static void SetMask(void);
 static int RecvData(void *data,int dataSize);
 
+static int sendsock,recvsock;
+static struct sockaddr_in recv_addr, send_addr;
+static char buf[2048];
+
 /*****************************************************************
 関数名	: SetUpClient
 機能	: サーバーとのコネクションを設立し，
@@ -29,34 +35,33 @@ static int RecvData(void *data,int dataSize);
 *****************************************************************/
 int SetUpClient(char *hostName,int *clientID,int *num,char clientNames[][MAX_NAME_SIZE])
 {
-    struct hostent	*servHost;
-    struct sockaddr_in	server;
-    int			len;
-    char		str[BUF_SIZE];
 
-    /* ホスト名からホスト情報を得る */
-    if((servHost = gethostbyname(hostName))==NULL){
-		fprintf(stderr,"Unknown host\n");
-		return -1;
-    }
+struct hostent *servHost;
+int	len;
+char	str[BUF_SIZE];
 
-    bzero((char*)&server,sizeof(server));
-    server.sin_family = AF_INET;
-    server.sin_port = htons(PORT);
-    bcopy(servHost->h_addr,(char*)&server.sin_addr,servHost->h_length);
+/* ホスト名からホスト情報を得る */
+if((servHost = gethostbyname(hostName))==NULL){
+fprintf(stderr,"Unknown host\n");
+return -1;
+}
 
-    /* ソケットを作成する */
-    if((gSocket = socket(AF_INET,SOCK_STREAM,0)) < 0){
-		fprintf(stderr,"socket allocation failed\n");
-		return -1;
-    }
+    sendsock = socket(AF_INET, SOCK_DGRAM, 0);
+    recvsock = socket(AF_INET, SOCK_DGRAM, 0);
+    
+    send_addr.sin_family = AF_INET;
+    send_addr.sin_port = htons(20000);
+    //send_addr.sin_addr.s_addr =hostName;
 
-    /* サーバーと接続する */
-    if(connect(gSocket,(struct sockaddr*)&server,sizeof(server)) == -1){
-		fprintf(stderr,"cannot connect\n");
-		close(gSocket);
-		return -1;
-    }
+ bcopy(servHost->h_addr,(char*)&send_addr.sin_addr,servHost->h_length);
+        
+    recv_addr.sin_family = AF_INET;
+    recv_addr.sin_port = htons(30000);
+    recv_addr.sin_addr.s_addr = INADDR_ANY;
+
+    bind(recvsock, (struct sockaddr *)&recv_addr, sizeof(recv_addr));
+
+
     fprintf(stderr,"connected\n");
     /* 名前を読み込みサーバーに送る */
     do{
@@ -65,9 +70,24 @@ int SetUpClient(char *hostName,int *clientID,int *num,char clientNames[][MAX_NAM
 		len = strlen(str)-1;
 		str[len]='\0';
     }while(len>MAX_NAME_SIZE-1 || len==0);
-    SendData(str,MAX_NAME_SIZE);
+    SendData(str);
 
     printf("Please Wait\n");
+recv(recvsock, buf, sizeof(buf), 0);
+
+printf("%s\n",buf);
+
+char *app_id = strtok(buf, ",");
+char *name = strtok(NULL, ",");
+char *client_id_str = strtok(NULL, ",");
+
+printf("app_id = %s\n",app_id);
+printf("name = %s\n",name);
+printf("client_id_str = %s\n",client_id_str);
+
+recv(recvsock, buf, sizeof(buf), 0);
+printf("%s\n",buf);
+recv(recvsock, buf, sizeof(buf), 0);
 
     /* 全クライアントのユーザー名を得る */
     GetAllName(clientID,num,clientNames);
@@ -136,13 +156,11 @@ int RecvIntData(int *intData)
 		  int		dataSize	: 送るデータのサイズ
 出力	: なし
 *****************************************************************/
-void SendData(void *data,int dataSize)
+void SendData(char *data)
 {
-    /* 引き数チェック */
-    assert(data != NULL);
-    assert(0 < dataSize);
 
-    write(gSocket,data,dataSize);
+    sendto(sendsock,data,sizeof(data),0,(struct sockaddr *)&send_addr, sizeof(send_addr));
+
 }
 
 /*****************************************************************
