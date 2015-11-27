@@ -14,7 +14,11 @@ static int cID;
 static void Move(int clientID);
 CLIENT gClients[MAX_CLIENTS];
 
+static int tflag;
+
 int dflag;
+int dirflag;
+
 
 /*****************************************************************
 関数名	: InitWindows
@@ -97,25 +101,80 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             SendEndCommand();
         }
-
+        if(tflag == 0)
+        {
+            if(wiimote.keys.two)
+            {
+                switch(dirflag){
+                case up_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    break;
+                case right_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+                case down_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    break;
+                case left_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+                }
+                Move(clientID);
+                tflag++;
+                break;
+            }
+        }
+        else if(tflag == 1)
+        {
+            switch(dirflag){
+            case up_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    break;
+            case right_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+            case down_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    break;
+            case left_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+            }
+            Move(clientID);
+            tflag++;
+            break;
+        }
+        else if(wiimote.keys.two != 1)
+        {
+            tflag = 0;
+        }
+        
         if(wiimote.keys.one){
             a = 4;
         }
         if(wiimote.keys.up){
             gClients[clientID].poi.x = gClients[clientID].poi.x-a;
             Move(clientID);
+
+            dirflag = left_dir;
         }
         else if (wiimote.keys.down){
             gClients[clientID].poi.x = gClients[clientID].poi.x+a;
             Move(clientID);
+
+            dirflag = right_dir;
         }
         else if(wiimote.keys.left){
             gClients[clientID].poi.y = gClients[clientID].poi.y+a;
             Move(clientID);
+
+            dirflag = down_dir;
         }
         else if(wiimote.keys.right){
             gClients[clientID].poi.y = gClients[clientID].poi.y-a;
             Move(clientID);
+
+            dirflag = up_dir;
         }
         break;
     }

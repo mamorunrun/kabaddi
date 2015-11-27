@@ -15,6 +15,14 @@ extern wiimote_t wiimote;
 extern wiimote_report_t report;
 extern int dflag;
 
+extern int dirflag; //client_win.cキャラの方向
+
+enum{
+    up_dir    = 0, 
+    right_dir = 1,
+    down_dir  = 2,
+    left_dir  = 3
+};
 
 /* client_net.c */
 extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][MAX_NAME_SIZE]);
