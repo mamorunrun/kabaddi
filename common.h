@@ -20,7 +20,7 @@
 
 #define PORT			(u_short)8888	/* ポート番号 */
 
-#define MAX_CLIENTS		2				/* クライアント数の最大値 */
+#define MAX_CLIENTS		3				/* クライアント数の最大値 */
 #define MAX_NAME_SIZE	10 				/* ユーザー名の最大値*/
 
 #define MAX_DATA		200				/* 送受信するデータの最大値 */

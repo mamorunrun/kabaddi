@@ -155,7 +155,7 @@ static
 void DrawChara(int n)
 {
     int i;
-    int num=2;
+    int num=3;
 
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
