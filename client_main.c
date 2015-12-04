@@ -40,6 +40,8 @@ static int thread_net(void *data)
 }
 int main(int argc,char *argv[])
 {
+
+
     timers timer;
 
     int		num;

@@ -11,7 +11,6 @@
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static int cID;
-CLIENT gClients[MAX_CLIENTS];
 
 int dflag;
 

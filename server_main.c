@@ -10,19 +10,21 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
-
+static char buf[2048];
 int main(int argc,char *argv[])
 {
     int sendsock,recvsock;
     struct sockaddr_in recv_addr, send_addr;
-    char buf[2048];
+    //char buf[2048];
     int yes = 1;
     int state=0;
     char client_name[3][128];
     int client_num;
     int connection_num=0;
     int i;
-
+    //char endflag={};
+    char *app_id;
+    char *end;
     if(argc==2){
         client_num=atoi(argv[1]);
     }
@@ -41,26 +43,30 @@ int main(int argc,char *argv[])
     recv_addr.sin_addr.s_addr = INADDR_ANY;
     
     bind(recvsock, (struct sockaddr *)&recv_addr, sizeof(recv_addr));
-    memset(buf, 0, sizeof(buf));
+    //memset(buf, 0, sizeof(buf));
     
     setsockopt(sendsock,SOL_SOCKET, SO_BROADCAST, (char *)&yes, sizeof(yes));
 
-    printf("wait\n");
+    //printf("wait\n");
 
-    while(1) {
+    //sendto(sendsock,&client_num , sizeof(client_num), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+printf("wait\n");
+
+    while(state==0) {
         recv(recvsock, buf, sizeof(buf), 0);
         
         printf("%s\n",buf);
         if(state==0){
+
             strcpy(client_name[connection_num],buf);
             
             sprintf(buf,"kabaddi,%s,%d\0",client_name[connection_num],connection_num);
             connection_num++;
             printf("%s\n",buf);
             sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
-
+            
             printf("%d,%d\n",connection_num,client_num);
-
+            
             if(connection_num==client_num){
                 state=1;
                 sprintf(buf,"kabaddi,u%d,",connection_num);
@@ -69,12 +75,20 @@ int main(int argc,char *argv[])
                     strcat(buf,",");
                 }
                 strcat(buf,"\0");
-            printf("%s\n",buf);
- sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+                printf("%s\n",buf);
+                sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
             }
-
+            
         }
     }
+
+    /* while(endflag){
+        recv(recvsock, buf, sizeof(buf), 0);
+        app_id = strtok(buf, ",");
+
+        if(endflag=)
+
+        }*/
     
     close(recvsock);
     close(sendsock);
