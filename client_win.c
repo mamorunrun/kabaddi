@@ -14,6 +14,7 @@ static int cID;
 static void Move(int clientID);
 CLIENT gClients[MAX_CLIENTS];
 
+
 static int tflag;//タックルのフラグ
 
 int dflag;//mainとのグローバル変数,動いたことの検知
@@ -174,6 +175,44 @@ void WindowEvent(int clientID)
         else if(wiimote.keys.right){
             gClients[clientID].poi.y = gClients[clientID].poi.y-a;
             Move(clientID);
+
+            dflag = 1;
+            gClients[clientID].poi.x = gClients[clientID].poi.x-2;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            //SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            //printf("%s,%d\n",data,data);
+            // SendData(data, dataSize);
+        }
+        else if (wiimote.keys.down){
+            dflag = 1;
+            gClients[clientID].poi.x = gClients[clientID].poi.x+2;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            //SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            //SendData(data, dataSize);
+        }
+        else if(wiimote.keys.left){
+            dflag = 1;
+            gClients[clientID].poi.y = gClients[clientID].poi.y+2;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            //SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            //SendData(data, dataSize);
+        }
+        else if(wiimote.keys.right){
+            dflag = 1;
+            gClients[clientID].poi.y = gClients[clientID].poi.y-2;
+            SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+            // SetIntData2DataBlock(data,clientID,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+            SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+            //SendData(data, dataSize);
+        }
+        //  DrawChara(clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
 
             dirflag = up_dir;
         }
