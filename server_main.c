@@ -22,7 +22,7 @@ int main(int argc,char *argv[])
     int client_num;
     int connection_num=0;
     int i;
-    //char endflag={};
+    int endflag=1;
     char *app_id;
     char *end;
     if(argc==2){
@@ -82,13 +82,18 @@ printf("wait\n");
         }
     }
 
-    /* while(endflag){
+    while(endflag){
         recv(recvsock, buf, sizeof(buf), 0);
-        app_id = strtok(buf, ",");
 
-        if(endflag=)
 
-        }*/
+
+        if(strncmp(buf,"endkabaddi",10)==0)
+            endflag=0;
+
+
+        sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+
+        }
     
     close(recvsock);
     close(sendsock);

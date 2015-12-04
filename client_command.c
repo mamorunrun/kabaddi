@@ -17,10 +17,13 @@ static void RecCharaData(void);
 *****************************************************************/
 int ExecuteCommand(char command)
 {
-
-
-
+    char *app_id = strtok(command, ",");
+    char *com = strtok(NULL, ",");
+    char *id = strtok(NULL, ",");
+    int x=atoi(strtok(NULL, ","));
+    int y=atoi(strtok(NULL, ","));
     int	endFlag = 1;
+
 #ifndef NDEBUG
     printf("#####\n");
     printf("ExecuteCommand()\n");

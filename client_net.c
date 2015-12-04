@@ -135,13 +135,14 @@ printf("id   = %d\n",id);
         printf("clientID=%d\n",*clientID);
 recv(recvsock, buf, sizeof(buf), 0);
 printf("%s\n",buf);
-recv(recvsock, buf, sizeof(buf), 0);
+
+
 
     /* 全クライアントのユーザー名を得る */
-    GetAllName(clientID,num,clientNames);
+    //GetAllName(clientID,num,clientNames);
 
     /* select()のためのマスク値を設定する */
-    SetMask();
+    //SetMask();
     
     return 0;
 }
@@ -155,26 +156,28 @@ recv(recvsock, buf, sizeof(buf), 0);
 *****************************************************************/
 int SendRecvManager(void)
 {
-    fd_set	readOK;
+    recv(recvsock, buf, sizeof(buf), 0);
+
+    /*fd_set	readOK;
     char	command;
     int		i;
     int		endFlag = 1;
     struct timeval	timeout;
 
     /* select()の待ち時間を設定する */
-    timeout.tv_sec = 0;
-    timeout.tv_usec = 20;
+    //timeout.tv_sec = 0;
+    //timeout.tv_usec = 20;
 
-    readOK = gMask;
+    //readOK = gMask;
     /* サーバーからデータが届いているか調べる */
-    select(gWidth,&readOK,NULL,NULL,&timeout);
-    if(FD_ISSET(gSocket,&readOK)){
+    //select(gWidth,&readOK,NULL,NULL,&timeout);
+    //if(FD_ISSET(gSocket,&readOK)){
 		/* サーバーからデータが届いていた */
     	/* コマンドを読み込む */
-		RecvData(&command,sizeof(char));
+    //RecvData(&command,sizeof(char));
     	/* コマンドに対する処理を行う */
-		endFlag = ExecuteCommand(command);
-    }
+		endFlag = ExecuteCommand(buf);
+    // }
     return endFlag;
 }
 
