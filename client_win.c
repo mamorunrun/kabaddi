@@ -217,7 +217,7 @@ void UpdatePos(int n,int x,int y)
 
 void Move(int clientID)
 {
-    unsigned char	data[MAX_DATA];
+    char	data[MAX_DATA];
     int			dataSize = 0;
 
     dflag = 1;
@@ -231,9 +231,15 @@ void Move(int clientID)
     else if(gClients[clientID].poi.y + 30 >= 600)
         gClients[clientID].poi.y = 600 -30;
 
-    SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
-    SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
-    SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
+    sprintf(data,"kabaddi,%s,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+    //strcat(data,gClients[clientID].poi.x);
+    //strcat(data,",");
+    //strcat(data,gClients[clientID].poi.y);
+    //strcat(data,"\0");
+
+    // SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
+    //SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
+    //SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
     SendData(data/*, dataSize*/);
 }
 /*
