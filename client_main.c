@@ -38,6 +38,7 @@ static int thread_net(void *data)
 	endFlag = SendRecvManager();
     }
 }
+
 int main(int argc,char *argv[])
 {
 
