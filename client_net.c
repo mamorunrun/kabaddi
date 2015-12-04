@@ -45,7 +45,7 @@ int SetUpClient(char *hostName,int *clientID,int *num,char clientNames[][MAX_NAM
 
 struct hostent *servHost;
 int	len;
-char	*str;
+char	str[100];
 int i,cnum;
 char *ipad;
 
@@ -100,27 +100,12 @@ return -1;
 
     fprintf(stderr,"connected\n");
 
-    //recv(recvsock, &cnum, sizeof(cnum), 0);
-    //printf("%d\n",cnum);
-    char *hname = "clpc039";
-    /* 名前を読み込みサーバーに送る */
-    /*do{
-		printf("Enter Your Name\n");
-		fgets(str,BUF_SIZE,stdin);
-		len = strlen(str)-1;
-		str[len]=',';
-    }while(len>MAX_NAME_SIZE-1 || len==0);
-    */
-    printf("%d\n",'\0');
     scanf("%s",str);
 
     char sendData[1024];
+  
     sprintf(sendData, "%s,%s\0", str, hostname);
 
-    //strcat(str,",");
-    //strcat(str,"aaaa");
-    //strcat(str,hostname);
-    //strcat(str,"\0");
     printf("%s\n",sendData);
     SendData(sendData);
 
@@ -133,18 +118,17 @@ return -1;
 
     char *app_id = strtok(buf, ",");
     char *name = strtok(NULL, ",");
-    char *ip = strtok(NULL, ",");
-    char *client_id_str = strtok(NULL, ",");
-    int id=atoi(client_id_str);
+    char *host = strtok(NULL, ",");
+    int id=atoi(strtok(NULL, ","));
     strcpy(gClients[id].name,name);
 
-    if(ip==inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr))
+    if(strcmp(hostname,host)==0)
        *clientID=id;
 
 printf("app_id = %s\n",app_id);
 printf("name = %s\n",name);
-printf("ip = %s\n",ip);
-printf("client_id_str = %s\n",client_id_str);
+printf("host = %s\n",host);
+printf("id   = %d\n",id);
 
     }
 
