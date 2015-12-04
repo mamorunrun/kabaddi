@@ -34,6 +34,7 @@ typedef struct{
 	int		fd;
 	char	name[MAX_NAME_SIZE];
         SDL_Rect poi;
+        int             ADsta;//¹¶·â¼éÈ÷¤Î¥Õ¥é¥°¡¡ATK1 DEF0
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];

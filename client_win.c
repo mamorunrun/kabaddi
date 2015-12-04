@@ -14,11 +14,12 @@ static int cID;
 static void Move(int clientID);
 CLIENT gClients[MAX_CLIENTS];
 
-static int tflag;
+static int tflag;//タックルのフラグ
 
-int dflag;
-int dirflag;
+int dflag;//mainとのグローバル変数,動いたことの検知
+int dirflag;//方向を表す
 
+static int color;
 
 /*****************************************************************
 関数名	: InitWindows
@@ -56,7 +57,7 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	sprintf(title,"Kabaddi[%d]",clientID);
 	SDL_WM_SetCaption(title,NULL);
 
-	
+	color = 0x000000ff;
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
@@ -66,7 +67,7 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
 
-            SDL_FillRect(buffer,&gClients[i].poi,0x000000ff);
+            SDL_FillRect(buffer,&gClients[i].poi, color);
         }
         SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
 	SDL_Flip(gMainWindow);
@@ -197,7 +198,7 @@ void DrawChara(int n)
 
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,0x000000ff);
+        SDL_FillRect(buffer,&gClients[i].poi,color);
     }
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
@@ -235,4 +236,35 @@ void Move(int clientID)
     SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
     SendData(data, dataSize);
 }
+/*
+int Judge(int clientID){
+
+    int i;
+    int n = 2;//グローバル変数で守備人数を設定
+    if(gClients[clientID].ADsta == 0)//自分が守備
+        for(i=0;i>=n;i++){//守備人数分
+            if(i != clientID){
+                if(gClients[i].ADsta == 1){
+                    if(gClients[i].poi.x - gClients[clientID].poi.x <= 40 && gClients[clientID].poi.x - gClients[i].poi.x >= -40){
+                        if(gClients[i].poi.y - gClients[clientID].poi.y <= 40 && gClients[clientID].poi.y - gClients[i].poi.y >= -40){
+                            color = 0x00ff0000;
+                        }
+                    }
+                }
+            }
+        }
+    else {//自分が攻撃
+        for(i=0;i>=2;i++){//全体
+            if(i != clientID){
+                if(gClients[i].ADsta == 1)
+                    if(gClients[i].poi.x - gClients[clientID].poi.x <= 40 && gClients[clientID].poi.x - gClients[i].poi.x >= -40)
+                        if(gClients[i].poi.y - gClients[clientID].poi.y <= 40 && gClients[clientID].poi.y - gClients[i].poi.y >= -40){
+                            color = 0x00ff0000;
+                        }
+            }
+        }
+    }
+}
+
+*/
 

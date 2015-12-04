@@ -23,7 +23,7 @@ Uint32 now,//現在時間
        lev;//経過時間
 }timers;
 extern timers timer;
-extern int dflag;
+extern int dflag;//移動したことの検知
 
 // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用

@@ -13,7 +13,7 @@
 #include <libcwiimote/wiimote_api.h>// Wiiリモコンを用いるために必要なヘッダファイル
 extern wiimote_t wiimote;
 extern wiimote_report_t report;
-extern int dflag;
+extern int dflag;//移動したことの検知main,winで使用
 
 extern int dirflag; //client_win.cキャラの方向
 
@@ -37,6 +37,7 @@ extern void DestroyWindow(void);
 extern void DrawChara(int n);
 extern void UpdatePos(int n,int x,int y);
 extern void WindowEvent(int clientID);
+extern int  Judge(int clientID);
 
 /* client_command.c */
 extern int ExecuteCommand(char command);
