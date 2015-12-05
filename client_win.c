@@ -232,6 +232,8 @@ void Move(int clientID)
         gClients[clientID].poi.y = 600 -30;
 
     sprintf(data,"kabaddi,%s,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+
+    printf("%s\n",data);
     //strcat(data,gClients[clientID].poi.x);
     //strcat(data,",");
     //strcat(data,gClients[clientID].poi.y);

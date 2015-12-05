@@ -19,23 +19,26 @@ int ExecuteCommand(char command)
 {
     char *app_id = strtok(command, ",");
     char *com = strtok(NULL, ",");
-    char *id = strtok(NULL, ",");
+    int id=atoi(strtok(NULL, ","));
     int x=atoi(strtok(NULL, ","));
     int y=atoi(strtok(NULL, ","));
     int	endFlag = 1;
+
+    if(strcmp("kabaddi",app_id)!=0);
+    return endFlag;
 
 #ifndef NDEBUG
     printf("#####\n");
     printf("ExecuteCommand()\n");
     printf("command = %c\n",command);
 #endif
-    switch(command){
+    switch(com){
     case END_COMMAND:
         endFlag = 0;
         break;
 /*キャラを描画*/
     case CDRAW:
-        RecCharaData();
+        UpdatePos(id,x,y);
         break;
     }
     return endFlag;
@@ -51,17 +54,15 @@ int ExecuteCommand(char command)
 *****************************************************************/
 void SendEndCommand(void)
 {
-    unsigned char	data[MAX_DATA];
+    char	data[MAX_DATA];
     int			dataSize;
 
 #ifndef NDEBUG
     printf("#####\n");
     printf("SendEndCommand()\n");
 #endif
-    dataSize = 0;
-    /* コマンドのセット */
-    SetCharData2DataBlock(data,END_COMMAND,&dataSize);
-
+   
+    sprintf(data,"endkabaddi,\0");
     /* データの送信 */
     SendData(data);
 }

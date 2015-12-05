@@ -158,11 +158,11 @@ int SendRecvManager(void)
 {
     recv(recvsock, buf, sizeof(buf), 0);
 
-    /*fd_set	readOK;
-    char	command;
-    int		i;
+    //fd_set	readOK;
+    //char	command;
+    //int		i;
     int		endFlag = 1;
-    struct timeval	timeout;
+    //struct timeval	timeout;
 
     /* select()の待ち時間を設定する */
     //timeout.tv_sec = 0;
