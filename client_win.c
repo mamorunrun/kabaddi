@@ -231,7 +231,7 @@ void Move(int clientID)
     else if(gClients[clientID].poi.y + 30 >= 600)
         gClients[clientID].poi.y = 600 -30;
 
-    sprintf(data,"kabaddi,%s,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+    sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
 
     printf("%s\n",data);
     //strcat(data,gClients[clientID].poi.x);

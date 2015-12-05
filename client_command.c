@@ -15,10 +15,11 @@ static void RecCharaData(void);
 出力	: プログラム終了コマンドがおくられてきた時には0を返す．
 		  それ以外は1を返す
 *****************************************************************/
-int ExecuteCommand(char command)
+int ExecuteCommand(char *command)
 {
     char *app_id = strtok(command, ",");
-    char *com = strtok(NULL, ",");
+    int com = atoi(strtok(NULL, ","));
+
     int id=atoi(strtok(NULL, ","));
     int x=atoi(strtok(NULL, ","));
     int y=atoi(strtok(NULL, ","));

@@ -40,7 +40,7 @@ extern void WindowEvent(int clientID);
 extern int  Judge(int clientID);
 
 /* client_command.c */
-extern int ExecuteCommand(char command);
+extern int ExecuteCommand(char *command);
 
 
 /*上下左右のコマンドを送る関数*/
