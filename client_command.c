@@ -27,7 +27,7 @@ int ExecuteCommand(char *command)
 
 
     if(strcmp("endkabaddi",app_id)==0)
-        endFlag=0;
+        return 0;
     else if(strcmp("kabaddi",app_id)!=0)
         return endFlag;
 

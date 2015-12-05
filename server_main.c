@@ -87,11 +87,10 @@ printf("wait\n");
 
         printf("%s\n",buf);
 
+        sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+
         if(strncmp(buf,"endkabaddi",10)==0)
             endflag=0;
-
-
-        sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
 
         }
     
