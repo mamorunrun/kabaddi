@@ -134,7 +134,6 @@ int main(int argc,char *argv[])
 
     /* ½ªÎ»½èÍý */
 	DestroyWindow();
-        SDL_Quit();
 	CloseSoc();
 
     return 0;
