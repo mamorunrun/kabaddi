@@ -178,6 +178,7 @@ int SendRecvManager(void)
     //RecvData(&command,sizeof(char));
     	/* コマンドに対する処理を行う */
 		endFlag = ExecuteCommand(buf);
+                printf("%d\n",endFlag);
     // }
     return endFlag;
 }
