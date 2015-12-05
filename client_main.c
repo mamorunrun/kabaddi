@@ -86,6 +86,8 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
+    printf("%d\n",clientID);
+
     /* ウインドウの初期化 */
 	if(InitWindows(clientID,num,name)==-1){
 		fprintf(stderr,"setup failed : InitWindows\n");

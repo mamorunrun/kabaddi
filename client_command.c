@@ -27,6 +27,11 @@ int ExecuteCommand(char *command)
 
 
     printf("%s\n",app_id);
+    printf("app_id = %s\n",app_id);
+    printf("id=%d\n",id)
+    printf("x=%d\n",x);
+    printf("y=%d\n",host);
+
     if(strcmp("endkabaddi",app_id)==0)
         return 0;
     else if(strcmp("kabaddi",app_id)!=0)
@@ -43,6 +48,7 @@ int ExecuteCommand(char *command)
         break;
 /*キャラを描画*/
     case CDRAW:
+        printf("pos");
         UpdatePos(id,x,y);
         break;
     }
