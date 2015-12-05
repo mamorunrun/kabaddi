@@ -203,7 +203,7 @@ void DrawChara(int n)
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
-    
+    dflag = 0;
 }
 
 void UpdatePos(int n,int x,int y)
