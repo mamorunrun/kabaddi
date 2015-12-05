@@ -136,6 +136,9 @@ printf("id   = %d\n",id);
 recv(recvsock, buf, sizeof(buf), 0);
 printf("%s\n",buf);
 
+recv(recvsock, buf, sizeof(buf), 0);
+*num=atoi(buf);
+
 
 
     /* 全クライアントのユーザー名を得る */

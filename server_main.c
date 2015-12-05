@@ -81,6 +81,12 @@ printf("wait\n");
             
         }
     }
+    
+    sprintf(buf,"%d\0",client_num);
+
+    sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+
+
 
     while(endflag){
         recv(recvsock, buf, sizeof(buf), 0);
@@ -88,6 +94,7 @@ printf("wait\n");
         printf("%s\n",buf);
 
         sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+
 
         if(strncmp(buf,"endkabaddi",10)==0)
             endflag=0;
