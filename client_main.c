@@ -37,6 +37,7 @@ static int thread_net(void *data)
     while(endFlag){
 	endFlag = SendRecvManager();
     }
+    return 0;
 }
 
 int main(int argc,char *argv[])
