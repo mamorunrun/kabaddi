@@ -157,6 +157,7 @@ printf("%s\n",buf);
 int SendRecvManager(void)
 {
     recv(recvsock, buf, sizeof(buf), 0);
+    printf("%s\n",buf);
 
     //fd_set	readOK;
     //char	command;
