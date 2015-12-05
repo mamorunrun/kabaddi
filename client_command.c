@@ -26,6 +26,7 @@ int ExecuteCommand(char *command)
     int	endFlag = 1;
 
 
+    printf("%s\n",app_id);
     if(strcmp("endkabaddi",app_id)==0)
         return 0;
     else if(strcmp("kabaddi",app_id)!=0)
