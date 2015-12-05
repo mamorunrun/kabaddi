@@ -85,7 +85,7 @@ printf("wait\n");
     while(endflag){
         recv(recvsock, buf, sizeof(buf), 0);
 
-
+        printf("%s\n",buf);
 
         if(strncmp(buf,"endkabaddi",10)==0)
             endflag=0;

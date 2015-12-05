@@ -25,8 +25,11 @@ int ExecuteCommand(char *command)
     int y=atoi(strtok(NULL, ","));
     int	endFlag = 1;
 
-    if(strcmp("kabaddi",app_id)!=0);
-    return endFlag;
+
+    if(strcmp("endkabaddi",app_id)==0)
+        endFlag=0;
+    else if(strcmp("kabaddi",app_id)!=0)
+        return endFlag;
 
 #ifndef NDEBUG
     printf("#####\n");
