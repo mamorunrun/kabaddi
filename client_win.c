@@ -20,7 +20,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-static int color;
+//static int color;
 
 /*****************************************************************
 関数名	: InitWindows
@@ -58,7 +58,7 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	sprintf(title,"Kabaddi[%d]",clientID);
 	SDL_WM_SetCaption(title,NULL);
 
-	color = 0x000000ff;
+//	color = 0x000000ff;
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
@@ -68,7 +68,7 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
 
-            SDL_FillRect(buffer,&gClients[i].poi, color);
+            SDL_FillRect(buffer,&gClients[i].poi, /*color*/0x000000ff);
         }
         SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
 	SDL_Flip(gMainWindow);
@@ -198,7 +198,7 @@ void DrawChara(int n)
 
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,color);
+        SDL_FillRect(buffer,&gClients[i].poi,/*color*/0x000000ff);
     }
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
