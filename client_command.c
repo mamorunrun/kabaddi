@@ -28,7 +28,7 @@ int ExecuteCommand(char *command)
 
     printf("%s\n",app_id);
     printf("app_id = %s\n",app_id);
-    printf("id=%d\n",id)
+    printf("id=%d\n",id);
     printf("x=%d\n",x);
     printf("y=%d\n",host);
 
