@@ -30,7 +30,7 @@ int ExecuteCommand(char *command)
     printf("app_id = %s\n",app_id);
     printf("id=%d\n",id);
     printf("x=%d\n",x);
-    printf("y=%d\n",host);
+    printf("y=%d\n",y);
 
     if(strcmp("endkabaddi",app_id)==0)
         return 0;
