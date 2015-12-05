@@ -66,7 +66,7 @@ void SendEndCommand(void)
     printf("SendEndCommand()\n");
 #endif
    
-    sprintf(data,"endkabaddi\0");
+    sprintf(data,"endkabaddi,\0");
     /* データの送信 */
     SendData(data);
 }
