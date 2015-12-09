@@ -86,7 +86,9 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
-    printf("%d\n",clientID);
+
+
+    printf("clientnum=%d\n",num);
 
     /* ウインドウの初期化 */
 	if(InitWindows(clientID,num,name)==-1){
@@ -94,7 +96,7 @@ int main(int argc,char *argv[])
 		return -1;
 	}
 
-        printf("%d\n",clientID);
+        printf("clientnum=%d\n",num);
 
         wiimote.mode.acc = 1;
     /*wiiリモコンの入力受付開始*/
