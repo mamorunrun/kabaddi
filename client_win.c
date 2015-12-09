@@ -63,12 +63,12 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
         for(i=0;i<num;i++){
-            gClients[i].poi.x=10*i+30;
+            gClients[i].poi.x=10*i+100;
             gClients[i].poi.y=10;
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
 
-            SDL_FillRect(buffer,&gClients[i].poi, /*color*/0x000000ff);
+            SDL_FillRect(buffer,&gClients[i].poi, color);
         }
         SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
 	SDL_Flip(gMainWindow);
@@ -250,7 +250,7 @@ int Judge(int clientID){
     int i;
     int n = 2;//グローバル変数で全体人数を設定
     for(i=0;i>=n;i++){
-        if(i != clientID && gClients[i].ADsta != gClients[clientID].ADsta){
+        if(i != clientID){
             if(gClients[i].poi.x - gClients[clientID].poi.x <= 40 && gClients[clientID].poi.x - gClients[i].poi.x >= -40){
                 if(gClients[i].poi.y - gClients[clientID].poi.y <= 40 && gClients[clientID].poi.y - gClients[i].poi.y >= -40){
                     color = 0x00ff0000;
