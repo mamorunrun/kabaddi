@@ -63,7 +63,7 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
         for(i=0;i<num;i++){
-            gClients[i].poi.x=10*i+100;
+            gClients[i].poi.x=100*i + 10;
             gClients[i].poi.y=10;
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
