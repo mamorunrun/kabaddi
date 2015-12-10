@@ -63,26 +63,6 @@ return -1;
   /* 取得したホスト名を出力 */
   printf("ホスト名: %s\n", hostname);
 
- int fd;
- struct ifreq ifr;
-
- fd = socket(AF_INET, SOCK_DGRAM, 0);
-
- /* IPv4のIPアドレスを取得したい */
- ifr.ifr_addr.sa_family = AF_INET;
-
- /* eth0のIPアドレスを取得したい */
- strncpy(ifr.ifr_name, "eth0", IFNAMSIZ-1);
-
- ioctl(fd, SIOCGIFADDR, &ifr);
-
- close(fd);
-
- /* 結果を表示 */
- printf("%s\n", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr));
- ipad=inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
- printf("%s\n",ipad);
-
     sendsock = socket(AF_INET, SOCK_DGRAM, 0);
     recvsock = socket(AF_INET, SOCK_DGRAM, 0);
     
@@ -162,47 +142,13 @@ int SendRecvManager(void)
     recv(recvsock, buf, sizeof(buf), 0);
     printf("%s\n",buf);
 
-    //fd_set	readOK;
-    //char	command;
-    //int		i;
     int		endFlag = 1;
-    //struct timeval	timeout;
 
-    /* select()の待ち時間を設定する */
-    //timeout.tv_sec = 0;
-    //timeout.tv_usec = 20;
-
-    //readOK = gMask;
-    /* サーバーからデータが届いているか調べる */
-    //select(gWidth,&readOK,NULL,NULL,&timeout);
-    //if(FD_ISSET(gSocket,&readOK)){
-		/* サーバーからデータが届いていた */
-    	/* コマンドを読み込む */
-    //RecvData(&command,sizeof(char));
     	/* コマンドに対する処理を行う */
 		endFlag = ExecuteCommand(buf);
                 printf("%d\n",endFlag);
     // }
     return endFlag;
-}
-
-/*****************************************************************
-関数名	: RecvIntData
-機能	: サーバーからint型のデータを受け取る
-引数	: int		*intData	: 受信したデータ
-出力	: 受け取ったバイト数
-*****************************************************************/
-int RecvIntData(int *intData)
-{
-    int n,tmp;
-    
-    /* 引き数チェック */
-    assert(intData!=NULL);
-
-    n = RecvData(&tmp,sizeof(int));
-    (*intData) = ntohl(tmp);
-    
-    return n;
 }
 
 /*****************************************************************
@@ -239,69 +185,3 @@ void CloseSoc(void)
     close(gSocket);
 }
 
-/*****
-static
-*****/
-/*****************************************************************
-関数名	: GetAllName
-機能	: サーバーから全クライアントのユーザー名を受信する
-引数	: int		*num			: クライアント数
-		  char		clientNames[][]	: 全クライアントのユーザー名
-出力	: なし
-*****************************************************************/
-static void GetAllName(int *clientID,int *num,char clientNames[][MAX_NAME_SIZE])
-{
-    int	i;
-
-    /* クライアント番号の読み込み */
-    RecvIntData(clientID);
-    /* クライアント数の読み込み */
-    RecvIntData(num);
-
-    /* 全クライアントのユーザー名を読み込む */
-    for(i=0;i<(*num);i++){
-		RecvData(clientNames[i],MAX_NAME_SIZE);
-    }
-#ifndef NDEBUG
-    printf("#####\n");
-    printf("client number = %d\n",(*num));
-    for(i=0;i<(*num);i++){
-		printf("%d:%s\n",i,clientNames[i]);
-    }
-#endif
-}
-
-
-/*****************************************************************
-関数名	: SetMask
-機能	: select()のためのマスク値を設定する
-引数	: なし
-出力	: なし
-*****************************************************************/
-static void SetMask(void)
-{
-    int	i;
-
-    FD_ZERO(&gMask);
-    FD_SET(gSocket,&gMask);
-
-    gWidth = gSocket+1;
-}
-
-/*****************************************************************
-関数名	: RecvData
-機能	: サーバーからデータを受け取る
-引数	: void		*data		: 受信したデータ
-		  int		dataSize	: 受信するデータのサイズ
-出力	: 受け取ったバイト数
-*****************************************************************/
-int RecvData(void *data,int dataSize)
-{
-    int n;
-
-    /* 引き数チェック */
-    assert(data != NULL);
-    assert(0 < dataSize);
-
-    return read(gSocket,data,dataSize);
-}

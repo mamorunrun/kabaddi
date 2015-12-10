@@ -27,7 +27,6 @@ enum{
 /* client_net.c */
 extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][MAX_NAME_SIZE]);
 extern void CloseSoc(void);
-extern int RecvIntData(int *intData);
 extern void SendData(char *data);
 extern int SendRecvManager(void);
 
@@ -46,8 +45,5 @@ extern int ExecuteCommand(char *command);
 /*上下左右のコマンドを送る関数*/
 
 extern void SendEndCommand(void);
-
-extern void SetIntData2DataBlock(void *data,int intData,int *dataSize);
-extern void SetCharData2DataBlock(void *data,char charData,int *dataSize);
 
 #endif
