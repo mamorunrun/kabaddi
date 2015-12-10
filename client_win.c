@@ -20,7 +20,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-static int color;
+int color[2] = {0x000000ff,0x00ff000};
 
 /*****************************************************************
 関数名	: InitWindows
@@ -58,7 +58,6 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	sprintf(title,"Kabaddi[%d]",clientID);
 	SDL_WM_SetCaption(title,NULL);
 
-	color = 0x000000ff;
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
@@ -67,8 +66,8 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
             gClients[i].poi.y=10;
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
-
-            SDL_FillRect(buffer,&gClients[i].poi, color);
+            gClients[i].ADsta = i;
+            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
         }
         SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
 	SDL_Flip(gMainWindow);
@@ -202,7 +201,7 @@ void DrawChara(int n)
     Judge(n);
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<num;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,color);
+        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
@@ -258,7 +257,9 @@ void Judge(int clientID){
             if((gClients[i].poi.x - gClients[clientID].poi.x) <= 32 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 32){
                 if((gClients[i].poi.y - gClients[clientID].poi.y) <= 32 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 32){
                     //printf("color\n");
-                    color = 0x00ff0000;
+                    for(i=0;i<n;i++){
+                        gClients[i].ADsta = (gClients[i].ADsta - 1)*(gClients[i].ADsta - 1);
+                    }
                 }
             }
         }
