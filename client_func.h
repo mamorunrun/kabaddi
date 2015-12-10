@@ -37,7 +37,7 @@ extern void DestroyWindow(void);
 extern void DrawChara(int n);
 extern void UpdatePos(int n,int x,int y);
 extern void WindowEvent(int clientID);
-extern int  Judge(int clientID);//当たり判定
+extern void Judge(int clientID);//当たり判定
 
 /* client_command.c */
 extern int ExecuteCommand(char *command);

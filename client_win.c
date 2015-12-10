@@ -245,11 +245,12 @@ void Move(int clientID)
     SendData(data/*, dataSize*/);
 }
 
-int Judge(int clientID){
+void Judge(int clientID){
 
     int i;
     int n = 2;//グローバル変数で全体人数を設定
-    for(i=0;i>=n;i++){
+    for(i=0;i<=n;i++){
+        printf("client%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         if(i != clientID){
             if((gClients[i].poi.x - gClients[clientID].poi.x) <= 40 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 40){
                 if((gClients[i].poi.y - gClients[clientID].poi.y) <= 40 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 40){
