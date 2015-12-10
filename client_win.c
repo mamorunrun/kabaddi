@@ -251,8 +251,9 @@ int Judge(int clientID){
     int n = 2;//グローバル変数で全体人数を設定
     for(i=0;i>=n;i++){
         if(i != clientID){
-            if(gClients[i].poi.x - gClients[clientID].poi.x <= 40 && gClients[clientID].poi.x - gClients[i].poi.x >= -40){
-                if(gClients[i].poi.y - gClients[clientID].poi.y <= 40 && gClients[clientID].poi.y - gClients[i].poi.y >= -40){
+            if((gClients[i].poi.x - gClients[clientID].poi.x) <= 40 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 40){
+                if((gClients[i].poi.y - gClients[clientID].poi.y) <= 40 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 40){
+                    printf("color\n");
                     color = 0x00ff0000;
                 }
             }
