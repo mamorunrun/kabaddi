@@ -49,7 +49,8 @@ int ExecuteCommand(char *command)
 /*キャラを描画*/
     case CDRAW:
         printf("pos");
-        UpdatePos(id,x,y);
+        if(id != clientID)
+            UpdatePos(id,x,y);
         break;
     }
     return endFlag;

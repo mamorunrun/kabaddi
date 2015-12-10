@@ -26,6 +26,8 @@ extern timers timer;
 extern int dflag;//移動したことの検知
 static int endFlag=1;
 
+int clientID;
+
 // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
 wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
@@ -50,7 +52,7 @@ int main(int argc,char *argv[])
     char	name[MAX_CLIENTS][MAX_NAME_SIZE];
     char	localHostName[]="localhost";
     char	*serverName;
-    int		clientID;
+    //int		clientID;
 
 //    SDL_TimerID timer_id1;	//　タイマ割り込みを行うためのタイマのID
 

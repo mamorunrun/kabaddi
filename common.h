@@ -30,6 +30,8 @@
 #define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
 
+extern int clientID; 
+
 /* クライアントを表す構造体 */
 typedef struct{
 	int		fd;
