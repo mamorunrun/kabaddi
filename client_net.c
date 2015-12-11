@@ -42,7 +42,7 @@ int SetUpClient(char *hostName,int *clientID,char clientNames[][MAX_NAME_SIZE])
 struct hostent *servHost;
 int	len;
 char	str[100];
-int i,cnum;
+int i;
 char *ipad;
 
 /* ホスト名からホスト情報を得る */

@@ -94,7 +94,7 @@ int main(int argc,char *argv[])
     printf("clientnum=%d\n",cnum);
 
     /* ウインドウの初期化 */
-	if(InitWindows(clientID,name)==-1){
+    if(InitWindows(clientID,name)==-1){
 		fprintf(stderr,"setup failed : InitWindows\n");
 		return -1;
 	}
