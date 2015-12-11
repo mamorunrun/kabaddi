@@ -17,9 +17,11 @@ int main(int argc,char *argv[])
     struct sockaddr_in recv_addr, send_addr;
     //char buf[2048];
     int yes = 1;
-    int state=0;
+    int state1=0;
+    int state2=0;
     char client_name[3][128];
     int client_num;
+    int connection=0;
     int connection_num=0;
     int i;
     int endflag=1;
@@ -50,15 +52,28 @@ int main(int argc,char *argv[])
     //printf("wait\n");
 
     //sendto(sendsock,&client_num , sizeof(client_num), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
-printf("wait\n");
+    printf("wait\n");
+    while(state1==0){
+        recv(recvsock, buf, sizeof(buf), 0);
+        i=atoi(buf);
+        if(i==1){
+            connection++;
+        }
 
-//recv
+        if(connection==client_num){
+            state1=1;
+            sprintf(buf,"1\0");
 
-    while(state==0) {
+            sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+        }
+        
+    }
+
+    while(state2==0) {
         recv(recvsock, buf, sizeof(buf), 0);
         
         printf("%s\n",buf);
-        if(state==0){
+        if(state2==0){
 
             strcpy(client_name[connection_num],buf);
             
@@ -70,7 +85,7 @@ printf("wait\n");
             printf("%d,%d\n",connection_num,client_num);
             
             if(connection_num==client_num){
-                state=1;
+                state2=1;
                 sprintf(buf,"kabaddi,u%d,",connection_num);
                 for(i=0;i<connection_num;i++){
                     strcat(buf,client_name[i]);
