@@ -110,14 +110,30 @@ void WindowEvent(int clientID)
                 case up_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
+                case up_right_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
                 case right_dir:
                     gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+                case right_down_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
                 case down_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
+                case down_left_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
                 case left_dir:
                     gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+                case left_up_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
                 }
                 Move(clientID);
@@ -131,14 +147,30 @@ void WindowEvent(int clientID)
             case up_dir:
                 gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
+            case up_right_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
             case right_dir:
                 gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+            case right_down_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
             case down_dir:
                 gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
+            case down_left_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
             case left_dir:
                 gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+            case left_up_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
             }
             Move(clientID);
@@ -153,29 +185,33 @@ void WindowEvent(int clientID)
         if(wiimote.keys.one){
             a = 4;
         }
-        if(wiimote.keys.up){
-            gClients[clientID].poi.x = gClients[clientID].poi.x-a;
+        if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right)
+        {
+            if(wiimote.keys.up){
+                gClients[clientID].poi.x = gClients[clientID].poi.x-a;
+                //Move(clientID);
+                
+                dirflag = left_dir;
+            }
+            else if (wiimote.keys.down){
+                gClients[clientID].poi.x = gClients[clientID].poi.x+a;
+                //Move(clientID);
+                
+                dirflag = right_dir;
+            }
+            if(wiimote.keys.left){
+                gClients[clientID].poi.y = gClients[clientID].poi.y+a;
+                //Move(clientID);
+                
+                dirflag = down_dir;
+            }
+            else if(wiimote.keys.right){
+                gClients[clientID].poi.y = gClients[clientID].poi.y-a;
+                //Move(clientID);
+                
+                dirflag = up_dir;
+            }
             Move(clientID);
-
-            dirflag = left_dir;
-        }
-        else if (wiimote.keys.down){
-            gClients[clientID].poi.x = gClients[clientID].poi.x+a;
-            Move(clientID);
-
-            dirflag = right_dir;
-        }
-        else if(wiimote.keys.left){
-            gClients[clientID].poi.y = gClients[clientID].poi.y+a;
-            Move(clientID);
-
-            dirflag = down_dir;
-        }
-        else if(wiimote.keys.right){
-            gClients[clientID].poi.y = gClients[clientID].poi.y-a;
-            Move(clientID);
-
-            dirflag = up_dir;
         }
         break;
     }
