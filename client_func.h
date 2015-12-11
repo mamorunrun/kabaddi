@@ -45,7 +45,7 @@ extern void WindowEvent(int clientID);
 
 /*client_system.c*/
 extern void UpdatePos(int n,int x,int y);
-extern void Move((int clientID,int befx,int befy);
+extern void Move(int clientID,int befx,int befy);
 extern int Judge(int clientID,int befx,int befy);//当たり判定
 
 
