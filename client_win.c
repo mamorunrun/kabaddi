@@ -141,7 +141,7 @@ void WindowEvent(int clientID)
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
                 }
-                Move(clientID);
+                Move(clientID,befx,befy);
                 tflag++;
                 break;
             }
@@ -178,7 +178,7 @@ void WindowEvent(int clientID)
                 gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
             }
-            Move(clientID);
+            Move(clientID,befx,befy);
             tflag++;
             break;
         }
@@ -239,7 +239,7 @@ void DrawChara(int n,int cnum)
     //  }
 
     //printf("%d\n",n);
-    Judge(n,cnum);
+    //Judge(n,cnum);
     SDL_FillRect(buffer,NULL,0xffffffff);
     for(i=0;i<cnum;i++){
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
