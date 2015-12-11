@@ -28,7 +28,7 @@ int color[MAX_CLIENTS] = {0x000000ff,0x00ff000};
 		  int	num				: 全クライアント数
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
-int InitWindows(int clientID,char name[][MAX_NAME_SIZE])
+int InitWindows(int clientID,int cnum,char name[][MAX_NAME_SIZE])
 {
     cID = clientID;
 	int i;

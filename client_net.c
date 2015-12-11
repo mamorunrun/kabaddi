@@ -36,7 +36,7 @@ CLIENT gClients[MAX_CLIENTS];
 		  char	clientNames[][]		: 全クライアントのユーザー名
 出力	: コネクションに失敗した時-1,成功した時0
 *****************************************************************/
-int SetUpClient(char *hostName,int *clientID,char clientNames[][MAX_NAME_SIZE])
+int SetUpClient(char *hostName,int *clientID,int *cnum,char clientNames[][MAX_NAME_SIZE])
 {
 
 struct hostent *servHost;
@@ -89,7 +89,7 @@ return -1;
 
     printf("Please Wait\n");
 
-    for(i=0;i<3;i++){
+    for(i=0;i<2;i++){
     recv(recvsock, buf, sizeof(buf), 0);
 
     printf("%s\n",buf);
