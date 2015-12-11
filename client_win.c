@@ -90,6 +90,7 @@ void DestroyWindow(void)
 void WindowEvent(int clientID)
 {
     int a = 2;
+    int mflag = 1;
 
     while (wiimote_is_open(&wiimote)){
         if (wiimote_update(&wiimote) < 0) {
@@ -185,7 +186,7 @@ void WindowEvent(int clientID)
         if(wiimote.keys.one){
             a = 4;
         }
-        if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right)
+        if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right && mflag)
         {
             if(wiimote.keys.up){
                 gClients[clientID].poi.x = gClients[clientID].poi.x-a;
@@ -212,6 +213,7 @@ void WindowEvent(int clientID)
                 dirflag = up_dir;
             }
             Move(clientID);
+            mflag = 0;
         }
         break;
     }
