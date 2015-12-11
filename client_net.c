@@ -80,12 +80,16 @@ return -1;
     SendData(sendData);
     printf("sendData = %s\n",sendData);
 
+    printf("Please Wait\n");
     while(i==0){
     recv(recvsock, buf, sizeof(buf), 0);
     printf("recvData = %s\n",buf);
     i=atoi(buf);
     printf("recvData = %d\n",i);
     }
+
+    recv(recvsock, buf, sizeof(buf), 0);
+    cnum=atoi(buf);
 
     printf("名前を入力してください\n");
     scanf("%s",str);
@@ -97,7 +101,7 @@ return -1;
 
     printf("Please Wait\n");
 
-    for(i=0;i<2;i++){
+    for(i=0;i<cnum;i++){
     recv(recvsock, buf, sizeof(buf), 0);
 
     printf("%s\n",buf);
@@ -122,8 +126,8 @@ printf("id   = %d\n",id);
 recv(recvsock, buf, sizeof(buf), 0);
 printf("%s\n",buf);
 
-recv(recvsock, buf, sizeof(buf), 0);
-cnum=atoi(buf);
+//recv(recvsock, buf, sizeof(buf), 0);
+//cnum=atoi(buf);
 printf("clientnum=%d\n",cnum);
 
 

@@ -71,6 +71,11 @@ int main(int argc,char *argv[])
         
     }
 
+    sprintf(buf,"%d\0",client_num);
+
+    sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+
+
     while(state2==0) {
         recv(recvsock, buf, sizeof(buf), 0);
         
@@ -101,9 +106,9 @@ int main(int argc,char *argv[])
         }
     }
     
-    sprintf(buf,"%d\0",client_num);
+    //  sprintf(buf,"%d\0",client_num);
 
-    sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
+    //sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
 
 
 
