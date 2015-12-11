@@ -19,10 +19,14 @@ extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
 
 enum{
-    up_dir    = 0, 
-    right_dir = 1,
-    down_dir  = 2,
-    left_dir  = 3
+    up_dir          = 0, 
+    up_right_dir    = 1, 
+    right_dir       = 2,
+    right_down_dir  = 3,
+    down_dir        = 4,
+    down_left_dir   = 5,
+    left_dir        = 6,
+    left_up_dir    = 7
 };
 
 /* client_net.c */
