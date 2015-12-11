@@ -55,7 +55,9 @@ int main(int argc,char *argv[])
     printf("wait\n");
     while(state1==0){
         recv(recvsock, buf, sizeof(buf), 0);
+        printf("recvData = %s\n",buf);
         i=atoi(buf);
+        printf("recvData = %d\n",i);
         if(i==1){
             connection++;
         }
@@ -63,7 +65,7 @@ int main(int argc,char *argv[])
         if(connection==client_num){
             state1=1;
             sprintf(buf,"1\0");
-
+            printf("sendData = %s\n",buf);
             sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
         }
         

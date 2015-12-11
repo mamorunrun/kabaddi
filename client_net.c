@@ -78,10 +78,13 @@ return -1;
 
     sprintf(sendData,"1\0");
     SendData(sendData);
+    printf("sendData = %s\n",sendData);
 
     while(i==0){
     recv(recvsock, buf, sizeof(buf), 0);
+    printf("recvData = %s\n",buf);
     i=atoi(buf);
+    printf("recvData = %d\n",i);
     }
 
     printf("名前を入力してください\n");
