@@ -11,13 +11,22 @@ void UpdatePos(int n,int x,int y)
     gClients[n].poi.y=y;
 }
 
-void Move(int clientID)
+/*********************************************************
+自分のキャラの移動と当たり判定をサーバーに送信
+                   clientID :自分のID
+                   cnum     :クライアントの数
+                   befx,befy:前のx座標y座標
+当たり判定（壁,キャラ）があればキャラの座標を戻す
+*********************************************************/
+void Move(int clientID,int befx,int befy)
 {
     char	data[MAX_DATA];
     int			dataSize = 0;
 
-    dflag = 1;
+    int i = -1;
 
+    dflag = 1;
+    
     if(gClients[clientID].poi.x <= 0)
         gClients[clientID].poi.x = 0;
     else if(gClients[clientID].poi.x + 30 >= 1000)
@@ -27,28 +36,52 @@ void Move(int clientID)
     else if(gClients[clientID].poi.y + 30 >= 600)
         gClients[clientID].poi.y = 600 -30;
 
-    sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
 
+    i = Judge(clientID,befx,befy);
+    if( i == -1){
+    
+        sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+
+    }
+    else {
+        
+        sprintf(data,"kabaddi,%d,%d,%d,%d\0",BUMP,clientID,i/*当たった相手のid*/,0/*ダミー*/);
+
+    }
     printf("%s\n",data);
    
     SendData(data);
 }
-
-void Judge(int clientID,int cnum){
+/**************************************************
+当たり判定  clientID:自分のID 
+            befx,befy:前のx座標y座標
+返し値      0       :あたってない
+           1       :あたった
+***************************************************/
+int Judge(int clientID,int befx,int befy){
 
     int i;
-    ;//グローバル変数で全体人数を設定
+    //グローバル変数で全体人数を設定
     for(i=0;i<cnum;i++){
         if(i != clientID){
-            if((gClients[i].poi.x - gClients[clientID].poi.x) <= 32 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 32){
-                if((gClients[i].poi.y - gClients[clientID].poi.y) <= 32 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 32){
+            if((gClients[i].poi.x - gClients[clientID].poi.x) <= 30 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 30){
+                if((gClients[i].poi.y - gClients[clientID].poi.y) <= 30 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 30){
                     //printf("color\n");
-                    for(i=0;i<cnum;i++){
-                        gClients[i].ADsta = (gClients[i].ADsta - 1)*(gClients[i].ADsta - 1);
-                    }
+                    
+                    gClients[clientID].poi.x = befx;
+                    gClients[clientID].poi.y = befy;
+                    
+                    return i;/*i*/
                 }
+                
+                
+                
+                /* for(i=0;i<cnum;i++){
+                   gClients[i].ADsta = (gClients[i].ADsta - 1)*(gClients[i].ADsta - 1);*/
             }
+                
         }
     }
-    //printf("%d\n",color);
+    
+    return -1;
 }

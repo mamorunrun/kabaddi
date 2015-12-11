@@ -29,6 +29,7 @@
 #define END_COMMAND		'E'		  		/* プログラム終了コマンド */
 #define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
+#define BUMP            'B'                             /*当たり判定のコマンド*/
 
 extern int clientID; 
 

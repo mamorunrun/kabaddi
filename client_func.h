@@ -26,7 +26,7 @@ enum{
     down_dir        = 4,
     down_left_dir   = 5,
     left_dir        = 6,
-    left_up_dir    = 7
+    left_up_dir     = 7
 };
 
 /* client_net.c */
@@ -39,10 +39,14 @@ extern int SendRecvManager(void);
 extern int InitWindows(int clientID,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);
-extern void UpdatePos(int n,int x,int y);
+
 extern void WindowEvent(int clientID);
-extern void Move(int clientID);
-extern void Judge(int clientID,int cnum);//当たり判定
+
+
+/*client_system.c*/
+extern void UpdatePos(int n,int x,int y);
+extern void Move((int clientID,int befx,int befy);
+extern int Judge(int clientID,int befx,int befy);//当たり判定
 
 
 /* client_command.c */
