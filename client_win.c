@@ -216,7 +216,7 @@ void WindowEvent(int clientID)
                 
                 dirflag = up_dir;
             }
-            Move(clientID);
+            Move(clientID,befx,befy);
             mflag = 0;
         }
         break;
