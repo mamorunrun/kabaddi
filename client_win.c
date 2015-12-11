@@ -11,7 +11,6 @@
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static int cID;
-static void Move(int clientID);
 CLIENT gClients[MAX_CLIENTS];
 
 
@@ -208,62 +207,3 @@ void DrawChara(int n,int cnum)
     SDL_Flip(gMainWindow);
     dflag = 0;
 }
-
-void UpdatePos(int n,int x,int y)
-{
-    if(cID == n)
-        return;
-
-    gClients[n].poi.x=x;
-    gClients[n].poi.y=y;
-}
-
-void Move(int clientID)
-{
-    char	data[MAX_DATA];
-    int			dataSize = 0;
-
-    dflag = 1;
-
-    if(gClients[clientID].poi.x <= 0)
-        gClients[clientID].poi.x = 0;
-    else if(gClients[clientID].poi.x + 30 >= 1000)
-        gClients[clientID].poi.x = 1000 - 30;
-    if(gClients[clientID].poi.y <= 0)
-        gClients[clientID].poi.y = 0;
-    else if(gClients[clientID].poi.y + 30 >= 600)
-        gClients[clientID].poi.y = 600 -30;
-
-    sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
-
-    printf("%s\n",data);
-    //strcat(data,gClients[clientID].poi.x);
-    //strcat(data,",");
-    //strcat(data,gClients[clientID].poi.y);
-    //strcat(data,"\0");
-
-    // SetCharData2DataBlock(data,POS_COMMAND,&dataSize);
-    //SetIntData2DataBlock(data,gClients[clientID].poi.x,&dataSize);
-    //SetIntData2DataBlock(data,gClients[clientID].poi.y,&dataSize);
-    SendData(data/*, dataSize*/);
-}
-
-void Judge(int clientID,int cnum){
-
-    int i;
-    ;//グローバル変数で全体人数を設定
-    for(i=0;i<cnum;i++){
-        if(i != clientID){
-            if((gClients[i].poi.x - gClients[clientID].poi.x) <= 32 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 32){
-                if((gClients[i].poi.y - gClients[clientID].poi.y) <= 32 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 32){
-                    //printf("color\n");
-                    for(i=0;i<cnum;i++){
-                        gClients[i].ADsta = (gClients[i].ADsta - 1)*(gClients[i].ADsta - 1);
-                    }
-                }
-            }
-        }
-    }
-    //printf("%d\n",color);
-}
-
