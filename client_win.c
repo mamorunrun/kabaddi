@@ -91,6 +91,10 @@ void WindowEvent(int clientID)
 {
     int a = 2;
     int mflag = 1;
+    int befx,befy;
+
+    befx = gClients[clientID].poi.x;
+    befy = gClients[clientID].poi.y;
 
     while (wiimote_is_open(&wiimote)){
         if (wiimote_update(&wiimote) < 0) {
