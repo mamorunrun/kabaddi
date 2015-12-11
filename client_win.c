@@ -257,7 +257,7 @@ void Judge(int clientID,int cnum){
             if((gClients[i].poi.x - gClients[clientID].poi.x) <= 32 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 32){
                 if((gClients[i].poi.y - gClients[clientID].poi.y) <= 32 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 32){
                     //printf("color\n");
-                    for(i=0;i<n;i++){
+                    for(i=0;i<cnum;i++){
                         gClients[i].ADsta = (gClients[i].ADsta - 1)*(gClients[i].ADsta - 1);
                     }
                 }
