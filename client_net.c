@@ -36,13 +36,13 @@ CLIENT gClients[MAX_CLIENTS];
 		  char	clientNames[][]		: 全クライアントのユーザー名
 出力	: コネクションに失敗した時-1,成功した時0
 *****************************************************************/
-int SetUpClient(char *hostName,int *clientID,int *cnum,char clientNames[][MAX_NAME_SIZE])
+int SetUpClient(char *hostName,int *clientID,char clientNames[][MAX_NAME_SIZE])
 {
 
 struct hostent *servHost;
 int	len;
 char	str[100];
-int i,cnum;
+int i;
 char *ipad;
 
 /* ホスト名からホスト情報を得る */
