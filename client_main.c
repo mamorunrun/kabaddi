@@ -127,6 +127,7 @@ int main(int argc,char *argv[])
             timer.lev=SDL_GetTicks();//経過時間を更新
         }
 
+        DrawChara(clientID,num);
        
         // timer.now=SDL_GetTicks();//現在時間を取得
         //timer.wit=timer.now-timer.lev;//待ち時間を計算

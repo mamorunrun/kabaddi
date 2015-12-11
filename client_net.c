@@ -91,7 +91,7 @@ return -1;
 
     printf("Please Wait\n");
 
-    for(i=0;i<2;i++){
+    for(i=0;i<3;i++){
     recv(recvsock, buf, sizeof(buf), 0);
 
     printf("%s\n",buf);

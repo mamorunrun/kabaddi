@@ -33,10 +33,10 @@ extern int SendRecvManager(void);
 /* client_win.c */
 extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
-extern void DrawChara(int n);
+extern void DrawChara(int n,int cnum);
 extern void UpdatePos(int n,int x,int y);
 extern void WindowEvent(int clientID);
-extern void Judge(int clientID);//当たり判定
+extern void Judge(int clientID,int cnum);//当たり判定
 
 /* client_command.c */
 extern int ExecuteCommand(char *command);

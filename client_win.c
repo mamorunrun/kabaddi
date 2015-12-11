@@ -20,7 +20,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-int color[2] = {0x000000ff,0x00ff000};
+int color[MAX_CLIENTS] = {0x000000ff,0x00ff000};
 
 /*****************************************************************
 関数名	: InitWindows
@@ -180,7 +180,7 @@ void WindowEvent(int clientID)
         }
         break;
     }
-    DrawChara(clientID);
+    //DrawChara(clientID);
     
 }
 
@@ -188,19 +188,19 @@ void WindowEvent(int clientID)
 static
 *****/
 
-void DrawChara(int n)
+void DrawChara(int n,int cnum)
 {
     int i;
-    int num=2;
+    int num=3;
 
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
     //  }
 
     //printf("%d\n",n);
-    Judge(n);
+    Judge(n,cnum);
     SDL_FillRect(buffer,NULL,0xffffffff);
-    for(i=0;i<num;i++){
+    for(i=0;i<cnum;i++){
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
@@ -248,11 +248,11 @@ void Move(int clientID)
     SendData(data/*, dataSize*/);
 }
 
-void Judge(int clientID){
+void Judge(int clientID,int cnum){
 
     int i;
-    int n = 2;//グローバル変数で全体人数を設定
-    for(i=0;i<n;i++){
+    ;//グローバル変数で全体人数を設定
+    for(i=0;i<cnum;i++){
         if(i != clientID){
             if((gClients[i].poi.x - gClients[clientID].poi.x) <= 32 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 32){
                 if((gClients[i].poi.y - gClients[clientID].poi.y) <= 32 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 32){
