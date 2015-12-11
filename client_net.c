@@ -76,8 +76,13 @@ return -1;
 
     fprintf(stderr,"connected\n");
 
-    //sprintf(sendData,"1\0");
+    sprintf(sendData,"1\0");
+    SendData(sendData);
 
+    while(i==0){
+    recv(recvsock, buf, sizeof(buf), 0);
+    i=atoi(buf);
+    }
 
     printf("名前を入力してください\n");
     scanf("%s",str);
