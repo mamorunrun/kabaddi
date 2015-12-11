@@ -22,10 +22,6 @@ static int	gSocket;	/* ソケット */
 static fd_set	gMask;	/* select()用のマスク */
 static int	gWidth;		/* gMask中ののチェックすべきビット数 */
 
-static void GetAllName(int *clientID,int *num,char clientNames[][MAX_NAME_SIZE]);
-static void SetMask(void);
-static int RecvData(void *data,int dataSize);
-
 static int sendsock,recvsock;
 static struct sockaddr_in recv_addr, send_addr;
 static char buf[2048];
@@ -40,7 +36,7 @@ CLIENT gClients[MAX_CLIENTS];
 		  char	clientNames[][]		: 全クライアントのユーザー名
 出力	: コネクションに失敗した時-1,成功した時0
 *****************************************************************/
-int SetUpClient(char *hostName,int *clientID,int *num,char clientNames[][MAX_NAME_SIZE])
+int SetUpClient(char *hostName,int *clientID,char clientNames[][MAX_NAME_SIZE])
 {
 
 struct hostent *servHost;
@@ -56,7 +52,7 @@ return -1;
 }
 
  char hostname[128];
- 
+ char sendData[1024];
   /* ホスト名を取得 */
   gethostname(hostname, sizeof(hostname));
  
@@ -80,9 +76,11 @@ return -1;
 
     fprintf(stderr,"connected\n");
 
-    scanf("%s",str);
+    //sprintf(sendData,"1\0");
 
-    char sendData[1024];
+
+    printf("名前を入力してください\n");
+    scanf("%s",str);
   
     sprintf(sendData, "%s,%s\0", str, hostname);
 
@@ -117,8 +115,8 @@ recv(recvsock, buf, sizeof(buf), 0);
 printf("%s\n",buf);
 
 recv(recvsock, buf, sizeof(buf), 0);
-*num=atoi(buf);
-printf("clientnum=%d\n",*num);
+cnum=atoi(buf);
+printf("clientnum=%d\n",cnum);
 
 
     /* 全クライアントのユーザー名を得る */

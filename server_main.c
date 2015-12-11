@@ -52,6 +52,8 @@ int main(int argc,char *argv[])
     //sendto(sendsock,&client_num , sizeof(client_num), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
 printf("wait\n");
 
+//recv
+
     while(state==0) {
         recv(recvsock, buf, sizeof(buf), 0);
         

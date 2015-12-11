@@ -27,6 +27,7 @@ extern int dflag;//移動したことの検知
 static int endFlag=1;
 
 int clientID;
+int cnum;
 
 // Wiiリモコンを用いるための構造体を宣言（初期化）
 wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
@@ -83,22 +84,22 @@ int main(int argc,char *argv[])
     }
 
     /* サーバーとの接続 */
-    if(SetUpClient(serverName,&clientID,&num,name)==-1){
+    if(SetUpClient(serverName,&clientID,name)==-1){
 		fprintf(stderr,"setup failed : SetUpClient\n");
 		return -1;
 	}
 
 
 
-    printf("clientnum=%d\n",num);
+    printf("clientnum=%d\n",cnum);
 
     /* ウインドウの初期化 */
-	if(InitWindows(clientID,num,name)==-1){
+	if(InitWindows(clientID,name)==-1){
 		fprintf(stderr,"setup failed : InitWindows\n");
 		return -1;
 	}
 
-        printf("clientnum=%d\n",num);
+        printf("clientnum=%d\n",cnum);
 
         wiimote.mode.acc = 1;
     /*wiiリモコンの入力受付開始*/
@@ -127,7 +128,7 @@ int main(int argc,char *argv[])
             timer.lev=SDL_GetTicks();//経過時間を更新
         }
 
-        DrawChara(clientID,num);
+        DrawChara(clientID,cnum);
        
         // timer.now=SDL_GetTicks();//現在時間を取得
         //timer.wit=timer.now-timer.lev;//待ち時間を計算

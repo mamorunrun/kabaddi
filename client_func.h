@@ -16,6 +16,7 @@ extern wiimote_report_t report;
 extern int dflag;//移動したことの検知main,winで使用
 
 extern int dirflag; //client_win.cキャラの方向
+extern int cnum;  /*クライアントの数*/
 
 enum{
     up_dir    = 0, 
@@ -25,13 +26,13 @@ enum{
 };
 
 /* client_net.c */
-extern int SetUpClient(char* hostName,int *clientID,int *num,char clientName[][MAX_NAME_SIZE]);
+extern int SetUpClient(char* hostName,int *clientID,char clientName[][MAX_NAME_SIZE]);
 extern void CloseSoc(void);
 extern void SendData(char *data);
 extern int SendRecvManager(void);
 
 /* client_win.c */
-extern int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE]);
+extern int InitWindows(int clientID,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);
 extern void UpdatePos(int n,int x,int y);

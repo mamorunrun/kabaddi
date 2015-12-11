@@ -28,14 +28,14 @@ int color[MAX_CLIENTS] = {0x000000ff,0x00ff000};
 		  int	num				: 全クライアント数
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
-int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
+int InitWindows(int clientID,char name[][MAX_NAME_SIZE])
 {
     cID = clientID;
 	int i;
 	char *s,title[10];
 
         /* 引き数チェック */
-        assert(0<num && num<=MAX_CLIENTS);
+        assert(0<num && cnum<=MAX_CLIENTS);
 	
 	/* SDLの初期化 */
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -60,7 +60,7 @@ int InitWindows(int clientID,int num,char name[][MAX_NAME_SIZE])
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
 
-        for(i=0;i<num;i++){
+        for(i=0;i<cnum;i++){
             gClients[i].poi.x=100*i + 10;
             gClients[i].poi.y=10;
             gClients[i].poi.w=30;
