@@ -94,10 +94,10 @@ int main(int argc,char *argv[])
     printf("clientnum=%d\n",cnum);
 
     /* スタート画面の初期化 */
-    if(InitWindows(clientID,name)==-1){
+    /*if(InitWindows()==-1){
 		fprintf(stderr,"setup failed : InitWindows\n");
 		return -1;
-	}
+                }*/
     
    /*ゲームウィンドウの初期化*/
     if(GameWindows(clientID,name)==-1){
