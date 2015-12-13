@@ -5,6 +5,7 @@
 
 #include<SDL/SDL.h>
 #include<SDL/SDL_gfxPrimitives.h>
+#include <SDL/SDL_ttf.h>
 #include"common.h"
 #include"client_func.h"
 
@@ -19,61 +20,95 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
+static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
+static TTF_Font* font2;
 int color[MAX_CLIENTS] = {0x000000ff,0x00ff000};
 
 /*****************************************************************
 関数名	: InitWindows
 機能	: メインウインドウの表示，設定を行う
-引数	: int	clientID		: クライアント番号
-		  int	num				: 全クライアント数
+引数	: なし
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
-int InitWindows(int clientID,char name[][MAX_NAME_SIZE])
+int InitWindows(void)
 {
     cID = clientID;
-	int i;
-	char *s,title[10];
+    int i;
+    char *s,title[10];
+    int end = 0;
 
-        /* 引き数チェック */
-        assert(0<num && cnum<=MAX_CLIENTS);
-	
-	/* SDLの初期化 */
-	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("failed to initialize SDL.\n");
-		return -1;
-	}
-	
-	/* メインのウインドウを作成する */
-	if((gMainWindow = SDL_SetVideoMode(1000,600, 32, SDL_SWSURFACE)) == NULL) {
-		printf("failed to initialize videomode.\n");
-		return -1;
-	}
-        if((buffer = SDL_CreateRGBSurface(SDL_SWSURFACE,1000,600,32,0,0,0,0))==NULL){
-            printf("failed to initialize videomode.\n");
-            exit(-1);
+    SDL_Event event;
+    SDL_Rect dst_rect = { 100, 200 };
+    SDL_Rect dst_rect2 = { 100, 400 };
+    SDL_Rect src_rect = { 0, 0, gMessage->w, gMessage->h };
+    SDL_Rect src_rect2 = { 0, 0, gMessage->w, gMessage->h };
+//    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
+    SDL_Surface gMessage_title;
+    SDL_Surface gMessage_req;
+    SDL_Surface gMessage_chotomate;
+    
+    /* SDLの初期化 */
+    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("failed to initialize SDL.\n");
+        return -1;
+    }
+    
+    /* メインのウインドウを作成する */
+    if((gMainWindow = SDL_SetVideoMode(1000,600, 32, SDL_SWSURFACE)) == NULL) {
+        printf("failed to initialize videomode.\n");
+        return -1;
+    }
+    if((buffer = SDL_CreateRGBSurface(SDL_SWSURFACE,1000,600,32,0,0,0,0))==NULL){
+        printf("failed to initialize videomode.\n");
+        exit(-1);
+    }
+
+    /* フォントの初期化 */
+    TTF_Init();
+
+    font = TTF_OpenFont("kochi-gothic-subst.ttf",32); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
+    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
+    
+    /* ウインドウのタイトルをセット */
+    sprintf(title,"Kabaddi[%d]",clientID);
+    SDL_WM_SetCaption(title,NULL);
+    
+    /* 背景を白にする */
+    SDL_FillRect(buffer,NULL,0xffffffff);
+
+    gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", 0x191970ff);
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", 0x191970ff);    
+
+    SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
+    SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
+
+    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_Flip(gMainWindow);
+
+    while(end == 0){
+        if(SDL_PollEvent(&event)){// イベント取得ができた場合イベントにより処理を分岐
+            switch(event.type){
+            case SDLK_KEYDOWN:
+                if(event.key.keysym.sym == SDLK_RETURN)  
+                    end = 1;
+                break;
+
+            default:
+                break;
+            }
         }
 
-	/* ウインドウのタイトルをセット */
-	sprintf(title,"Kabaddi[%d]",clientID);
-	SDL_WM_SetCaption(title,NULL);
+        /* 背景を白にする */
+        SDL_FillRect(buffer,NULL,0xffffffff);
 
-	/* 背景を白にする */
-	SDL_FillRect(buffer,NULL,0xffffffff);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font3, "ちょっと待ってちょっと待って...", 0x000000ff);
 
-        for(i=0;i<cnum;i++){
-            gClients[i].poi.x=100*i + 10;
-            gClients[i].poi.y=10;
-            gClients[i].poi.w=30;
-            gClients[i].poi.h=30;
-            gClients[i].ADsta = i;
-            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-        }
-        SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
-	SDL_Flip(gMainWindow);
-	
-        //printf("%d\n",color);
+        SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
 
-	return 0;
+    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_Flip(gMainWindow);
+    
+    return 0;
 }
 
 /*****************************************************************
