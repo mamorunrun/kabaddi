@@ -36,7 +36,7 @@ extern void SendData(char *data);
 extern int SendRecvManager(void);
 
 /* client_win.c */
-extern int InitWindows(int clientID,char name[][MAX_NAME_SIZE]);
+extern int InitWindows(void);
 extern int GameWindows(int clientID,char name[][MAX_NAME_SIZE]);
 extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);

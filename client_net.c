@@ -75,6 +75,10 @@ return -1;
     bind(recvsock, (struct sockaddr *)&recv_addr, sizeof(recv_addr));
 
     fprintf(stderr,"connected\n");
+    printf("名前を入力してください\n");
+    scanf("%s",str);
+
+    InitWindows();
 
     sprintf(sendData,"1\0");
     SendData(sendData);
@@ -90,9 +94,6 @@ return -1;
 
     recv(recvsock, buf, sizeof(buf), 0);
     cnum=atoi(buf);
-
-    printf("名前を入力してください\n");
-    scanf("%s",str);
   
     sprintf(sendData, "%s,%s\0", str, hostname);
 
