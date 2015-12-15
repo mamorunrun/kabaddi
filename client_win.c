@@ -30,7 +30,7 @@ int color[2] = {0x000000ff,0xff000000};
 *****************************************************************/
 int InitWindows(int clientID,char name[][MAX_NAME_SIZE])
 {
-    cID = clientID;
+     cID = clientID;
 	int i;
 	char *s,title[10];
 
@@ -79,10 +79,10 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 	
 /*　　　文字関係
         char Pname[cnum][MAX_NAME_SIZE+2];
-        SDL_Surface *PNAME;
+        SDL_Surface *PNAME[cnum];
 */      
 
-        lineColor(buffer, 700, 0, 700, 600,0x000000ff);
+        lineColor(buffer, 600, 0, 600, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
 
@@ -91,11 +91,20 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
         for(i=0;i<cnum;i++){
-            gClients[i].poi.x=100*i + 10;
-            gClients[i].poi.y=10;
-            gClients[i].poi.w=30;
-            gClients[i].poi.h=30;
-            gClients[i].ADsta = i%2;/*今だけ奇数攻撃,偶数守り*/
+            if(i < 2){
+                gClients[i].poi.x=200;
+                gClients[i].poi.y=100 + i*300;
+                gClients[i].poi.w=30;
+                gClients[i].poi.h=30;
+                gClients[i].ADsta = 0;/*最初二人は守備*/
+            }
+            else{
+                gClients[i].poi.x=700;
+                gClients[i].poi.y=250;
+                gClients[i].poi.w=30;
+                gClients[i].poi.h=30;
+                gClients[i].ADsta = 1;/*最後は攻撃*/
+            }
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
             
 /***************************************************************************

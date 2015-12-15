@@ -38,15 +38,25 @@ void Move(int clientID,int befx,int befy)
 
 
     i = Judge(clientID,befx,befy);
-    if( i == -1){
-    
-        sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
 
+    
+    if(gClients[clientID].Bflag > 0){
+        if(gClients[clientID].poi.x >= 600)
+            /*WIN,LOSEフラグの送信
+              win();
+              sprintf(data,"kabaddi,%d,%d,%d,%d\0",LOSE,clientID,i,0);
+              SendData(data);
+              break;
+             */
+            
+            }
+
+
+    if( i == -1){
+        sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
     }
     else {
-        
         sprintf(data,"kabaddi,%d,%d,%d,%d\0",BUMP,clientID,i/*当たった相手のid*/,0/*ダミー*/);
-
     }
     printf("%s\n",data);
    
@@ -67,19 +77,13 @@ int Judge(int clientID,int befx,int befy){
             if((gClients[i].poi.x - gClients[clientID].poi.x) <= 30 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 30){
                 if((gClients[i].poi.y - gClients[clientID].poi.y) <= 30 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 30){
                     //printf("color\n");
-                    
+                    gClients[clientID].Bflag++;//自分に当たり判定のフラグを立てる
                     gClients[clientID].poi.x = befx;
                     gClients[clientID].poi.y = befy;
                     
                     return i;/*i*/
                 }
-                
-                
-                
-                /* for(i=0;i<cnum;i++){
-                   gClients[i].ADsta = (gClients[i].ADsta - 1)*(gClients[i].ADsta - 1);*/
             }
-                
         }
     }
     
