@@ -147,7 +147,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
-        int i;
+        int i,x,y;
 
         for(i=0;i<cnum;i++){
             if(i == (loop % cnum)){
@@ -160,18 +160,19 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             else{
                 gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*300;
+                gClients[i].poi.y=100 + i*100;
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
                 gClients[i].color=0;
             }
+
+            printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-            if(gClients[i].ADsta==1){
-                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
-            }
-
+            /* if(gClients[i].ADsta==1){
+                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
+                }*/
 
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
@@ -185,6 +186,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             
 *****************************************************************************/
         }
+        printf("loop=%d\n",loop);
         SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
 	SDL_Flip(gMainWindow);
         
