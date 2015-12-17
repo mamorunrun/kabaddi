@@ -56,7 +56,7 @@ void Move(int clientID,int befx,int befy)
 
     i=Collision(clientID,befx,befy);
 
-    if(gClients[clientID].Bflag > 0){
+    /*if(gClients[clientID].Bflag > 0){
         if(gClients[clientID].poi.x >= 600)
             /*WIN,LOSEフラグの送信
              
@@ -68,7 +68,7 @@ void Move(int clientID,int befx,int befy)
               break;
              */
             
-            }
+            //}
 
 
     if( i == -1){
