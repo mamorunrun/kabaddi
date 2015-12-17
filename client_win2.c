@@ -127,7 +127,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 /*　　　文字関係
         char Pname[cnum][MAX_NAME_SIZE+2];
         SDL_Surface *PNAME[cnum];
-*/      
+*/
 
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -138,7 +138,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
         for(i=0;i<cnum;i++){
-            if(i < 2){
+            if(i == (loop % cnum)){
                 gClients[i].poi.x=200;
                 gClients[i].poi.y=100 + i*300;
                 gClients[i].poi.w=30;

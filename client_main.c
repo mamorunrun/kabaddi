@@ -172,7 +172,6 @@ int main(int argc,char *argv[])
                 WindowEvent(clientID);
                 
             }
-            Game.restTime = 30;
             
             if(GameWindows(clientID,name,loop)==-1){
                 fprintf(stderr,"setup failed : GameWindows\n");

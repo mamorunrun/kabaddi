@@ -19,7 +19,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-int color[2] = {0x000000ff,0xff000000};
+int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
 
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
@@ -133,8 +133,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        restTime = 30;/*残り30秒*/
-        lineColor(buffer, 600, 0, 600, 600,0x000000ff);
+        Game.restTime = 30;/*残り30秒*/
+        lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
 
@@ -143,12 +143,13 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
         for(i=0;i<cnum;i++){
-            if(i == (loop % 3)){
+            if(i == (loop % cnum)){
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
+                gclients[i].color=1;
             }
             else{
                 gClients[i].poi.x=200;
@@ -156,10 +157,15 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
+                gclients[i].color=0;
             }
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-            
+            if(gclient[i].ADsta==1){
+                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
+            }
+
+
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
             sprintf(Pname[i],"%d:%s",i,name);
@@ -361,11 +367,16 @@ void DrawChara(int n,int cnum)
     DisplayStatus();
 
     SDL_FillRect(buffer,NULL,0xffffffff);
-    lineColor(buffer, 700, 0, 700, 600,0x000000ff);
+    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
+
+    if(gclient[i].ADsta==1){
+        rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
+    }
+
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
