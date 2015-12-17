@@ -13,7 +13,7 @@ all: $(TARGET1) $(TARGET2)
 $(TARGET1):	$(OBJS1)
 	gcc -o $(TARGET1) $(OBJS1) -lm -lSDL $(WII)
 $(TARGET2):	$(OBJS2)
-	gcc -o $(TARGET2) $(OBJS2) -lm -lSDL -lSDL_image -lSDL_gfx $(WII) $(LDFLAGS)
+	gcc -o $(TARGET2) $(OBJS2) -lm -lSDL -lSDL_image -lSDL_gfx -lSDL_ttf $(WII) $(LDFLAGS)
 
 clean:
 	rm *.o $(TARGET1) $(TARGET2)
