@@ -47,6 +47,7 @@ typedef struct{
         int             ADsta;//攻撃守備のフラグ　ATK1 DEF0
         int             Bflag;//当たり判定のフラグ
         int             score;//得点の保存
+        int color;
 
 }CLIENT;
 

@@ -19,7 +19,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-int color[2] = {0x000000ff,0xff000000};
+int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
 
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
@@ -155,7 +155,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
 
             if(gclient[i].ADsta==1){
-                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50);
+                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
             }
             
 /***************************************************************************
@@ -344,8 +344,13 @@ void DrawChara(int n,int cnum)
     lineColor(buffer, 700, 0, 700, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
+        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].]);
     }
+    
+    if(gclient[i].ADsta==1){
+        rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
+    }
+    
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
