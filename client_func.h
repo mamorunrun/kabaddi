@@ -47,8 +47,8 @@ extern void WindowEvent(int clientID);
 /*client_system.c*/
 extern void UpdatePos(int n,int x,int y);
 extern void Move(int clientID,int befx,int befy);
-extern int Judge(int clientID,int befx,int befy);//当たり判定
-
+extern int Judge(int clientID,int x,int y);//当たり判定
+extern int Collision(int clientID,int befx,int befy);
 
 /* client_command.c */
 extern int ExecuteCommand(char *command);
