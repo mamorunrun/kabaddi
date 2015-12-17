@@ -44,8 +44,8 @@ void Move(int clientID,int befx,int befy)
     case 1:
         if(gClients[clientID].poi.x <= 0)
             gClients[clientID].poi.x = 0;
-        else if(gClients[clientID].poi.x + 30 >= 800)
-            gClients[clientID].poi.x = 800 - 30;
+        else if(gClients[clientID].poi.x + 30 >= 1000)
+            gClients[clientID].poi.x = 1000 - 30;
         if(gClients[clientID].poi.y <= 0)
             gClients[clientID].poi.y = 0;
         else if(gClients[clientID].poi.y + 30 >= 600)
@@ -123,8 +123,8 @@ int Collision(int clientID,int befx,int befy){
                     }
                 }
 
-                if((gClients[i].poi.x - (gClients[clientID].poi.x-20)) <= 30 && ((gClients[clientID].poi.x-20) - gClients[i].poi.x) <= 30){
-                    if((gClients[i].poi.y - (gClients[clientID].poi.y-20)) <= 30 && ((gClients[clientID].poi.y-20) - gClients[i].poi.y) <= 30){
+                if((gClients[i].poi.x - (gClients[clientID].poi.x-20)) <= 70 && ((gClients[clientID].poi.x-20) - gClients[i].poi.x) <= 70){
+                    if((gClients[i].poi.y - (gClients[clientID].poi.y-20)) <= 70 && ((gClients[clientID].poi.y-20) - gClients[i].poi.y) <= 70){
                         //printf("color\n");
                         if(gClients[i].Bflag==0){
                             gClients[clientID].Bflag++;
