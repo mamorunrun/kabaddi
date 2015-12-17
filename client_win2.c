@@ -5,7 +5,6 @@
 
 #include<SDL/SDL.h>
 #include<SDL/SDL_gfxPrimitives.h>
-#include <SDL/SDL_ttf.h>
 #include"common.h"
 #include"client_func.h"
 
@@ -20,9 +19,11 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
+int color[2] = {0x000000ff,0xff000000};
+
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
-int color[MAX_CLIENTS] = {0x000000ff,0x00ff000};
+
 
 /*****************************************************************
 関数名	: InitWindows
@@ -110,16 +111,65 @@ int InitWindows(void)
     
     return 0;
 }
-
 /*****************************************************************
 関数名	: InitWindows
 機能	: ゲームウインドウの表示，設定を行う
 引数	: int	clientID		: クライアント番号
-		  int	num				: 全クライアント数
+		
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
 int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 {
+    
+     /* 引き数チェック */
+        assert(0<num && cnum<=MAX_CLIENTS);
+	
+/*　　　文字関係
+        char Pname[cnum][MAX_NAME_SIZE+2];
+        SDL_Surface *PNAME[cnum];
+*/      
+
+        lineColor(buffer, 600, 0, 600, 600,0x000000ff);
+        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
+
+
+
+	/* 背景を白にする */
+	SDL_FillRect(buffer,NULL,0xffffffff);
+       
+        for(i=0;i<cnum;i++){
+            if(i < 2){
+                gClients[i].poi.x=200;
+                gClients[i].poi.y=100 + i*300;
+                gClients[i].poi.w=30;
+                gClients[i].poi.h=30;
+                gClients[i].ADsta = 0;/*最初二人は守備*/
+            }
+            else{
+                gClients[i].poi.x=700;
+                gClients[i].poi.y=250;
+                gClients[i].poi.w=30;
+                gClients[i].poi.h=30;
+                gClients[i].ADsta = 1;/*最後は攻撃*/
+            }
+            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
+            
+/***************************************************************************
+            四角の上に文字を出力 SDL_BlitSurfaceの活用
+            sprintf(Pname[i],"%d:%s",i,name);
+            
+            PNAME = TTF_RenderUTF8_Blended(font, Pname[i], );
+            SDL_Rect src_rect = {0,0 }
+            
+            SDL_BlitSurface(PNAME, &rect, SDL_GetVideoSurface(), &scr_rect);
+          
+            
+*****************************************************************************/
+        }
+        SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+	SDL_Flip(gMainWindow);
+        
+
 	return 0;
 }
 /*****************************************************************
@@ -287,6 +337,8 @@ void DrawChara(int n,int cnum)
     //printf("%d\n",n);
     //Judge(n,cnum);
     SDL_FillRect(buffer,NULL,0xffffffff);
+    lineColor(buffer, 700, 0, 700, 600,0x000000ff);
+                       /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
