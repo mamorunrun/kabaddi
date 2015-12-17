@@ -210,9 +210,6 @@ void WindowEvent(int clientID)
     int mflag = 1;//moveflag
     int befx,befy;
 
-
-    printf("WindowEvent\n");
-
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -323,7 +320,9 @@ void WindowEvent(int clientID)
             a = 4;
         }
         if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
-        {
+        {    
+            printf("WindowEvent\n");
+
             if(wiimote.keys.up){
                 gClients[clientID].poi.x = gClients[clientID].poi.x-a;
                 //Move(clientID);

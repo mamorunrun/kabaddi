@@ -70,8 +70,9 @@ void Move(int clientID,int befx,int befy)
             */
             
         }
-        
-        
+    }    
+        printf("%d\n",i);        
+
         if( i == -1){
             sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
     }
@@ -81,7 +82,7 @@ void Move(int clientID,int befx,int befy)
         printf("%s\n",data);
         
         SendData(data);
-    }
+    
 }
 /**************************************************
 当たり判定  clientID:自分のID 
