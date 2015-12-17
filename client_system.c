@@ -43,9 +43,12 @@ void Move(int clientID,int befx,int befy)
     if(gClients[clientID].Bflag > 0){
         if(gClients[clientID].poi.x >= 600)
             /*WIN,LOSEフラグの送信
-              win();
+             
               sprintf(data,"kabaddi,%d,%d,%d,%d\0",LOSE,clientID,i,0);
               SendData(data);
+
+
+              win();
               break;
              */
             

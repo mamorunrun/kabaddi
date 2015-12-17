@@ -30,6 +30,7 @@
 #define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
 #define BUMP            'B'                             /*当たり判定のコマンド*/
+#define WIN             'W'                             /*勝ちコマンド*/
 #define LOSE            'L'                             /*負けコマンド*/
 
 extern int clientID; 
@@ -41,6 +42,7 @@ typedef struct{
         SDL_Rect poi;
         int             ADsta;//攻撃守備のフラグ　ATK1 DEF0
         int             Bflag;//当たり判定のフラグ
+        
 
 }CLIENT;
 
