@@ -110,15 +110,18 @@ int InitWindows(void)
     SDL_Flip(gMainWindow);
     
     return 0;
+    }
 }
+
 /*****************************************************************
 関数名	: GameWindows
 機能	: ゲームウインドウの表示，設定を行う
 引数	: int	clientID		: クライアント番号
-		
+	  char  name                    : 名前
+          int   loop                    : 何回目のループか	
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
-int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
+int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 {
     
      /* 引き数チェック */
@@ -127,8 +130,10 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 /*　　　文字関係
         char Pname[cnum][MAX_NAME_SIZE+2];
         SDL_Surface *PNAME[cnum];
-*/
+*/      
 
+
+        game.restTime = 30;/*残り30秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -139,27 +144,28 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
        
         for(i=0;i<cnum;i++){
             if(i == (loop % cnum)){
-                gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*300;
-                gClients[i].poi.w=30;
-                gClients[i].poi.h=30;
-                gClients[i].ADsta = 0;/*最初二人は守備*/
-                gclients[i].color=0;
-            }
-            else{
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
-                gClients[i].ADsta = 1;/*最後は攻撃*/
+                gClients[i].ADsta = 1;/*最初は攻撃*/
                 gclients[i].color=1;
             }
-            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].color]);
-
+            else{
+                gClients[i].poi.x=200;
+                gClients[i].poi.y=100 + i*300;
+                gClients[i].poi.w=30;
+                gClients[i].poi.h=30;
+                gClients[i].ADsta = 0;/*最後二人は守備*/
+                gclients[i].color=0;
+            }
+            gClients[i].Bflag = 0;
+            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
             if(gclient[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
             }
-            
+
+
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
             sprintf(Pname[i],"%d:%s",i,name);
@@ -192,8 +198,11 @@ void DestroyWindow(void)
 void WindowEvent(int clientID)
 {
     int a = 2;
-    int mflag = 1;
+    int mflag = 1;//moveflag
     int befx,befy;
+
+
+
 
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
@@ -207,8 +216,20 @@ void WindowEvent(int clientID)
             printf("home\n");
             wiimote_speaker_free(&wiimote);
             wiimote_disconnect(&wiimote);
+            game.flag = 0;
             SendEndCommand();
         }
+
+        if(game.flag == 1){
+
+            if(wiimote_t.keys.a)
+            {
+                game.flag == 0;
+            }
+
+            break;
+        }
+
         if(tflag == 0)
         {
             if(wiimote.keys.two)
@@ -342,19 +363,46 @@ void DrawChara(int n,int cnum)
 
     //printf("%d\n",n);
     //Judge(n,cnum);
+
+    DisplayStatus();
+
     SDL_FillRect(buffer,NULL,0xffffffff);
-    lineColor(buffer, 700, 0, 700, 600,0x000000ff);
+    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].color]);
+        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
-    
+
     if(gclient[i].ADsta==1){
         rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
     }
-    
+
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
     dflag = 0;
+}
+
+
+static void DisplayStatus(void)//時間,自分の得点の描写
+{
+    char   status[64];
+    SDL_Surface *mes;
+    SDL_Rect dst_rect = {0,0};//転送先
+    SDL_Rect src_rect = {0,0,0,0};//転送元
+    SDL_Color colB = {0,0,0};
+
+    if(game.restTime > 0){
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[i].score);
+    }
+    else
+        sprintf(status,"タイムアップ");
+
+    mes = TTF_RenderUTF8_Blended(font, status, colB);
+    src_rect.w = mes->w;
+    src_rect.h = mes->h;
+
+
+    SDL_BlitSurface(mes, &src_rect, buffer, &dst_rect);
+
 }
