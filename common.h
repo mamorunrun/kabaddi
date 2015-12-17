@@ -34,7 +34,10 @@
 #define LOSE            'L'                             /*負けコマンド*/
 
 extern int clientID; 
-extern int restTime;                                    /*残り時間*/
+typedef struct {
+    int restTime;               /* 残り時間 */
+    int flag;                   /* ゲームの状態 */
+    }Game;
 
 /* クライアントを表す構造体 */
 typedef struct{
@@ -43,7 +46,7 @@ typedef struct{
         SDL_Rect poi;
         int             ADsta;//攻撃守備のフラグ　ATK1 DEF0
         int             Bflag;//当たり判定のフラグ
-        
+        int             score;//得点の保存
 
 }CLIENT;
 

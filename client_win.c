@@ -110,7 +110,9 @@ int InitWindows(void)
     SDL_Flip(gMainWindow);
     
     return 0;
+    }
 }
+
 /*****************************************************************
 関数名	: InitWindows
 機能	: ゲームウインドウの表示，設定を行う
@@ -129,6 +131,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
         SDL_Surface *PNAME[cnum];
 */      
 
+
+        restTime = 30;/*残り30秒*/
         lineColor(buffer, 600, 0, 600, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -152,6 +156,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 1;/*最後は攻撃*/
             }
+            gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
             
 /***************************************************************************
@@ -186,7 +191,7 @@ void DestroyWindow(void)
 void WindowEvent(int clientID)
 {
     int a = 2;
-    int mflag = 1;
+    int mflag = 1;//moveflag
     int befx,befy;
 
     befx = gClients[clientID].poi.x;
@@ -336,6 +341,9 @@ void DrawChara(int n,int cnum)
 
     //printf("%d\n",n);
     //Judge(n,cnum);
+
+    DisplayStatus();
+
     SDL_FillRect(buffer,NULL,0xffffffff);
     lineColor(buffer, 700, 0, 700, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -346,4 +354,28 @@ void DrawChara(int n,int cnum)
     
     SDL_Flip(gMainWindow);
     dflag = 0;
+}
+
+
+static void DisplayStatus(void)//時間,自分の得点の描写
+{
+    char   status[64];
+    SDL_Surface *mes;
+    SDL_Rect dst_rect = {0,0};//転送先
+    SDL_Rect src_rect = {0,0,0,0};//転送元
+    SDL_Color colB = {0,0,0};
+
+    if(Game.restTime > 0){
+        sprintf(status,"残り%d秒 score:%dpt",Game.restTime,gClients[i].score);
+    }
+    else
+        sprintf(status,"タイムアップ");
+
+    mes = TTF_RenderUTF8_Blended(font, status, colB);
+    src_rect.w = mes->w;
+    src_rect.h = mes->h;
+
+
+    SDL_BlitSurface(mes, &src_rect, buffer, &dst_rect);
+
 }

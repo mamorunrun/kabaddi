@@ -109,6 +109,17 @@ int main(int argc,char *argv[])
         printf("clientnum=%d\n",cnum);
 
         wiimote.mode.acc = 1;
+
+        switch(clientID){
+        case 1: wiimote.led.one =   1; break;
+        case 2: wiimote.led.two   = 1; break; 
+        case 3 :wiimote.led.three = 1; break;
+
+        default: break;
+        }
+
+
+}
     /*wiiリモコンの入力受付開始*/
 
     // SDL_GetTicks関数を用いる時間管理
@@ -120,7 +131,7 @@ int main(int argc,char *argv[])
 
     /* メインイベントループ */
     while(endFlag){
-
+/*
         timer.now=SDL_GetTicks();//現在時間を取得
         timer.wit=timer.now-timer.lev;//待ち時間を計算
 
@@ -134,9 +145,32 @@ int main(int argc,char *argv[])
             dflag = 0;
             timer.lev=SDL_GetTicks();//経過時間を更新
         }
+*/
+        timer.now=SDL_GetTicks();//現在時間を取得
+        timer.wit=timer.now-timer.lev;//待ち時間を計算
 
-        DrawChara(clientID,cnum);
+        if(timer.wit > 1000){
+            Game.restTime--;
+            timer.lev=SDL_GetTicks();//経過時間を更新
+        }
+
+        
+        
+        if(Game.restTime > 0 && Game.flag == 0){
+            WindowEvent(clientID);
+            DrawChara(clientID,cnum);
+            
+            
+        }
+        
+        else {
+
+             DrawChara(clientID,cnum);
+            
+
+        }
        
+
         // timer.now=SDL_GetTicks();//現在時間を取得
         //timer.wit=timer.now-timer.lev;//待ち時間を計算
         
