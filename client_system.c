@@ -27,6 +27,7 @@ void Move(int clientID,int befx,int befy)
 
     dflag = 1;
     
+    printf("Move\n");
 
     switch(gClients[clientID].ADsta){
 
@@ -140,6 +141,8 @@ int Collision(int clientID,int befx,int befy){
         }
         break;
     }    
+
+    printf("Collision\n");
 
     return -1;
 }

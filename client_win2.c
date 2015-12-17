@@ -4,6 +4,7 @@
 *****************************************************************/
 
 #include<SDL/SDL.h>
+#include<SDL/SDL_ttf.h>
 #include<SDL/SDL_gfxPrimitives.h>
 #include"common.h"
 #include"client_func.h"
@@ -13,7 +14,7 @@ static SDL_Surface *buffer;
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
-static void DisplayStatus(void);//時間,自分の得点の描写
+static void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
 
@@ -21,7 +22,7 @@ int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
 int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
-
+SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
 
@@ -42,12 +43,10 @@ int InitWindows(void)
     SDL_Event event;
     SDL_Rect dst_rect = { 100, 200 };
     SDL_Rect dst_rect2 = { 100, 400 };
-    SDL_Rect src_rect = { 0, 0, gMessage->w, gMessage->h };
-    SDL_Rect src_rect2 = { 0, 0, gMessage->w, gMessage->h };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
-    SDL_Surface gMessage_title;
-    SDL_Surface gMessage_req;
-    SDL_Surface gMessage_chotomate;
+    SDL_Surface *gMessage_title;
+    SDL_Surface *gMessage_req;
+    SDL_Surface *gMessage_chotomate;
     
     /* SDLの初期化 */
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -78,8 +77,11 @@ int InitWindows(void)
     /* 背景を白にする */
     SDL_FillRect(buffer,NULL,0xffffffff);
 
-    gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", 0x191970ff);
-    gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", 0x191970ff);    
+    gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", /*0x191970ff*/colB);    
+
+    SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
+    SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
 
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
     SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
@@ -90,7 +92,7 @@ int InitWindows(void)
     while(end == 0){
         if(SDL_PollEvent(&event)){// イベント取得ができた場合イベントにより処理を分岐
             switch(event.type){
-            case SDLK_KEYDOWN:
+            case SDL_KEYDOWN:
                 if(event.key.keysym.sym == SDLK_RETURN)  
                     end = 1;
                 break;
@@ -100,10 +102,12 @@ int InitWindows(void)
             }
         }
 
+        printf("aaa\n");
+
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font3, "ちょっと待ってちょっと待って...", 0x000000ff);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってちょっと待って...", /*0x000000ff*/colB);
 
         SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
 
@@ -143,6 +147,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
+        int i,x,y;
+
         for(i=0;i<cnum;i++){
             if(i == (loop % cnum)){
                 gClients[i].poi.x=700;
@@ -150,23 +156,23 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
-                gclients[i].color=1;
+                gClients[i].color=1;
             }
             else{
                 gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*300;
+                gClients[i].poi.y=100 + i*200;
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
-                gclients[i].color=0;
-            }
-            gClients[i].Bflag = 0;
-            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-/**************************************************************************/
-            if(gClients[i].ADsta==1){
-                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
+                gClients[i].color=0;
             }
 
+            printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+            gClients[i].Bflag = 0;
+            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
+            /* if(gClients[i].ADsta==1){
+                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
+                }*/
 
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
@@ -180,6 +186,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             
 *****************************************************************************/
         }
+        printf("loop=%d\n",loop);
         SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
 	SDL_Flip(gMainWindow);
         
@@ -204,7 +211,7 @@ void WindowEvent(int clientID)
     int befx,befy;
 
 
-
+    printf("WindowEvent\n");
 
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
@@ -224,7 +231,7 @@ void WindowEvent(int clientID)
 
         if(game.flag == 1){
 
-            if(wiimote_t.keys.a)
+            if(wiimote.keys.a)
             {
                 game.flag == 0;
             }
@@ -375,7 +382,7 @@ void DrawChara(int n,int cnum)
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
 
-    if(gclient[i].ADsta==1){
+    if(gClients[i].ADsta==1){
         rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
     }
 
@@ -392,15 +399,15 @@ void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Surface *mes;
     SDL_Rect dst_rect = {0,0};//転送先
     SDL_Rect src_rect = {0,0,0,0};//転送元
-    SDL_Color colB = {0,0,0};
-
+    TTF_Font* Font;
+    Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
     }
     else
         sprintf(status,"タイムアップ");
 
-    mes = TTF_RenderUTF8_Blended(font, status, colB);
+    mes = TTF_RenderUTF8_Blended(Font, status, colB);
     src_rect.w = mes->w;
     src_rect.h = mes->h;
 
