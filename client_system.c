@@ -103,7 +103,7 @@ int Collision(int clientID,int befx,int befy){
                         //printf("color\n");
                         if(gClients[i].ADsta==1){
                             gClients[clientID].Bflag++;//自分に当たり判定のフラグを立てる
-                            gClient[clientID].color=2;/*i*/
+                            gClients[clientID].color=2;/*i*/
                         }
                     }
                 }
@@ -130,7 +130,7 @@ int Collision(int clientID,int befx,int befy){
                             gClients[i].Bflag++;
                             gClients[clientID].score++;
                             gClients[clientID].color=3;
-                            gClient[i].color=2;
+                            gClients[i].color=2;
                             return i;
                         }
                     }

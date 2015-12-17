@@ -35,6 +35,8 @@ wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
 
 SDL_Thread *thr_net;
 
+Game game;
+
 static int thread_net(void *data)
 {
     while(endFlag){
@@ -120,7 +122,7 @@ int main(int argc,char *argv[])
         }
 
 
-}
+
     /*wiiリモコンの入力受付開始*/
 
     // SDL_GetTicks関数を用いる時間管理
@@ -151,13 +153,13 @@ int main(int argc,char *argv[])
         timer.wit=timer.now-timer.lev;//待ち時間を計算
 
         if(timer.wit > 1000){
-            Game.restTime--;
+            game.restTime--;
             timer.lev=SDL_GetTicks();//経過時間を更新
         }
 
         
         
-        if(Game.restTime > 0 && Game.flag == 0){
+        if(game.restTime > 0 && game.flag == 0){
             WindowEvent(clientID);
             DrawChara(clientID,cnum);
             
@@ -165,10 +167,10 @@ int main(int argc,char *argv[])
         }
         
         else{
-            Game.flag == 1;
+            game.flag == 1;
             loop++;
             DrawChara(clientID,cnum);
-            while(Game.flag == 1){
+            while(game.flag == 1){
                 WindowEvent(clientID);
                 
             }
@@ -190,7 +192,7 @@ int main(int argc,char *argv[])
         
         //timer.lev=SDL_GetTicks();//経過時間を更新
 
-    };
+    }
 
     /* 終了処理 */
 	DestroyWindow();

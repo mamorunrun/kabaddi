@@ -39,6 +39,8 @@ typedef struct {
     int flag;                   /* ゲームの状態 */
     }Game;
 
+extern Game game;
+
 /* クライアントを表す構造体 */
 typedef struct{
 	int		fd;

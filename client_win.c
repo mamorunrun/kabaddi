@@ -133,7 +133,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        Game.restTime = 30;/*残り30秒*/
+        game.restTime = 30;/*残り30秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -216,15 +216,15 @@ void WindowEvent(int clientID)
             printf("home\n");
             wiimote_speaker_free(&wiimote);
             wiimote_disconnect(&wiimote);
-            Game.flag = 0;
+            game.flag = 0;
             SendEndCommand();
         }
 
-        if(Game.flag == 1){
+        if(game.flag == 1){
 
             if(wiimote_t.keys.a)
             {
-                Game.flag == 0;
+                game.flag == 0;
             }
 
             break;
@@ -392,8 +392,8 @@ static void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Rect src_rect = {0,0,0,0};//転送元
     SDL_Color colB = {0,0,0};
 
-    if(Game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",Game.restTime,gClients[i].score);
+    if(game.restTime > 0){
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[i].score);
     }
     else
         sprintf(status,"タイムアップ");
