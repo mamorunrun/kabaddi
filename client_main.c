@@ -50,6 +50,7 @@ int main(int argc,char *argv[])
     timers timer;
 
     int		num;
+    int loop = 0;
     char	name[MAX_CLIENTS][MAX_NAME_SIZE];
     char	localHostName[]="localhost";
     char	*serverName;
@@ -100,7 +101,7 @@ int main(int argc,char *argv[])
                 }*/
     
    /*ゲームウィンドウの初期化*/
-    if(GameWindows(clientID,name)==-1){
+    if(GameWindows(clientID,name,loop)==-1){
 	fprintf(stderr,"setup failed : GameWindows\n");
 		return -1;
 
@@ -163,11 +164,22 @@ int main(int argc,char *argv[])
             
         }
         
-        else {
-
-             DrawChara(clientID,cnum);
+        else{
+            Game.flag == 1;
+            loop++;
+            DrawChara(clientID,cnum);
+            while(Game.flag == 1){
+                WindowEvent(clientID);
+                
+            }
+            Game.restTime = 30;
             
-
+            if(GameWindows(clientID,name,loop)==-1){
+                fprintf(stderr,"setup failed : GameWindows\n");
+		return -1;
+                
+            }
+            timer.lev=SDL_GetTicks();//経過時間を更新
         }
        
 

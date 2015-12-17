@@ -114,13 +114,14 @@ int InitWindows(void)
 }
 
 /*****************************************************************
-関数名	: InitWindows
+関数名	: GameWindows
 機能	: ゲームウインドウの表示，設定を行う
 引数	: int	clientID		: クライアント番号
-		
+	  char  name                    : 名前
+          int   loop                    : 何回目のループか	
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
-int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
+int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 {
     
      /* 引き数チェック */
@@ -142,19 +143,19 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
         for(i=0;i<cnum;i++){
-            if(i < 2){
-                gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*300;
-                gClients[i].poi.w=30;
-                gClients[i].poi.h=30;
-                gClients[i].ADsta = 0;/*最初二人は守備*/
-            }
-            else{
+            if(i == (loop % 3)){
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
-                gClients[i].ADsta = 1;/*最後は攻撃*/
+                gClients[i].ADsta = 1;/*最初は攻撃*/
+            }
+            else{
+                gClients[i].poi.x=200;
+                gClients[i].poi.y=100 + i*300;
+                gClients[i].poi.w=30;
+                gClients[i].poi.h=30;
+                gClients[i].ADsta = 0;/*最後二人は守備*/
             }
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
@@ -194,6 +195,9 @@ void WindowEvent(int clientID)
     int mflag = 1;//moveflag
     int befx,befy;
 
+
+
+
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -206,8 +210,20 @@ void WindowEvent(int clientID)
             printf("home\n");
             wiimote_speaker_free(&wiimote);
             wiimote_disconnect(&wiimote);
+            Game.flag = 0;
             SendEndCommand();
         }
+
+        if(Game.flag == 1){
+
+            if(wiimote_t.keys.a)
+            {
+                Game.flag == 0;
+            }
+
+            break;
+        }
+
         if(tflag == 0)
         {
             if(wiimote.keys.two)
