@@ -34,6 +34,7 @@
 #define LOSE            'L'                             /*負けコマンド*/
 
 extern int clientID; 
+extern int restTime;                                    /*残り時間*/
 
 /* クライアントを表す構造体 */
 typedef struct{
