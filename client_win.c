@@ -399,14 +399,15 @@ void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Surface *mes;
     SDL_Rect dst_rect = {0,0};//転送先
     SDL_Rect src_rect = {0,0,0,0};//転送元
-
+    TTF_Font* Font;
+    Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
     }
     else
         sprintf(status,"タイムアップ");
 
-    mes = TTF_RenderUTF8_Blended(font, status, colB);
+    mes = TTF_RenderUTF8_Blended(Font, status, colB);
     src_rect.w = mes->w;
     src_rect.h = mes->h;
 
