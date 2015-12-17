@@ -82,6 +82,9 @@ int InitWindows(void)
     gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
     gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", /*0x191970ff*/colB);    
 
+    SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
+    SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
+
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
     SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
 
@@ -100,6 +103,8 @@ int InitWindows(void)
                 break;
             }
         }
+
+        printf("aaa\n");
 
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
