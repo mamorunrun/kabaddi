@@ -55,31 +55,25 @@ void Move(int clientID,int befx,int befy)
     }
 
     i=Collision(clientID,befx,befy);
-
-    /*if(gClients[clientID].Bflag > 0){
-        if(gClients[clientID].poi.x >= 600)
-            /*WIN,LOSEフラグの送信
-             
-              sprintf(data,"kabaddi,%d,%d,%d,%d\0",LOSE,clientID,i,0);
-              SendData(data);
-
-
-              win();
-              break;
-             */
-            
-            //}
-
-
-    if( i == -1){
-        sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+    if(gClients[clientID].Bflag > 0){
+        if(gClients[clientID].poi.x >= 600){
+/*WIN,LOSEフラグの送信
+  sprintf(data,"kabaddi,%d,%d,%d,%d\0",LOSE,clientID,i,0);
+  SendData(data);
+  win();
+  break;
+*/
+        }
+        if( i == -1){
+            sprintf(data,"kabaddi,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y);
+        }
+        else {
+            sprintf(data,"kabaddi,%d,%d,%d,%d\0",BUMP,clientID,i/*当たった相手のid*/,0/*ダミー*/);
+        }
+        printf("%s\n",data);
+        
+        SendData(data);
     }
-    else {
-        sprintf(data,"kabaddi,%d,%d,%d,%d\0",BUMP,clientID,i/*当たった相手のid*/,0/*ダミー*/);
-    }
-    printf("%s\n",data);
-   
-    SendData(data);
 }
 /**************************************************
 当たり判定  clientID:自分のID 
