@@ -22,7 +22,7 @@ int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
 int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
-
+SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
 
@@ -43,12 +43,12 @@ int InitWindows(void)
     SDL_Event event;
     SDL_Rect dst_rect = { 100, 200 };
     SDL_Rect dst_rect2 = { 100, 400 };
-    SDL_Rect src_rect = { 0, 0, gMessage->w, gMessage->h };
-    SDL_Rect src_rect2 = { 0, 0, gMessage->w, gMessage->h };
+    SDL_Rect src_rect = { 0, 0, 0, 0};
+    SDL_Rect src_rect2 = { 0, 0, 0, 0 };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
-    SDL_Surface gMessage_title;
-    SDL_Surface gMessage_req;
-    SDL_Surface gMessage_chotomate;
+    SDL_Surface *gMessage_title;
+    SDL_Surface *gMessage_req;
+    SDL_Surface *gMessage_chotomate;
     
     /* SDLの初期化 */
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -79,8 +79,8 @@ int InitWindows(void)
     /* 背景を白にする */
     SDL_FillRect(buffer,NULL,0xffffffff);
 
-    gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", 0x191970ff);
-    gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", 0x191970ff);    
+    gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", /*0x191970ff*/colB);    
 
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
     SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
@@ -91,7 +91,7 @@ int InitWindows(void)
     while(end == 0){
         if(SDL_PollEvent(&event)){// イベント取得ができた場合イベントにより処理を分岐
             switch(event.type){
-            case SDLK_KEYDOWN:
+            case SDL_KEYDOWN:
                 if(event.key.keysym.sym == SDLK_RETURN)  
                     end = 1;
                 break;
@@ -104,7 +104,7 @@ int InitWindows(void)
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font3, "ちょっと待ってちょっと待って...", 0x000000ff);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってちょっと待って...", /*0x000000ff*/colB);
 
         SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
 
@@ -394,7 +394,6 @@ void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Surface *mes;
     SDL_Rect dst_rect = {0,0};//転送先
     SDL_Rect src_rect = {0,0,0,0};//転送元
-    SDL_Color colB = {0,0,0};
 
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);

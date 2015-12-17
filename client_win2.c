@@ -13,6 +13,7 @@ static SDL_Surface *buffer;
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
+static void DisplayStatus(void);//時間,自分の得点の描写
 
 static int tflag;//タックルのフラグ
 
@@ -161,7 +162,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-            if(gclient[i].ADsta==1){
+/**************************************************************************/
+            if(gClients[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
             }
 
@@ -384,7 +386,7 @@ void DrawChara(int n,int cnum)
 }
 
 
-static void DisplayStatus(void)//時間,自分の得点の描写
+void DisplayStatus(void)//時間,自分の得点の描写
 {
     char   status[64];
     SDL_Surface *mes;
@@ -393,7 +395,7 @@ static void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Color colB = {0,0,0};
 
     if(game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[i].score);
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
     }
     else
         sprintf(status,"タイムアップ");
