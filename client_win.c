@@ -43,8 +43,6 @@ int InitWindows(void)
     SDL_Event event;
     SDL_Rect dst_rect = { 100, 200 };
     SDL_Rect dst_rect2 = { 100, 400 };
-    SDL_Rect src_rect = { 0, 0, 0, 0};
-    SDL_Rect src_rect2 = { 0, 0, 0, 0 };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
     SDL_Surface *gMessage_title;
     SDL_Surface *gMessage_req;
