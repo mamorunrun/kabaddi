@@ -4,6 +4,7 @@
 *****************************************************************/
 
 #include<SDL/SDL.h>
+#include<SDL/SDL_ttf.h>
 #include<SDL/SDL_gfxPrimitives.h>
 #include"common.h"
 #include"client_func.h"
@@ -13,6 +14,7 @@ static SDL_Surface *buffer;
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
+static void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
 
@@ -142,6 +144,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
+        int i;
+
         for(i=0;i<cnum;i++){
             if(i == (loop % cnum)){
                 gClients[i].poi.x=700;
@@ -149,7 +153,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
-                gclients[i].color=1;
+                gClients[i].color=1;
             }
             else{
                 gClients[i].poi.x=200;
@@ -157,11 +161,11 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
-                gclients[i].color=0;
+                gClients[i].color=0;
             }
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-            if(gclient[i].ADsta==1){
+            if(gClients[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
             }
 
@@ -222,7 +226,7 @@ void WindowEvent(int clientID)
 
         if(game.flag == 1){
 
-            if(wiimote_t.keys.a)
+            if(wiimote.keys.a)
             {
                 game.flag == 0;
             }
@@ -373,7 +377,7 @@ void DrawChara(int n,int cnum)
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
     }
 
-    if(gclient[i].ADsta==1){
+    if(gClients[i].ADsta==1){
         rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
     }
 
@@ -384,7 +388,7 @@ void DrawChara(int n,int cnum)
 }
 
 
-static void DisplayStatus(void)//時間,自分の得点の描写
+void DisplayStatus(void)//時間,自分の得点の描写
 {
     char   status[64];
     SDL_Surface *mes;
@@ -393,7 +397,7 @@ static void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Color colB = {0,0,0};
 
     if(game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[i].score);
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
     }
     else
         sprintf(status,"タイムアップ");
