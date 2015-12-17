@@ -98,17 +98,18 @@ int Collision(int clientID,int befx,int befy){
             if(i != clientID){
                 if((gClients[i].poi.x - gClients[clientID].poi.x) <= 30 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 30){
                     if((gClients[i].poi.y - gClients[clientID].poi.y) <= 30 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 30){
-                        //printf("color\n");
-                        if(gClients[i].ADsta==1)
-                            gClients[clientID].Bflag++;//自分に当たり判定のフラグを立てる
                         gClients[clientID].poi.x = befx;
                         gClients[clientID].poi.y = befy;
-                        
-                        return i;/*i*/
+                        //printf("color\n");
+                        if(gClients[i].ADsta==1){
+                            gClients[clientID].Bflag++;//自分に当たり判定のフラグを立てる
+                            gClient[clientID].color=2;/*i*/
+                        }
                     }
                 }
             }
         }
+        break;
 
     case 1:
         for(i=0;i<cnum;i++){
@@ -126,14 +127,18 @@ int Collision(int clientID,int befx,int befy){
                         //printf("color\n");
                         if(gClients[i].Bflag==0){
                             gClients[clientID].Bflag++;
+                            gClients[i].Bflag++;
                             gClients[clientID].score++;
+                            gClients[clientID].color=3;
+                            gClient[i].color=2;
                             return i;
                         }
                     }
                 }
             }
         }
-    }
-    
+        break;
+    }    
+
     return -1;
 }

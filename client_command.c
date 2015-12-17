@@ -45,6 +45,7 @@ int ExecuteCommand(char *command)
     switch(com){
     case END_COMMAND:
         endFlag = 0;
+        Game.flag=0
         break;
 /*キャラを描画*/
     case CDRAW:
@@ -52,6 +53,13 @@ int ExecuteCommand(char *command)
         if(id != clientID)
             UpdatePos(id,x,y);
         break;
+    case BUMP:
+        if(id != clientID){
+            gClient[id].color=3;
+            gClient[x].Bflag++;
+            gClient[x].color=2;
+        }
+
     }
     return endFlag;
 }

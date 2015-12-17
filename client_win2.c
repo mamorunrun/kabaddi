@@ -144,6 +144,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 0;/*最初二人は守備*/
+                gclients[i].color=0;
             }
             else{
                 gClients[i].poi.x=700;
@@ -151,8 +152,9 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE])
                 gClients[i].poi.w=30;
                 gClients[i].poi.h=30;
                 gClients[i].ADsta = 1;/*最後は攻撃*/
+                gclients[i].color=1;
             }
-            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
+            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].color]);
 
             if(gclient[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
@@ -344,7 +346,7 @@ void DrawChara(int n,int cnum)
     lineColor(buffer, 700, 0, 700, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].]);
+        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].color]);
     }
     
     if(gclient[i].ADsta==1){
