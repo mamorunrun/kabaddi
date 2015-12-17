@@ -114,9 +114,9 @@ int main(int argc,char *argv[])
         wiimote.mode.acc = 1;
 
         switch(clientID){
-        case 1: wiimote.led.one =   1; break;
-        case 2: wiimote.led.two   = 1; break; 
-        case 3 :wiimote.led.three = 1; break;
+        case 0: wiimote.led.one =   1; break;
+        case 1: wiimote.led.two   = 1; break; 
+        case 2 :wiimote.led.three = 1; break;
 
         default: break;
         }
@@ -129,7 +129,7 @@ int main(int argc,char *argv[])
 	Uint32 next_frame=SDL_GetTicks();	// SDLライブラリの初期化からの経過ミリ秒数を取得
         
         dflag = 0;
-
+        game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
 
     /* メインイベントループ */
@@ -167,7 +167,7 @@ int main(int argc,char *argv[])
         }
         
         else{
-            game.flag == 1;
+            game.flag = 1;
             loop++;
             DrawChara(clientID,cnum);
             while(game.flag == 1){
