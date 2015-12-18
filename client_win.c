@@ -406,14 +406,14 @@ void WinDisplay(void)
     SDL_Surface *gMessage_score;
     
     for(i++;i<cnum;i++){
-        if(gClients[clientID].ADsta == 1){
+        if(gClients[i].ADsta == 1){
             SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
             
 //            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
 //            SDL_Rect src_rect = { 0, 0, gMessage_win->w,gMessage_win->h };
 //            SDL_BlitSurface(gMessage_win, &src_rect, buffer, &dst_rect);
 
-            sprintf(status,"score:%dpt",gClients[clientID].score);
+            sprintf(status,"score:%dpt",gClients[i].score);
 
             gMessage_score = TTF_RenderUTF8_Blended(font, status, /*0x191970ff*/colB);
             SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
