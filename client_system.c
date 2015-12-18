@@ -48,12 +48,10 @@ void Move(int clientID,int befx,int befy)
             gClients[clientID].poi.x = 0;
         else if(gClients[clientID].poi.x >= 800){
             end=0;
-game.flag
             if(gClients[clientID].Bflag > 0){
                 sprintf(data,"kabaddi,%d,%d,%d,%d\0",WIN,clientID,i,0);
                 SendData(data);
             }
-            else 
 
         }
         if(gClients[clientID].poi.y <= 0)

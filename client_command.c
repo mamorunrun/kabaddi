@@ -59,7 +59,11 @@ int ExecuteCommand(char *command)
             gClients[x].Bflag++;
             gClients[x].color=2;
         }
-
+        break;
+    case WIN:
+        WinDisplay();
+        game.flag=1;
+        break;
     }
     return endFlag;
 }

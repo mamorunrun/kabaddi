@@ -170,7 +170,7 @@ int main(int argc,char *argv[])
         else{
             game.flag = 1;
             loop++;
-            DrawChara(clientID,cnum);
+            //DrawChara(clientID,cnum);
             while(game.flag == 1){
                 WindowEvent(clientID);
                 
