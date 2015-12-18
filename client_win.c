@@ -38,7 +38,7 @@ int InitWindows(void)
     cID = clientID;
     int i;
     char *s,title[10];
-    int end = 0;
+    int end = 1;
 
     SDL_Event event;
     SDL_Rect dst_rect = { 100, 200 };
@@ -96,11 +96,11 @@ int InitWindows(void)
                 if(event.key.keysym.sym == SDLK_RETURN)  
                     end = 1;
                 break;
-
             default:
                 break;
             }
         }
+    }
 
         printf("aaa\n");
 
@@ -115,7 +115,6 @@ int InitWindows(void)
     SDL_Flip(gMainWindow);
     
     return 0;
-    }
 }
 
 /*****************************************************************
@@ -202,7 +201,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 *****************************************************************/
 void DestroyWindow(void)
 {
-	SDL_Quit();
+    TTF_CloseFont(font);
+    SDL_Quit();
 }
 
 void WindowEvent(int clientID)
