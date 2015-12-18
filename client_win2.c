@@ -25,7 +25,7 @@ int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
-
+static TTF_Font* Font;//DisplayStatus
 
 /*****************************************************************
 関数名	: InitWindows
@@ -167,12 +167,13 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].color=0;
             }
 
+            if(gClients[i].ADsta==1){
+                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
+            }
+
             printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-            /* if(gClients[i].ADsta==1){
-                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
-                }*/
 
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
@@ -210,9 +211,6 @@ void WindowEvent(int clientID)
     int mflag = 1;//moveflag
     int befx,befy;
 
-
-    printf("WindowEvent\n");
-
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -233,7 +231,7 @@ void WindowEvent(int clientID)
 
             if(wiimote.keys.a)
             {
-                game.flag == 0;
+                game.flag = 0;
             }
 
             break;
@@ -322,8 +320,10 @@ void WindowEvent(int clientID)
         if(wiimote.keys.one){
             a = 4;
         }
-        if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right && mflag)
-        {
+        if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
+        {    
+            printf("WindowEvent\n");
+
             if(wiimote.keys.up){
                 gClients[clientID].poi.x = gClients[clientID].poi.x-a;
                 //Move(clientID);
@@ -363,6 +363,7 @@ static
 
 void DrawChara(int n,int cnum)
 {
+
     int i;
     int num=3;
 
@@ -372,20 +373,21 @@ void DrawChara(int n,int cnum)
 
     //printf("%d\n",n);
     //Judge(n,cnum);
-
-    DisplayStatus();
-
     SDL_FillRect(buffer,NULL,0xffffffff);
+    //DisplayStatus();
+
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
-        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
+        if(gClients[i].ADsta==1){
+            rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
+        }
+        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].color]);
+        
+        
     }
-
-    if(gClients[i].ADsta==1){
-        rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
-    }
-
+    
+    
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
@@ -399,7 +401,7 @@ void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Surface *mes;
     SDL_Rect dst_rect = {0,0};//転送先
     SDL_Rect src_rect = {0,0,0,0};//転送元
-    TTF_Font* Font;
+    
     Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
@@ -413,5 +415,5 @@ void DisplayStatus(void)//時間,自分の得点の描写
 
 
     SDL_BlitSurface(mes, &src_rect, buffer, &dst_rect);
-
+ 
 }
