@@ -41,9 +41,9 @@ int InitWindows(void)
     int end = 1;
 
     SDL_Event event;
-    SDL_Rect dst_rect = { 200, 100 };
-    SDL_Rect dst_rect2 = { 250, 350 };
-    SDL_Rect dst_rect3 = { 250, 300 };
+    SDL_Rect dst_rect = { 350, 250 };
+    SDL_Rect dst_rect2 = { 370, 350 };
+    SDL_Rect dst_rect3 = { 250, 280 };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
     SDL_Surface *gMessage_title;
     SDL_Surface *gMessage_req;
@@ -107,7 +107,8 @@ int InitWindows(void)
         SDL_FillRect(buffer,NULL,0xffffffff);
 
         gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！", /*0x000000ff*/colB);
-        SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect3);
+    SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
+        SDL_BlitSurface(gMessage_chotomate, &src_rect3, buffer, &dst_rect3);   
 
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     SDL_Flip(gMainWindow);
@@ -391,6 +392,37 @@ void DrawChara(int n,int cnum)
     
     SDL_Flip(gMainWindow);
     dflag = 0;
+}
+
+void WinDisplay(void)
+{
+    int i;
+    char   status[64];
+
+    //   SDL_Rect dst_rect = { 350, 250 };
+    SDL_Rect dst_rect2 = { 350, 350 };
+//    SDL_Surface *gMessage_win;
+    SDL_Surface *gMessage_score;
+    
+    for(i++;i<cnum;i++){
+        if(gClients[clientID].ADsta == 1){
+            SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+            
+//            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
+//            SDL_Rect src_rect = { 0, 0, gMessage_win->w,gMessage_win->h };
+//            SDL_BlitSurface(gMessage_win, &src_rect, buffer, &dst_rect);
+
+            sprintf(status,"score:%dpt",gClients[clientID].score);
+
+            gMessage_score = TTF_RenderUTF8_Blended(font, status, /*0x191970ff*/colB);
+            SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
+            SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
+            
+            SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+            SDL_Flip(gMainWindow);
+        }
+    }
+
 }
 
 
