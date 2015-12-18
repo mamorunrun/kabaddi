@@ -56,6 +56,7 @@ int ExecuteCommand(char *command)
     case BUMP:
         if(id != clientID){
             gClients[id].color=3;
+            gClients[id].score++;
             gClients[x].Bflag++;
             gClients[x].color=2;
         }
