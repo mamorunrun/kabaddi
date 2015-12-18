@@ -271,7 +271,7 @@ void WindowEvent(int clientID)
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
                 }
-                Move(clientID,befx,befy);
+                //Move(clientID,befx,befy);
                 tflag++;
                 break;
             }
@@ -308,7 +308,7 @@ void WindowEvent(int clientID)
                 gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
             }
-            Move(clientID,befx,befy);
+            //Move(clientID,befx,befy);
             tflag++;
             break;
         }
@@ -348,13 +348,14 @@ void WindowEvent(int clientID)
                 
                 dirflag = up_dir;
             }
-            Move(clientID,befx,befy);
+            //Move(clientID,befx,befy);
             mflag = 0;
         }
         break;
     }
     //DrawChara(clientID);
-    
+    Move(clientID,befx,befy);
+
 }
 
 /*****
