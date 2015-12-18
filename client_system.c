@@ -127,8 +127,9 @@ int Collision(int clientID,int befx,int befy){
 
                 if((gClients[i].poi.x - (gClients[clientID].poi.x-20)) <= 70 && ((gClients[clientID].poi.x-20) - gClients[i].poi.x) <= 70){
                     if((gClients[i].poi.y - (gClients[clientID].poi.y-20)) <= 70 && ((gClients[clientID].poi.y-20) - gClients[i].poi.y) <= 70){
-                        //printf("color\n");
+                        printf("i=%d,client=%d\n",gClients[i].Bflag,gClients[clientID].Bflag);
                         if(gClients[i].Bflag==0){
+                            printf("BUMP\n");
                             gClients[clientID].Bflag++;
                             gClients[i].Bflag++;
                             gClients[clientID].score++;
