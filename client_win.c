@@ -25,7 +25,7 @@ int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
-
+static TTF_Font* Font;//DisplayStatus
 
 /*****************************************************************
 関数名	: InitWindows
@@ -373,10 +373,9 @@ void DrawChara(int n,int cnum)
 
     //printf("%d\n",n);
     //Judge(n,cnum);
-
+    SDL_FillRect(buffer,NULL,0xffffffff);
     //DisplayStatus();
 
-    SDL_FillRect(buffer,NULL,0xffffffff);
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
@@ -402,7 +401,7 @@ void DisplayStatus(void)//時間,自分の得点の描写
     SDL_Surface *mes;
     SDL_Rect dst_rect = {0,0};//転送先
     SDL_Rect src_rect = {0,0,0,0};//転送元
-    TTF_Font* Font;
+    
     Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
@@ -416,5 +415,5 @@ void DisplayStatus(void)//時間,自分の得点の描写
 
 
     SDL_BlitSurface(mes, &src_rect, buffer, &dst_rect);
-
+ 
 }
