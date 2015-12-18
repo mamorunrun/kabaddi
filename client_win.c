@@ -421,6 +421,7 @@ void WinDisplay(void)
             
             SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
             SDL_Flip(gMainWindow);
+            SDL_Delay(5000);
         }
     }
 
