@@ -230,7 +230,7 @@ void WindowEvent(int clientID)
 
             if(wiimote.keys.a)
             {
-                game.flag == 0;
+                game.flag = 0;
             }
 
             break;
@@ -362,6 +362,7 @@ static
 
 void DrawChara(int n,int cnum)
 {
+
     int i;
     int num=3;
 
@@ -372,7 +373,7 @@ void DrawChara(int n,int cnum)
     //printf("%d\n",n);
     //Judge(n,cnum);
 
-    DisplayStatus();
+    //DisplayStatus();
 
     SDL_FillRect(buffer,NULL,0xffffffff);
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
