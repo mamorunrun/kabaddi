@@ -167,12 +167,13 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].color=0;
             }
 
+            if(gClients[i].ADsta==1){
+                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
+            }
+
             printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
-            /* if(gClients[i].ADsta==1){
-                rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
-                }*/
 
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
@@ -379,13 +380,15 @@ void DrawChara(int n,int cnum)
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     for(i=0;i<cnum;i++){
+        if(gClients[i].ADsta==1){
+            rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
+        }
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
+        
+        
     }
-
-    if(gClients[i].ADsta==1){
-        rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
-    }
-
+    
+    
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     
     SDL_Flip(gMainWindow);
