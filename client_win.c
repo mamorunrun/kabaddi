@@ -382,7 +382,7 @@ void DrawChara(int n,int cnum)
         if(gClients[i].ADsta==1){
             rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
         }
-        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].ADsta]);
+        SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].color]);
         
         
     }
