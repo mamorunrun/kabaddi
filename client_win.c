@@ -78,7 +78,7 @@ int InitWindows(void)
     SDL_FillRect(buffer,NULL,0xffffffff);
 
     gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
-    gMessage_req = TTF_RenderUTF8_Blended(font2, "Enterキーを押すんだぜ！", /*0x191970ff*/colB);    
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);    
 
     SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
     SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
@@ -89,25 +89,24 @@ int InitWindows(void)
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     SDL_Flip(gMainWindow);
 
-    while(end == 0){
+    while(end){
         if(SDL_PollEvent(&event)){// イベント取得ができた場合イベントにより処理を分岐
             switch(event.type){
             case SDL_KEYDOWN:
-                if(event.key.keysym.sym == SDLK_RETURN)  
-                    end = 1;
-                break;
-            default:
-                break;
+                switch(event.key.keysym.sym){
+                case SDLK_SPACE:
+                    end = 0;
+                    break;
+                }
             }
         }
     }
-
         printf("aaa\n");
 
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってちょっと待って...", /*0x000000ff*/colB);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！...", /*0x000000ff*/colB);
 
         SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
 
