@@ -202,8 +202,6 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 void DestroyWindow(void)
 {
     TTF_CloseFont(font);
-    font = TTF_CloseFont("kochi-gothic-subst.ttf", 32);
-    font2 = TTF_CloseFont("kochi-gothic-subst.ttf",24);
     SDL_Quit();
 }
 
