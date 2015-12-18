@@ -420,6 +420,7 @@ void WinDisplay(void)
             SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
             
             SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+            printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             SDL_Flip(gMainWindow);
             SDL_Delay(5000);
         }
