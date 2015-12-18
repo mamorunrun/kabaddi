@@ -61,7 +61,7 @@ int ExecuteCommand(char *command)
         }
         break;
     case WIN:
-        WinDisplay();
+        //WinDisplay();
         game.flag=1;
         break;
     }
