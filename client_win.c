@@ -41,8 +41,9 @@ int InitWindows(void)
     int end = 1;
 
     SDL_Event event;
-    SDL_Rect dst_rect = { 100, 200 };
-    SDL_Rect dst_rect2 = { 100, 400 };
+    SDL_Rect dst_rect = { 200, 100 };
+    SDL_Rect dst_rect2 = { 250, 350 };
+    SDL_Rect dst_rect3 = { 250, 300 };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
     SDL_Surface *gMessage_title;
     SDL_Surface *gMessage_req;
@@ -67,8 +68,8 @@ int InitWindows(void)
     /* フォントの初期化 */
     TTF_Init();
 
-    font = TTF_OpenFont("kochi-gothic-subst.ttf",32); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
-    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
+    font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
+    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);
     
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
@@ -78,9 +79,8 @@ int InitWindows(void)
     SDL_FillRect(buffer,NULL,0xffffffff);
 
     gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
-    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);    
-
     SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
 
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
@@ -106,9 +106,8 @@ int InitWindows(void)
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！...", /*0x000000ff*/colB);
-
-        SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！", /*0x000000ff*/colB);
+        SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect3);
 
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     SDL_Flip(gMainWindow);
@@ -201,6 +200,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 void DestroyWindow(void)
 {
     TTF_CloseFont(font);
+    TTF_CloseFont(font2);
     SDL_Quit();
 }
 
