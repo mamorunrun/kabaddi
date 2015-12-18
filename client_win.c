@@ -405,8 +405,9 @@ void WinDisplay(void)
 //    SDL_Surface *gMessage_win;
     SDL_Surface *gMessage_score;
     
-    for(i++;i<cnum;i++){
+    for(i=0;i<cnum;i++){
         if(gClients[i].ADsta == 1){
+            printf("win\n");
             SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
             
 //            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
