@@ -41,8 +41,9 @@ int InitWindows(void)
     int end = 1;
 
     SDL_Event event;
-    SDL_Rect dst_rect = { 100, 200 };
-    SDL_Rect dst_rect2 = { 100, 400 };
+    SDL_Rect dst_rect = { 350, 250 };
+    SDL_Rect dst_rect2 = { 370, 350 };
+    SDL_Rect dst_rect3 = { 250, 280 };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
     SDL_Surface *gMessage_title;
     SDL_Surface *gMessage_req;
@@ -67,8 +68,8 @@ int InitWindows(void)
     /* フォントの初期化 */
     TTF_Init();
 
-    font = TTF_OpenFont("kochi-gothic-subst.ttf",32); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
-    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
+    font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
+    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);
     
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
@@ -78,9 +79,8 @@ int InitWindows(void)
     SDL_FillRect(buffer,NULL,0xffffffff);
 
     gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
-    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);    
-
     SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
 
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
@@ -106,9 +106,9 @@ int InitWindows(void)
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！...", /*0x000000ff*/colB);
-
-        SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！", /*0x000000ff*/colB);
+    SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
+        SDL_BlitSurface(gMessage_chotomate, &src_rect3, buffer, &dst_rect3);   
 
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     SDL_Flip(gMainWindow);
@@ -201,7 +201,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 void DestroyWindow(void)
 {
     TTF_CloseFont(font);
-    font = TTF_CloseFont("kochi-gothic-subst.ttf", 24);
+    TTF_CloseFont(font2);
     SDL_Quit();
 }
 
@@ -271,7 +271,7 @@ void WindowEvent(int clientID)
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
                 }
-                Move(clientID,befx,befy);
+                //Move(clientID,befx,befy);
                 tflag++;
                 break;
             }
@@ -308,7 +308,7 @@ void WindowEvent(int clientID)
                 gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
             }
-            Move(clientID,befx,befy);
+            //Move(clientID,befx,befy);
             tflag++;
             break;
         }
@@ -348,13 +348,14 @@ void WindowEvent(int clientID)
                 
                 dirflag = up_dir;
             }
-            Move(clientID,befx,befy);
+            //Move(clientID,befx,befy);
             mflag = 0;
         }
         break;
     }
     //DrawChara(clientID);
-    
+    Move(clientID,befx,befy);
+
 }
 
 /*****
@@ -392,6 +393,39 @@ void DrawChara(int n,int cnum)
     
     SDL_Flip(gMainWindow);
     dflag = 0;
+}
+
+void WinDisplay(void)
+{
+    int i;
+    char   status[64];
+
+    //   SDL_Rect dst_rect = { 350, 250 };
+    SDL_Rect dst_rect2 = { 350, 350 };
+//    SDL_Surface *gMessage_win;
+    SDL_Surface *gMessage_score;
+    
+    for(i=0;i<cnum;i++){
+        if(gClients[i].ADsta == 1){
+            printf("win\n");
+            SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+            
+//            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
+//            SDL_Rect src_rect = { 0, 0, gMessage_win->w,gMessage_win->h };
+//            SDL_BlitSurface(gMessage_win, &src_rect, buffer, &dst_rect);
+
+            sprintf(status,"score:%dpt",gClients[i].score);
+
+            gMessage_score = TTF_RenderUTF8_Blended(font, status, /*0x191970ff*/colB);
+            SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
+            SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
+            
+            SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+            SDL_Flip(gMainWindow);
+            SDL_Delay(5000);
+        }
+    }
+
 }
 
 
