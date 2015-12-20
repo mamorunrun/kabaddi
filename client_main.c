@@ -175,6 +175,8 @@ int main(int argc,char *argv[])
                 WindowEvent(clientID);
                 
             }
+
+
             
             if(GameWindows(clientID,name,loop)==-1){
                 fprintf(stderr,"setup failed : GameWindows\n");
