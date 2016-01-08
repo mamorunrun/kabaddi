@@ -430,6 +430,6 @@ void DisplayStatus(void)//時間,自分の得点の描写
     SDL_FillRect(stbar,NULL,0xffffffff);
     SDL_BlitSurface(mes, NULL, stbar, NULL);
     SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
-    SDL_Flip(gMainWindow);
+    //SDL_Flip(gMainWindow);
 
 }
