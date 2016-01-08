@@ -81,7 +81,7 @@ int InitWindows(void)
 
     font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
     font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);
-    
+
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
     SDL_WM_SetCaption(title,NULL);
@@ -414,7 +414,7 @@ void DisplayStatus(void)//時間,自分の得点の描写
     //SDL_Rect dst_rect = {0,0};//転送先
     //SDL_Rect src_rect = {0,0,0,0};//転送元
     printf("callback\n");
-    Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
+   
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
         printf("%s\n",status);
@@ -422,13 +422,13 @@ void DisplayStatus(void)//時間,自分の得点の描写
     else
         sprintf(status,"タイムアップ");
 
-    mes = TTF_RenderUTF8_Blended(Font, status, colB);
-    Src_rect.w = mes->w;
-    Src_rect.h = mes->h;//転送元
+    mes = TTF_RenderUTF8_Blended(font2, status, colB);
+    //Src_rect.w = mes->w;
+    //Src_rect.h = mes->h;//転送元
 
     /* 背景を白にする */
     SDL_FillRect(stbar,NULL,0xffffffff);
-    SDL_BlitSurface(mes, &Src_rect, stbar, &Dst_rect);
+    SDL_BlitSurface(mes, NULL, stbar, NULL);
     SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
     SDL_Flip(gMainWindow);
 
