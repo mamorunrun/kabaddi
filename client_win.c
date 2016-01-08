@@ -221,6 +221,7 @@ void WindowEvent(int clientID)
             wiimote_disconnect(&wiimote);
             break;
         }
+
         if (wiimote.keys.home) {
             printf("home\n");
             wiimote_speaker_free(&wiimote);
@@ -341,13 +342,14 @@ void WindowEvent(int clientID)
                     
                     dirflag = up_dir;
                 }
-                //Move(clientID,befx,befy);
+                Move(clientID,befx,befy);
                 mflag = 0;
             }
-            break;
+            //Move(clientID,befx,befy);
+            //break;
         }
         //DrawChara(clientID);
-        Move(clientID,befx,befy);
+
 
         if(game.flag == 1){
             if(gClients[clientID].restart==0){
@@ -357,8 +359,6 @@ void WindowEvent(int clientID)
                     SendData(data);
                 }
             }
-            
-            break;
         }
     }
 }
