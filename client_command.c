@@ -25,6 +25,9 @@ int ExecuteCommand(char *command)
     int y=atoi(strtok(NULL, ","));
     int	endFlag = 1;
 
+    int i;
+    int j;
+
 
     /*printf("%s\n",app_id);
     printf("app_id = %s\n",app_id);
@@ -59,6 +62,23 @@ int ExecuteCommand(char *command)
             gClients[id].score++;
             gClients[x].Bflag++;
             gClients[x].color=2;
+        }
+        break;
+    case RESTART:
+        j = 0;
+        gClients[id].restart=1;
+        for(i=0;i<cnum;i++)
+        {
+            if(gClients[i].restart == 1)
+                j++;
+        }
+        if(j == cnum)
+        {
+            for(i=0;i<cnum;i++)
+            {
+                gClients[i].restart=0;
+            }
+            game.flag = 0;
         }
         break;
     case WIN:
