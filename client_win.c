@@ -72,7 +72,7 @@ int InitWindows(void)
         exit(-1);
     }
 
-     if((stbar = SDL_CreateRGBSurface(SDL_SWSURFACE,1000,50,32,0,0,0,0))==NULL){
+     if((stbar = SDL_CreateRGBSurface(SDL_SWSURFACE,1000, 50,32,0,0,0,0))==NULL){
         printf("failed to initialize videomode.\n");
         exit(-1);
     }
@@ -426,7 +426,8 @@ void DisplayStatus(void)//時間,自分の得点の描写
     Src_rect.w = mes->w;
     Src_rect.h = mes->h;//転送元
 
-
+    /* 背景を白にする */
+    SDL_FillRect(stbar,NULL,0xffffffff);
     SDL_BlitSurface(mes, &Src_rect, stbar, &Dst_rect);
     SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
     SDL_Flip(gMainWindow);

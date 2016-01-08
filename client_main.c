@@ -140,7 +140,7 @@ int main(int argc,char *argv[])
         dflag = 0;
         game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
-
+        thr_time=SDL_CreateThread(thread_time,NULL);
     /* メインイベントループ */
     while(endFlag){
 /*
@@ -161,10 +161,10 @@ int main(int argc,char *argv[])
         timer.now=SDL_GetTicks();//現在時間を取得
         timer.wit=timer.now-timer.lev;//待ち時間を計算
 
-        if(timer.wit > 1000){
+        /*if(timer.wit > 1000){
             game.restTime--;
             timer.lev=SDL_GetTicks();//経過時間を更新
-        }
+            }*/
 
         
         
