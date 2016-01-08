@@ -11,10 +11,13 @@
 
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
+static SDL_Surface *stbar;//時間,得点を表すバッファ
+SDL_Rect srect = {0, 0};//statusバッファからの領域
+SDL_Rect brect = {0, 51};//bufferからの領域
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
-static void DisplayStatus(void);
+void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
 
@@ -27,6 +30,10 @@ static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
 static TTF_Font* Font;//DisplayStatus
 
+/*時間描画のためstatic*/
+static SDL_Rect Src_rect;//時間描画
+static SDL_Rect Dst_rect = {0,0};//転送先
+static SDL_Surface *mes;
 /*****************************************************************
 関数名	: InitWindows
 機能	: メインウインドウの表示，設定を行う
@@ -56,7 +63,7 @@ int InitWindows(void)
     }
     
     /* メインのウインドウを作成する */
-    if((gMainWindow = SDL_SetVideoMode(1000,600, 32, SDL_SWSURFACE)) == NULL) {
+    if((gMainWindow = SDL_SetVideoMode(1000,650, 32, SDL_SWSURFACE)) == NULL) {
         printf("failed to initialize videomode.\n");
         return -1;
     }
@@ -65,12 +72,16 @@ int InitWindows(void)
         exit(-1);
     }
 
+     if((stbar = SDL_CreateRGBSurface(SDL_SWSURFACE,1000, 50,32,0,0,0,0))==NULL){
+        printf("failed to initialize videomode.\n");
+        exit(-1);
+    }
     /* フォントの初期化 */
     TTF_Init();
 
     font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
     font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);
-    
+
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
     SDL_WM_SetCaption(title,NULL);
@@ -86,7 +97,7 @@ int InitWindows(void)
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
     SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
 
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
 
     while(end){
@@ -110,7 +121,7 @@ int InitWindows(void)
     SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
         SDL_BlitSurface(gMessage_chotomate, &src_rect3, buffer, &dst_rect3);   
 
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
     
     return 0;
@@ -186,7 +197,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 *****************************************************************************/
         }
         printf("loop=%d\n",loop);
-        SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+        SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
 	SDL_Flip(gMainWindow);
         
 
@@ -368,7 +379,7 @@ void DrawChara(int n,int cnum)
     //printf("%d\n",n);
     //Judge(n,cnum);
     SDL_FillRect(buffer,NULL,0xffffffff);
-    //DisplayStatus();
+    DisplayStatus();
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -382,7 +393,7 @@ void DrawChara(int n,int cnum)
     }
     
     
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     
     SDL_Flip(gMainWindow);
     dflag = 0;
@@ -391,23 +402,28 @@ void DrawChara(int n,int cnum)
 
 void DisplayStatus(void)//時間,自分の得点の描写
 {
+    //game.restTime--;
     char   status[64];
-    SDL_Surface *mes;
-    SDL_Rect dst_rect = {0,0};//転送先
-    SDL_Rect src_rect = {0,0,0,0};//転送元
-    
-    Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
+    //  SDL_Surface *mes;
+    //SDL_Rect dst_rect = {0,0};//転送先
+    //SDL_Rect src_rect = {0,0,0,0};//転送元
+    printf("callback\n");
+   
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
+        printf("%s\n",status);
     }
     else
         sprintf(status,"タイムアップ");
 
-    mes = TTF_RenderUTF8_Blended(Font, status, colB);
-    src_rect.w = mes->w;
-    src_rect.h = mes->h;
+    mes = TTF_RenderUTF8_Blended(font2, status, colB);
+    //Src_rect.w = mes->w;
+    //Src_rect.h = mes->h;//転送元
 
+    /* 背景を白にする */
+    SDL_FillRect(stbar,NULL,0xffffffff);
+    SDL_BlitSurface(mes, NULL, stbar, NULL);
+    SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
+    //SDL_Flip(gMainWindow);
 
-    SDL_BlitSurface(mes, &src_rect, buffer, &dst_rect);
- 
 }
