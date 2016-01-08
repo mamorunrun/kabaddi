@@ -11,10 +11,13 @@
 
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
+static SDL_Surface *stbar;//時間,得点を表すバッファ
+SDL_Rect srect = {0, 50};//statusバッファからの領域
+SDL_Rect brect = {0, 51};//bufferからの領域
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
-static void DisplayStatus(void);
+//static void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
 
@@ -27,6 +30,10 @@ static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
 static TTF_Font* Font;//DisplayStatus
 
+/*時間描画のためstatic*/
+static SDL_Rect Src_rect;//時間描画
+static SDL_Rect Dst_rect = {0,0};//転送先
+static SDL_Surface *mes;
 /*****************************************************************
 関数名	: InitWindows
 機能	: メインウインドウの表示，設定を行う
@@ -56,7 +63,7 @@ int InitWindows(void)
     }
     
     /* メインのウインドウを作成する */
-    if((gMainWindow = SDL_SetVideoMode(1000,600, 32, SDL_SWSURFACE)) == NULL) {
+    if((gMainWindow = SDL_SetVideoMode(1000,650, 32, SDL_SWSURFACE)) == NULL) {
         printf("failed to initialize videomode.\n");
         return -1;
     }
@@ -86,7 +93,7 @@ int InitWindows(void)
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
     SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
 
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
 
     while(end){
@@ -110,7 +117,7 @@ int InitWindows(void)
     SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
         SDL_BlitSurface(gMessage_chotomate, &src_rect3, buffer, &dst_rect3);   
 
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
     
     return 0;
@@ -136,7 +143,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        game.restTime = 30;/*残り30秒*/
+        game.restTime = 300;/*残り30秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -186,7 +193,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 *****************************************************************************/
         }
         printf("loop=%d\n",loop);
-        SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+        SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
 	SDL_Flip(gMainWindow);
         
 
@@ -388,7 +395,7 @@ void DrawChara(int n,int cnum)
     }
     
     
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     
     SDL_Flip(gMainWindow);
     dflag = 0;
@@ -397,23 +404,27 @@ void DrawChara(int n,int cnum)
 
 void DisplayStatus(void)//時間,自分の得点の描写
 {
+    game.restTime--;
     char   status[64];
-    SDL_Surface *mes;
-    SDL_Rect dst_rect = {0,0};//転送先
-    SDL_Rect src_rect = {0,0,0,0};//転送元
-    
+    //  SDL_Surface *mes;
+    //SDL_Rect dst_rect = {0,0};//転送先
+    //SDL_Rect src_rect = {0,0,0,0};//転送元
+    printf("callback\n");
     Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
+        printf("%s\n",status);
     }
     else
         sprintf(status,"タイムアップ");
 
     mes = TTF_RenderUTF8_Blended(Font, status, colB);
-    src_rect.w = mes->w;
-    src_rect.h = mes->h;
+    Src_rect.w = mes->w;
+    Src_rect.h = mes->h;//転送元
 
 
-    SDL_BlitSurface(mes, &src_rect, buffer, &dst_rect);
- 
+    SDL_BlitSurface(mes, &Src_rect, stbar, &Dst_rect);
+    SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
+    SDL_Flip(gMainWindow);
+
 }

@@ -12,9 +12,11 @@
 #include <libcwiimote/wiimote_api.h>
 
 // タイマーで呼び出されるコールバック関数
-//Uint32 callbackfunc(Uint32 interval, void *param){
-//	return interval;
-//}
+Uint32 callbackfunc(Uint32 interval, void *param){
+
+    DisplayStatus();
+    return interval;
+}
 
 typedef struct//フレームレート用の変数
 {
@@ -34,14 +36,21 @@ wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
 wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
 
 SDL_Thread *thr_net;
-
+SDL_Thread *thr_time;
 Game game;
+SDL_TimerID timer_id1;	//　タイマ割り込みを行うためのタイマのID
 
 static int thread_net(void *data)
 {
     while(endFlag){
 	endFlag = SendRecvManager();
     }
+    return 0;
+}
+
+static int thread_time(void *data){
+    timer_id1=SDL_AddTimer(100, callbackfunc, NULL);
+   
     return 0;
 }
 
@@ -161,7 +170,7 @@ int main(int argc,char *argv[])
         
         if(game.restTime > 0 && game.flag == 0){
             WindowEvent(clientID);  
-            printf("DrawChara\n");
+            printf("game.restTime:\n");
             DrawChara(clientID,cnum);
             
             
@@ -196,6 +205,7 @@ int main(int argc,char *argv[])
     }
 
     /* 終了処理 */
+    SDL_RemoveTimer(timer_id1);
 	DestroyWindow();
 	CloseSoc();
 
