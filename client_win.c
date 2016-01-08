@@ -72,6 +72,10 @@ int InitWindows(void)
         exit(-1);
     }
 
+     if((stbar = SDL_CreateRGBSurface(SDL_SWSURFACE,1000,50,32,0,0,0,0))==NULL){
+        printf("failed to initialize videomode.\n");
+        exit(-1);
+    }
     /* フォントの初期化 */
     TTF_Init();
 
@@ -412,7 +416,7 @@ void DisplayStatus(void)//時間,自分の得点の描写
     printf("callback\n");
     Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime/10,gClients[clientID].score);
         printf("%s\n",status);
     }
     else

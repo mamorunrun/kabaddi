@@ -170,7 +170,7 @@ int main(int argc,char *argv[])
         
         if(game.restTime > 0 && game.flag == 0){
             WindowEvent(clientID);  
-            printf("game.restTime:\n");
+            printf("game.restTime:%d\n",game.restTime);
             DrawChara(clientID,cnum);
             
             
