@@ -17,7 +17,7 @@ SDL_Rect brect = {0, 51};//bufferからの領域
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
-static void DisplayStatus(void);
+void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
 
@@ -385,7 +385,7 @@ void DrawChara(int n,int cnum)
     //printf("%d\n",n);
     //Judge(n,cnum);
     SDL_FillRect(buffer,NULL,0xffffffff);
-    DisplayStatus();
+    //DisplayStatus();
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -408,7 +408,7 @@ void DrawChara(int n,int cnum)
 
 void DisplayStatus(void)//時間,自分の得点の描写
 {
-    //game.restTime--;
+    game.restTime--;
     char   status[64];
     //  SDL_Surface *mes;
     //SDL_Rect dst_rect = {0,0};//転送先
