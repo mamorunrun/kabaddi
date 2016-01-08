@@ -350,10 +350,10 @@ void WindowEvent(int clientID)
         Move(clientID,befx,befy);
 
         if(game.flag == 1){
-            if(gClients[clientID].restart==1){
+            if(gClients[clientID].restart==0){
                 if(wiimote.keys.a)
                 {
-                    sprintf(data,"kabaddi,%d,%d,%d,%d\0",WIN,clientID,0,0);
+                    sprintf(data,"kabaddi,%d,%d,%d,%d\0",RESTART,clientID,0,0);
                     SendData(data);
                 }
             }
