@@ -12,7 +12,7 @@
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static SDL_Surface *stbar;//時間,得点を表すバッファ
-SDL_Rect srect = {0, 50};//statusバッファからの領域
+SDL_Rect srect = {0, 0};//statusバッファからの領域
 SDL_Rect brect = {0, 51};//bufferからの領域
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
@@ -147,7 +147,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        game.restTime = 300;/*残り30秒*/
+        game.restTime = 60;/*残り30秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -416,7 +416,7 @@ void DisplayStatus(void)//時間,自分の得点の描写
     printf("callback\n");
     Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",game.restTime/10,gClients[clientID].score);
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime/2,gClients[clientID].score);
         printf("%s\n",status);
     }
     else
