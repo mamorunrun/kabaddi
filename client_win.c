@@ -211,6 +211,8 @@ void WindowEvent(int clientID)
     int mflag = 1;//moveflag
     int befx,befy;
 
+    char	data[MAX_DATA];
+    
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -350,8 +352,18 @@ void WindowEvent(int clientID)
             }
             Move(clientID,befx,befy);
             mflag = 0;
+            break;
         }
-        break;
+        if(game.flag == 1){
+            if(gClients[clientID].restart==0){
+                if(wiimote.keys.a)
+                {
+                    sprintf(data,"kabaddi,%d,%d,%d,%d\0",RESTART,clientID,0,0);
+                    SendData(data);
+                }
+            }
+            break;
+        }
     }
     //DrawChara(clientID);
     

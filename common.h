@@ -33,6 +33,8 @@
 #define WIN             'W'                             /*勝ちコマンド*/
 #define LOSE            'L'                             /*負けコマンド*/
 
+#define RESTART         'R'                             /*リスタートコマンド*/
+
 extern int clientID; 
 typedef struct {
     int restTime;               /* 残り時間 */
@@ -49,8 +51,8 @@ typedef struct{
         int             ADsta;//攻撃守備のフラグ　ATK1 DEF0
         int             Bflag;//当たり判定のフラグ
         int             score;//得点の保存
-        int color;
-
+        int             color;
+        int             restart;
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];
