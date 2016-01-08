@@ -28,7 +28,6 @@ int ExecuteCommand(char *command)
     int i;
     int j;
 
-
     /*printf("%s\n",app_id);
     printf("app_id = %s\n",app_id);
     printf("id=%d\n",id);
@@ -56,14 +55,6 @@ int ExecuteCommand(char *command)
         if(id != clientID)
             UpdatePos(id,x,y);
         break;
-    case BUMP:
-        if(id != clientID){
-            gClients[id].color=3;
-            gClients[id].score++;
-            gClients[x].Bflag++;
-            gClients[x].color=2;
-        }
-        break;
     case RESTART:
         j = 0;
         gClients[id].restart=1;
@@ -81,9 +72,12 @@ int ExecuteCommand(char *command)
             game.flag = 0;
         }
         break;
-    case WIN:
-        //WinDisplay();
-        game.flag=1;
+    case BUMP:
+        if(id != clientID){
+            gClients[id].color=3;
+            gClients[x].Bflag++;
+            gClients[x].color=2;
+        }
         break;
     }
     return endFlag;

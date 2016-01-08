@@ -32,6 +32,7 @@
 #define BUMP            'B'                             /*当たり判定のコマンド*/
 #define WIN             'W'                             /*勝ちコマンド*/
 #define LOSE            'L'                             /*負けコマンド*/
+
 #define RESTART         'R'                             /*リスタートコマンド*/
 
 extern int clientID; 

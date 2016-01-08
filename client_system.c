@@ -24,7 +24,6 @@ void Move(int clientID,int befx,int befy)
     int			dataSize = 0;
 
     int i = -1;
-    int end=1;
 
     dflag = 1;
     
@@ -46,14 +45,8 @@ void Move(int clientID,int befx,int befy)
     case 1:
         if(gClients[clientID].poi.x <= 0)
             gClients[clientID].poi.x = 0;
-        else if(gClients[clientID].poi.x >= 800){
-            end=0;
-            if(gClients[clientID].Bflag > 0){
-                sprintf(data,"kabaddi,%d,%d,%d,%d\0",WIN,clientID,i,0);
-                SendData(data);
-            }
-
-        }
+        else if(gClients[clientID].poi.x + 30 >= 1000)
+            gClients[clientID].poi.x = 1000 - 30;
         if(gClients[clientID].poi.y <= 0)
             gClients[clientID].poi.y = 0;
         else if(gClients[clientID].poi.y + 30 >= 600)
@@ -88,9 +81,8 @@ void Move(int clientID,int befx,int befy)
         }
         printf("%s\n",data);
         
-        if(end){
-            SendData(data);
-        }
+        SendData(data);
+    
 }
 /**************************************************
 当たり判定  clientID:自分のID 

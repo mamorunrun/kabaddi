@@ -170,13 +170,11 @@ int main(int argc,char *argv[])
         else{
             game.flag = 1;
             loop++;
-            WinDisplay();
+            DrawChara(clientID,cnum);
             while(game.flag == 1){
                 WindowEvent(clientID);
                 
             }
-
-
             
             if(GameWindows(clientID,name,loop)==-1){
                 fprintf(stderr,"setup failed : GameWindows\n");

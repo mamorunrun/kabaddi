@@ -43,7 +43,7 @@ extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);
 
 extern void WindowEvent(int clientID);
-extern void WinDisplay(void);
+
 
 /*client_system.c*/
 extern void UpdatePos(int n,int x,int y);

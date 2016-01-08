@@ -41,9 +41,8 @@ int InitWindows(void)
     int end = 1;
 
     SDL_Event event;
-    SDL_Rect dst_rect = { 350, 250 };
-    SDL_Rect dst_rect2 = { 370, 350 };
-    SDL_Rect dst_rect3 = { 250, 280 };
+    SDL_Rect dst_rect = { 100, 200 };
+    SDL_Rect dst_rect2 = { 100, 400 };
 //    SDL_Rect src_rect3 = { 100, 400, gMessage->w, gMessage->h };
     SDL_Surface *gMessage_title;
     SDL_Surface *gMessage_req;
@@ -68,8 +67,8 @@ int InitWindows(void)
     /* フォントの初期化 */
     TTF_Init();
 
-    font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
-    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);
+    font = TTF_OpenFont("kochi-gothic-subst.ttf",32); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
+    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24); // フォントの設定kochi-gothic-substフォントを24ポイントで使用（読み込み）
     
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
@@ -79,8 +78,9 @@ int InitWindows(void)
     SDL_FillRect(buffer,NULL,0xffffffff);
 
     gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
+    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);    
+
     SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
-    gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
 
     SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
@@ -106,9 +106,9 @@ int InitWindows(void)
         /* 背景を白にする */
         SDL_FillRect(buffer,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！", /*0x000000ff*/colB);
-    SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
-        SDL_BlitSurface(gMessage_chotomate, &src_rect3, buffer, &dst_rect3);   
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！...", /*0x000000ff*/colB);
+
+        SDL_BlitSurface(gMessage_chotomate, &src_rect2, buffer, &dst_rect2);
 
     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
     SDL_Flip(gMainWindow);
@@ -201,7 +201,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 void DestroyWindow(void)
 {
     TTF_CloseFont(font);
-    TTF_CloseFont(font2);
+    font = TTF_CloseFont("kochi-gothic-subst.ttf", 24);
     SDL_Quit();
 }
 
@@ -210,8 +210,6 @@ void WindowEvent(int clientID)
     int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
-
-    char data[MAX_DATA];
 
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
@@ -229,136 +227,134 @@ void WindowEvent(int clientID)
             SendEndCommand();
         }
 
-        if(game.flag == 0){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
-            if(tflag == 0)
-            {
-                if(wiimote.keys.two)
-                {
-                    switch(dirflag){
-                    case up_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                        break;
-                    case up_right_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                        gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        break;
-                    case right_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        break;
-                    case right_down_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        break;
-                    case down_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        break;
-                    case down_left_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        break;
-                    case left_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        break;
-                    case left_up_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                        break;
-                    }
-                    //Move(clientID,befx,befy);
-                    tflag++;
-                    break;
-                }
-            }
-            else if(tflag == 1)
-            {
-                switch(dirflag){
-                case up_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;
-                case up_right_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;
-                case right_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;
-                case right_down_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;
-                case down_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;
-                case down_left_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;
-                case left_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;
-                case left_up_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;
-                }
-                //Move(clientID,befx,befy);
-                tflag++;
-                break;
-            }
-            else if(wiimote.keys.two != 1)
-            {
-                tflag = 0;
-            }
-            
-            if(wiimote.keys.one){
-                a = 4;
-            }
-            if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
-            {    
-                printf("WindowEvent\n");
-                
-                if(wiimote.keys.up){
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-a;
-                    //Move(clientID);
-                    
-                    dirflag = left_dir;
-                }
-                else if (wiimote.keys.down){
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+a;
-                    //Move(clientID);
-                    
-                    dirflag = right_dir;
-                }
-                if(wiimote.keys.left){
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+a;
-                    //Move(clientID);
-                    
-                    dirflag = down_dir;
-                }
-                else if(wiimote.keys.right){
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-a;
-                    //Move(clientID);
-                    
-                    dirflag = up_dir;
-                }
-                //Move(clientID,befx,befy);
-                mflag = 0;
-            }
-            break;
-        }
-        //DrawChara(clientID);
-        Move(clientID,befx,befy);
-
         if(game.flag == 1){
-            
+
             if(wiimote.keys.a)
             {
                 game.flag = 0;
             }
-            
+
             break;
         }
+
+        if(tflag == 0)
+        {
+            if(wiimote.keys.two)
+            {
+                switch(dirflag){
+                case up_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    break;
+                case up_right_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+                case right_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+                case right_down_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    break;
+                case down_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    break;
+                case down_left_dir:
+                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+                case left_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+                case left_up_dir:
+                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    break;
+                }
+                Move(clientID,befx,befy);
+                tflag++;
+                break;
+            }
+        }
+        else if(tflag == 1)
+        {
+            switch(dirflag){
+            case up_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    break;
+            case up_right_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+            case right_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                    break;
+            case right_down_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    break;
+            case down_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                    break;
+            case down_left_dir:
+                gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+            case left_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                    break;
+            case left_up_dir:
+                gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                    break;
+            }
+            Move(clientID,befx,befy);
+            tflag++;
+            break;
+        }
+        else if(wiimote.keys.two != 1)
+        {
+            tflag = 0;
+        }
+        
+        if(wiimote.keys.one){
+            a = 4;
+        }
+        if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
+        {    
+            printf("WindowEvent\n");
+
+            if(wiimote.keys.up){
+                gClients[clientID].poi.x = gClients[clientID].poi.x-a;
+                //Move(clientID);
+                
+                dirflag = left_dir;
+            }
+            else if (wiimote.keys.down){
+                gClients[clientID].poi.x = gClients[clientID].poi.x+a;
+                //Move(clientID);
+                
+                dirflag = right_dir;
+            }
+            if(wiimote.keys.left){
+                gClients[clientID].poi.y = gClients[clientID].poi.y+a;
+                //Move(clientID);
+                
+                dirflag = down_dir;
+            }
+            else if(wiimote.keys.right){
+                gClients[clientID].poi.y = gClients[clientID].poi.y-a;
+                //Move(clientID);
+                
+                dirflag = up_dir;
+            }
+            Move(clientID,befx,befy);
+            mflag = 0;
+        }
+        break;
     }
+    //DrawChara(clientID);
+    
 }
 
 /*****
@@ -396,38 +392,6 @@ void DrawChara(int n,int cnum)
     
     SDL_Flip(gMainWindow);
     dflag = 0;
-}
-
-void WinDisplay(void)
-{
-    int i;
-    char   status[64];
-
-    //   SDL_Rect dst_rect = { 350, 250 };
-    SDL_Rect dst_rect2 = { 350, 350 };
-//    SDL_Surface *gMessage_win;
-    SDL_Surface *gMessage_score;
-    
-    for(i=0;i<cnum;i++){
-        if(gClients[i].ADsta == 1){
-            printf("win\n");
-            SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
-            
-//            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
-//            SDL_Rect src_rect = { 0, 0, gMessage_win->w,gMessage_win->h };
-//            SDL_BlitSurface(gMessage_win, &src_rect, buffer, &dst_rect);
-
-            sprintf(status,"score:%dpt",gClients[i].score);
-
-            gMessage_score = TTF_RenderUTF8_Blended(font, status, /*0x191970ff*/colB);
-            SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
-            SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
-            
-            SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
-            SDL_Flip(gMainWindow);
-        }
-    }
-
 }
 
 
