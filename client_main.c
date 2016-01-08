@@ -36,7 +36,7 @@ wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
 wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
 
 SDL_Thread *thr_net;
-SDL_Thread *thr_time;
+//SDL_Thread *thr_time;
 Game game;
 SDL_TimerID timer_id1;	//　タイマ割り込みを行うためのタイマのID
 
@@ -48,11 +48,11 @@ static int thread_net(void *data)
     return 0;
 }
 
-static int thread_time(void *data){
+/*static int thread_time(void *data){
     timer_id1=SDL_AddTimer(1000, callbackfunc, NULL);
    
     return 0;
-}
+    }*/
 
 int main(int argc,char *argv[])
 {
@@ -140,7 +140,8 @@ int main(int argc,char *argv[])
         dflag = 0;
         game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
-        thr_time=SDL_CreateThread(thread_time,NULL);
+        //thr_time=SDL_CreateThread(thread_time,NULL);
+        timer_id1=SDL_AddTimer(1000, callbackfunc, NULL);
     /* メインイベントループ */
     while(endFlag){
 /*
