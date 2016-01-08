@@ -49,7 +49,7 @@ static int thread_net(void *data)
 }
 
 static int thread_time(void *data){
-    timer_id1=SDL_AddTimer(500, callbackfunc, NULL);
+    timer_id1=SDL_AddTimer(1000, callbackfunc, NULL);
    
     return 0;
 }

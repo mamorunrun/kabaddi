@@ -147,7 +147,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        game.restTime = 60;/*残り30秒*/
+        game.restTime = 30;/*残り30秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -416,7 +416,7 @@ void DisplayStatus(void)//時間,自分の得点の描写
     printf("callback\n");
     Font = TTF_OpenFont("kochi-gothic-subst.ttf",16); // フォントの設定kochi-gothic-substフォントを16ポイントで使用（読み込み）
     if(game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",game.restTime/2,gClients[clientID].score);
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
         printf("%s\n",status);
     }
     else
