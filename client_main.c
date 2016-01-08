@@ -12,9 +12,11 @@
 #include <libcwiimote/wiimote_api.h>
 
 // タイマーで呼び出されるコールバック関数
-//Uint32 callbackfunc(Uint32 interval, void *param){
-//	return interval;
-//}
+Uint32 callbackfunc(Uint32 interval, void *param){
+    game.restTime--;
+    //DisplayStatus();
+    return interval;
+}
 
 typedef struct//フレームレート用の変数
 {
@@ -34,8 +36,9 @@ wiimote_t wiimote = WIIMOTE_INIT;	// Wiiリモコンの状態格納用
 wiimote_report_t report = WIIMOTE_REPORT_INIT;	// レポートタイプ用
 
 SDL_Thread *thr_net;
-
+//SDL_Thread *thr_time;
 Game game;
+SDL_TimerID timer_id1;	//　タイマ割り込みを行うためのタイマのID
 
 static int thread_net(void *data)
 {
@@ -44,6 +47,12 @@ static int thread_net(void *data)
     }
     return 0;
 }
+
+/*static int thread_time(void *data){
+    timer_id1=SDL_AddTimer(1000, callbackfunc, NULL);
+   
+    return 0;
+    }*/
 
 int main(int argc,char *argv[])
 {
@@ -131,7 +140,8 @@ int main(int argc,char *argv[])
         dflag = 0;
         game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
-
+        //thr_time=SDL_CreateThread(thread_time,NULL);
+        timer_id1=SDL_AddTimer(1000, callbackfunc, NULL);
     /* メインイベントループ */
     while(endFlag){
 /*
@@ -152,16 +162,16 @@ int main(int argc,char *argv[])
         timer.now=SDL_GetTicks();//現在時間を取得
         timer.wit=timer.now-timer.lev;//待ち時間を計算
 
-        if(timer.wit > 1000){
+        /*if(timer.wit > 1000){
             game.restTime--;
             timer.lev=SDL_GetTicks();//経過時間を更新
-        }
+            }*/
 
         
         
         if(game.restTime > 0 && game.flag == 0){
             WindowEvent(clientID);  
-            printf("DrawChara\n");
+            printf("game.restTime:%d\n",game.restTime);
             DrawChara(clientID,cnum);
             
             
@@ -198,6 +208,7 @@ int main(int argc,char *argv[])
     }
 
     /* 終了処理 */
+    SDL_RemoveTimer(timer_id1);
 	DestroyWindow();
 	CloseSoc();
 
