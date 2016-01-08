@@ -13,8 +13,8 @@
 
 // タイマーで呼び出されるコールバック関数
 Uint32 callbackfunc(Uint32 interval, void *param){
-    //game.restTime--;
-    DisplayStatus();
+    game.restTime--;
+    //DisplayStatus();
     return interval;
 }
 
