@@ -231,10 +231,8 @@ void WindowEvent(int clientID)
         }
 
         if(game.flag == 0){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
-            if(tflag == 0)
-            {
-                if(wiimote.keys.two)
-                {
+            if(tflag == 0){
+                if(wiimote.keys.two){
                     switch(dirflag){
                     case up_dir:
                         gClients[clientID].poi.y = gClients[clientID].poi.y-30;
@@ -265,13 +263,12 @@ void WindowEvent(int clientID)
                         gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                         break;
                     }
-                    //Move(clientID,befx,befy);
+                    Move(clientID,befx,befy);
                     tflag++;
                     break;
                 }
             }
-            else if(tflag == 1)
-            {
+            else if(tflag == 1){
                 switch(dirflag){
                 case up_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
@@ -302,7 +299,7 @@ void WindowEvent(int clientID)
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
                 }
-                //Move(clientID,befx,befy);
+                Move(clientID,befx,befy);
                 tflag++;
                 break;
             }
@@ -314,42 +311,32 @@ void WindowEvent(int clientID)
             if(wiimote.keys.one){
                 a = 4;
             }
+            
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 printf("WindowEvent\n");
                 
                 if(wiimote.keys.up){
                     gClients[clientID].poi.x = gClients[clientID].poi.x-a;
-                    //Move(clientID);
-                    
                     dirflag = left_dir;
                 }
                 else if (wiimote.keys.down){
                     gClients[clientID].poi.x = gClients[clientID].poi.x+a;
-                    //Move(clientID);
-                    
                     dirflag = right_dir;
                 }
                 if(wiimote.keys.left){
                     gClients[clientID].poi.y = gClients[clientID].poi.y+a;
-                    //Move(clientID);
-                    
                     dirflag = down_dir;
                 }
                 else if(wiimote.keys.right){
                     gClients[clientID].poi.y = gClients[clientID].poi.y-a;
-                    //Move(clientID);
-                    
                     dirflag = up_dir;
                 }
-                Move(clientID,befx,befy);
                 mflag = 0;
+                Move(clientID,befx,befy);
+                break;
             }
-            //Move(clientID,befx,befy);
-            //break;
         }
-        //DrawChara(clientID);
-
 
         if(game.flag == 1){
             if(gClients[clientID].restart==0){
@@ -360,6 +347,7 @@ void WindowEvent(int clientID)
                 }
             }
         }
+        break;
     }
 }
 
