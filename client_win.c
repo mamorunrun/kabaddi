@@ -272,31 +272,31 @@ void WindowEvent(int clientID)
                     case up_dir:
                         gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                         break;
-/*                    case up_right_dir:
+                    case up_right_dir:
                         gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                         gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        break;*/
+                        break;
                     case right_dir:
                         gClients[clientID].poi.x = gClients[clientID].poi.x+30;
                         break;
-/*                    case right_down_dir:
+                    case right_down_dir:
                         gClients[clientID].poi.x = gClients[clientID].poi.x+30;
                         gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        break;*/
+                        break;
                     case down_dir:
                         gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                         break;
-/*                    case down_left_dir:
+                    case down_left_dir:
                         gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                         gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        break;*/
+                        break;
                     case left_dir:
                         gClients[clientID].poi.x = gClients[clientID].poi.x-30;
                         break;
-/*                    case left_up_dir:
+                    case left_up_dir:
                         gClients[clientID].poi.x = gClients[clientID].poi.x-30;
                         gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                        break;*/
+                        break;
                     }
                     Move(clientID,befx,befy);
                     tflag++;
@@ -308,31 +308,31 @@ void WindowEvent(int clientID)
                 case up_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     break;
-/*                case up_right_dir:
+                case up_right_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
                     gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;*/
+                    break;
                 case right_dir:
                     gClients[clientID].poi.x = gClients[clientID].poi.x-30;
                     break;
-/*                case right_down_dir:
+                case right_down_dir:
                     gClients[clientID].poi.x = gClients[clientID].poi.x-30;
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;*/
+                    break;
                 case down_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     break;
-/*                case down_left_dir:
+                case down_left_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                     gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;*/
+                    break;
                 case left_dir:
                     gClients[clientID].poi.x = gClients[clientID].poi.x+30;
                     break;
-/*                case left_up_dir:
+                case left_up_dir:
                     gClients[clientID].poi.x = gClients[clientID].poi.x+30;
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;*/
+                    break;
                 }
                 //Move(clientID,befx,befy);
                 tflag++;
@@ -359,7 +359,7 @@ void WindowEvent(int clientID)
                     gClients[clientID].poi.x = gClients[clientID].poi.x+a;
                     dirflag = right_dir;
                 }
-                else if(wiimote.keys.left){//if
+                if(wiimote.keys.left){
                     gClients[clientID].poi.y = gClients[clientID].poi.y+a;
                     dirflag = down_dir;
                 }
