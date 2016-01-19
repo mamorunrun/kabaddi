@@ -12,11 +12,11 @@
 #include <libcwiimote/wiimote_api.h>
 
 // タイマーで呼び出されるコールバック関数
-/*Uint32 callbackfunc(Uint32 interval, void *param){
+Uint32 callbackfunc(Uint32 interval, void *param){
     game.restTime--;
     //DisplayStatus();
     return interval;
-    }*/
+    }
 
 typedef struct//フレームレート用の変数
 {
@@ -141,7 +141,7 @@ int main(int argc,char *argv[])
         game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
         //thr_time=SDL_CreateThread(thread_time,NULL);
-        // timer_id1=SDL_AddTimer(100, callbackfunc, NULL);
+        timer_id1=SDL_AddTimer(100, callbackfunc, NULL);
     /* メインイベントループ */
     while(endFlag){
 /*
