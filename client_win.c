@@ -27,6 +27,7 @@ int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
 int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
+int stcol[3] = {0x0000ffff,0xffff00ff,0xff0000ff};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
@@ -402,7 +403,7 @@ void DrawChara(int n,int cnum)
     //printf("%d\n",n);
     //Judge(n,cnum);
     SDL_FillRect(buffer,NULL,0xffffffff);
-    DisplayStatus();
+    // DisplayStatus();
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -484,7 +485,14 @@ void DisplayStatus(void)//自分のスタミナの描写
     STrect.x = game.restTime*2;
     STrect.w = 600 - game.restTime*2;
 //背景を水色に
-    SDL_FillRect(stbar,NULL,0x0000ffff);
+    if(game.restTime > 120)
+        SDL_FillRect(stbar,NULL,stcol[0]);
+    else if(game.restTime > 50)
+        SDL_FillRect(stbar,NULL,stcol[1]);
+    else 
+        SDL_FillRect(stbar,NULL,stcol[2]);
+
+
     SDL_FillRect(stbar,&STrect,0xffffffff);
    
     SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
