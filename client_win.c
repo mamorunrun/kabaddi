@@ -26,7 +26,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
+int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と5はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ffff,0xffff00ff,0xff0000ff};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
@@ -441,7 +441,6 @@ void WinDisplay(void)
 //            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
 //            SDL_Rect src_rect = { 0, 0, gMessage_win->w,gMessage_win->h };
 //            SDL_BlitSurface(gMessage_win, &src_rect, buffer, &dst_rect);
-
             sprintf(status,"score:%dpt",gClients[i].score);
 
             gMessage_score = TTF_RenderUTF8_Blended(font, status, /*0x191970ff*/colB);
