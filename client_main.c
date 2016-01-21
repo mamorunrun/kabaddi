@@ -16,7 +16,7 @@ Uint32 callbackfunc(Uint32 interval, void *param){
     game.restTime--;
     //DisplayStatus();
     return interval;
-}
+    }
 
 typedef struct//フレームレート用の変数
 {
@@ -141,7 +141,7 @@ int main(int argc,char *argv[])
         game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
         //thr_time=SDL_CreateThread(thread_time,NULL);
-        timer_id1=SDL_AddTimer(1000, callbackfunc, NULL);
+        timer_id1=SDL_AddTimer(100, callbackfunc, NULL);
     /* メインイベントループ */
     while(endFlag){
 /*

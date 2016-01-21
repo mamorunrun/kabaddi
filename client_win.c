@@ -11,8 +11,10 @@
 
 static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
-static SDL_Surface *stbar;//時間,得点を表すバッファ
-SDL_Rect srect = {0, 0};//statusバッファからの領域
+static SDL_Surface *scbuf;//得点を表すバッファ
+static SDL_Surface *stbar;//スタミナを表すバッファ
+SDL_Rect STrect = {0, 0, 0, 50};//スタミナゲージのため
+SDL_Rect srect = {400,0};//stbarの領域
 SDL_Rect brect = {0, 51};//bufferからの領域
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
@@ -25,6 +27,7 @@ int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
 int color[4] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff};
+int stcol[3] = {0x0000ffff,0xffff00ff,0xff0000ff};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
@@ -72,10 +75,15 @@ int InitWindows(void)
         exit(-1);
     }
 
-     if((stbar = SDL_CreateRGBSurface(SDL_SWSURFACE,1000, 50,32,0,0,0,0))==NULL){
+     if((scbuf = SDL_CreateRGBSurface(SDL_SWSURFACE,400, 50,32,0,0,0,0))==NULL){
         printf("failed to initialize videomode.\n");
         exit(-1);
     }
+     if((stbar = SDL_CreateRGBSurface(SDL_SWSURFACE,600, 50,32,0,0,0,0))==NULL){
+        printf("failed to initialize videomode.\n");
+        exit(-1);
+    }
+
     /* フォントの初期化 */
     TTF_Init();
 
@@ -147,7 +155,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        game.restTime = 30;/*残り30秒*/
+        game.restTime = 300;/*残り30秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -197,6 +205,22 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 *****************************************************************************/
         }
         printf("loop=%d\n",loop);
+
+/*******************************************************************************
+得点の描写
+ ****************************************************************************/
+        char   status[64];
+
+        sprintf(status,"score:%dpt",gClients[clientID].score);
+        printf("%s\n",status);
+    
+        mes = TTF_RenderUTF8_Blended(font2, status, colB);
+  
+    // 背景を白にする 
+        SDL_FillRect(scbuf,NULL,0xffffffff);
+        SDL_BlitSurface(mes, NULL, scbuf, NULL);
+        SDL_BlitSurface(scbuf, NULL, gMainWindow, NULL);
+        
         SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
 	SDL_Flip(gMainWindow);
         
@@ -432,17 +456,17 @@ void WinDisplay(void)
 }
 
 
-void DisplayStatus(void)//時間,自分の得点の描写
+void DisplayStatus(void)//自分のスタミナの描写
 {
     //game.restTime--;
-    char   status[64];
+    //char   status[64];
     //  SDL_Surface *mes;
     //SDL_Rect dst_rect = {0,0};//転送先
     //SDL_Rect src_rect = {0,0,0,0};//転送元
     printf("callback\n");
-   
+    /*
     if(game.restTime > 0){
-        sprintf(status,"残り%d秒 score:%dpt",game.restTime,gClients[clientID].score);
+        sprintf(status,"残り%d秒 score:%dpt",game.restTime/10,gClients[clientID].score);
         printf("%s\n",status);
     }
     else
@@ -452,9 +476,25 @@ void DisplayStatus(void)//時間,自分の得点の描写
     //Src_rect.w = mes->w;
     //Src_rect.h = mes->h;//転送元
 
-    /* 背景を白にする */
-    SDL_FillRect(stbar,NULL,0xffffffff);
-    SDL_BlitSurface(mes, NULL, stbar, NULL);
+    // 背景を白にする 
+    SDL_FillRect(scbuf,NULL,0xffffffff);
+    SDL_BlitSurface(mes, NULL, scbuf, NULL);
+    SDL_BlitSurface(scbuf, NULL, gMainWindow, NULL);
+    */
+    
+    STrect.x = game.restTime*2;
+    STrect.w = 600 - game.restTime*2;
+//背景を水色に
+    if(game.restTime > 120)
+        SDL_FillRect(stbar,NULL,stcol[0]);
+    else if(game.restTime > 50)
+        SDL_FillRect(stbar,NULL,stcol[1]);
+    else 
+        SDL_FillRect(stbar,NULL,stcol[2]);
+
+
+    SDL_FillRect(stbar,&STrect,0xffffffff);
+   
     SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
     //SDL_Flip(gMainWindow);
 
