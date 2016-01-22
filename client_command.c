@@ -55,19 +55,13 @@ int ExecuteCommand(char *command)
         if(id != clientID)
             UpdatePos(id,x,y);
         break;
-        // case BUMP:
-        //   if(id != clientID){
-            //  gClients[id].color=3;
-        //    gClients[x].Bflag++;
-            //gClients[x].color=2;
-        //  }
-        //  break;
+        case BUMP:
+            if(id != clientID){
+                gClients[id].color=3;
+                gClients[x].color=2;
+            }
+            break;
     case WIN:
-        gClients[id].Bflag++;
-        gClients[x].Bflag++;
-        gClients[id].color=3;//¹¶·â
-        gClients[x].color=2;//¼éÈ÷
-
         if(gClients[x].color==2)//¼éÈ÷¤Î¿§¤¬2¤Ê¤é
         {
             gClients[id].score = gClients[id].score + gClients[x].Bflag;
