@@ -151,7 +151,7 @@ int Collision(int clientID,int befx,int befy){
                                 //gClients[i].color=3;//攻撃
                                 //gClients[clientID].color=2;//守備
 
-                                sprintf(data,"kabaddi,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/);
+                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0);
                                 SendData(data);
 
                                 return i;//攻撃
@@ -181,7 +181,7 @@ int Collision(int clientID,int befx,int befy){
                             //gClients[clientID].color=3;//攻撃
                             //gClients[i].color=2;//守備
 
-                            sprintf(data,"kabaddi,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/);
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/,0);
                             SendData(data);
 
                             return i;//守備
