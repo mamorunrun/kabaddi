@@ -10,7 +10,7 @@ void UpdatePos(int n,int x,int y,int t)
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
     
-    if(t >= 0)
+    if(t >= 0)//攻撃側は時間を,守備側は-1を送っているため
         game.restTime = t;
 }
 
