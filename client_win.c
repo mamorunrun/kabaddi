@@ -478,7 +478,7 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
         resultflag=0;
         i = 0;
     }
-    else if(resultflag+1<cnum)
+    else if(resultflag<0)
     {
         resultflag=cnum-1;
         i = cnum-1;
