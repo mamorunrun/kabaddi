@@ -2,13 +2,16 @@
 #include"client_func.h"
 
 
-void UpdatePos(int n,int x,int y)
+void UpdatePos(int n,int x,int y,int t)
 {
     if(clientID == n)
         return;
 
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
+    
+    if(t >= 0)
+        game.restTime = t;
 }
 
 /*********************************************************
