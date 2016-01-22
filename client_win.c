@@ -250,7 +250,7 @@ void DestroyWindow(void)
 
 void WindowEvent(int clientID)
 {
-    int a = 1;
+    int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
 
@@ -367,7 +367,7 @@ void WindowEvent(int clientID)
                     if(gClients[clientID].ADsta == 1)
                         game.restTime = game.restTime - 50;//ゲージを減らす
                     
-                    a = 2;
+                    a = 3;
                 }
                 
 
