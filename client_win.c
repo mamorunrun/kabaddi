@@ -13,6 +13,11 @@ static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
+static SDL_Surface *gCharaImage;
+static char gPlayerImgFile[]   = "kabaddi.png";
+
+static SDL_Rect chara_rect ={0,0,96,144};
+
 SDL_Rect STrect = {0, 0, 0, 50};//スタミナゲージのため
 SDL_Rect srect = {400,0};//stbarの領域
 SDL_Rect brect = {0, 51};//bufferからの領域
@@ -83,6 +88,12 @@ int InitWindows(void)
         printf("failed to initialize videomode.\n");
         exit(-1);
     }
+
+    if((gCharaImage= IMG_Load(gPlayerImgFile)) ==  NULL){
+        printf("failed to open player image.");
+        exit(-1);
+    }
+
 
     /* フォントの初期化 */
     TTF_Init();
@@ -191,6 +202,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
+
+
 
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用

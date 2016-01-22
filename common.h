@@ -48,6 +48,8 @@ typedef struct{
 	int		fd;
 	char	name[MAX_NAME_SIZE];
         SDL_Rect poi;
+        int anime;  /*アニメーションフラグ*/
+        int anipatnum; /*アニメーションパターン*/
         int             ADsta;//攻撃守備のフラグ　ATK1 DEF0
         int             Bflag;//当たり判定のフラグ
         int             score;//得点の保存
