@@ -110,7 +110,7 @@ void SendEndCommand(void)
     printf("SendEndCommand()\n");
 #endif
    
-    sprintf(data,"endkabaddi,a,a,a,a\0");
+    sprintf(data,"endkabaddi,a,a,a,a,a\0");
     /* データの送信 */
     SendData(data);
 }
