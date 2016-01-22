@@ -26,7 +26,7 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
-int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と5はcommand.c内l.65のため同じ
+int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と4はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
