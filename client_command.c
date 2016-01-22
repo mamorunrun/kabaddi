@@ -23,6 +23,7 @@ int ExecuteCommand(char *command)
     int id=atoi(strtok(NULL, ","));
     int x=atoi(strtok(NULL, ","));
     int y=atoi(strtok(NULL, ","));
+    int t=atoi(strtok(NULL, ","));
     int	endFlag = 1;
 
     int i;
@@ -53,7 +54,7 @@ int ExecuteCommand(char *command)
     case CDRAW:
         printf("pos");
         if(id != clientID)
-            UpdatePos(id,x,y);
+            UpdatePos(id,x,y,t);
         break;
         // case BUMP:
         //   if(id != clientID){

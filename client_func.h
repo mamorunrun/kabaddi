@@ -46,7 +46,7 @@ extern void WindowEvent(int clientID);
 extern void WinDisplay(void);
 
 /*client_system.c*/
-extern void UpdatePos(int n,int x,int y);
+extern void UpdatePos(int n,int x,int y,int t);
 extern void Move(int clientID,int befx,int befy);
 //当たり判定
 extern int Collision(int clientID,int befx,int befy);
