@@ -250,7 +250,7 @@ void DestroyWindow(void)
 
 void WindowEvent(int clientID)
 {
-    int a = 2;
+    int a = 1;
     int mflag = 1;//moveflag
     int befx,befy;
 
@@ -359,17 +359,19 @@ void WindowEvent(int clientID)
                 tflag = 0;
             }
             
-            if(wiimote.keys.one){
-                if(gClients[clientID].ADsta == 1)
-                    game.restTime = game.restTime - 50;//ゲージを減らす
-                
-                a = 4;
-            }
-            
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 printf("WindowEvent\n");
                 
+                if(wiimote.keys.one){
+                    if(gClients[clientID].ADsta == 1)
+                        game.restTime = game.restTime - 50;//ゲージを減らす
+                    
+                    a = 2;
+                }
+                
+
+
                 if(wiimote.keys.up){
                     gClients[clientID].poi.x = gClients[clientID].poi.x-a;
                     dirflag = left_dir;
