@@ -56,7 +56,7 @@ int ExecuteCommand(char *command)
             UpdatePos(id,x,y);
         break;
         case BUMP:
-            if(gClients[x].color==){
+            if(gClients[x].color==0){
                 gClients[id].Bflag++;
                 gClients[x].Bflag++;
                 gClients[id].color=3;
