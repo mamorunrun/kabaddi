@@ -26,6 +26,8 @@ static int tflag;//タックルのフラグ
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
+int resultflag;//自分以外の人の結果を確認するため
+
 int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と4はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
@@ -266,6 +268,7 @@ void WindowEvent(int clientID)
         }
 
         if(game.flag == 0){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
+            resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
             if(tflag == 0){
                 if(wiimote.keys.two){
                     switch(dirflag){
@@ -385,6 +388,16 @@ void WindowEvent(int clientID)
 
         if(game.flag == 1){
             if(gClients[clientID].restart==0){
+                if(wiimote.keys.right)
+                {
+                    resultflag++;
+                    WinDisplay(resultflag);
+                }
+                else if(wiimote.keys.left)
+                {
+                    resultflag--;
+                    WinDisplay(resultflag); 
+                }
                 if(wiimote.keys.a)
                 {
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
@@ -433,36 +446,29 @@ void DrawChara(int n,int cnum)
     dflag = 0;
 }
 
-void WinDisplay(void)
+void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
 {
-    int i;
     char   status[64];
 
-    //   SDL_Rect dst_rect = { 350, 250 };
     SDL_Rect dst_rect2 = { 350, 350 };
-//    SDL_Surface *gMessage_win;
     SDL_Surface *gMessage_score;
+
+    if(resultflag>cnum)
+        resultflag=0;
+    else if(resultflag<cnum)
+        resultflag=cnum;
+
+    SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+    sprintf(status,"%d score:%dpt",resultflag,gClients[resultflag].score);
     
-    for(i=0;i<cnum;i++){
-        if(gClients[i].ADsta == 1){
-            printf("win\n");
-            SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
-            
-//            gMessage_win = TTF_RenderUTF8_Blended(font, "Win", /*0x191970ff*/colB);
-//            SDL_Rect src_rect = { 0, 0, gMessage_win->w,gMessage_win->h };
-//            SDL_BlitSurface(gMessage_win, &src_rect, buffer, &dst_rect);
-            sprintf(status,"score:%dpt",gClients[i].score);
-
-            gMessage_score = TTF_RenderUTF8_Blended(font, status, /*0x191970ff*/colB);
-            SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
-            SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
-            
-            SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
-            SDL_Flip(gMainWindow);
-        }
-    }
-
+    gMessage_score = TTF_RenderUTF8_Blended(font, status, colB);
+    SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
+    SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
+    
+    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_Flip(gMainWindow);
 }
+
 
 
 void DisplayStatus(void)//自分のスタミナの描写
