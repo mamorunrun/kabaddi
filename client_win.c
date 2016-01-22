@@ -357,18 +357,18 @@ void WindowEvent(int clientID)
             else if(wiimote.keys.two != 1)//tflagが10以上かつ2が押されていない
             {
                 tflag = 0;
-            }        
-
-            if(wiimote.keys.one){
-                if(gClients[clientID].ADsta == 1)
-                    game.restTime = game.restTime - 50;//ゲージを減らす
-                
-                a = 3;
             }
+
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 printf("WindowEvent\n");
-
+                if(wiimote.keys.one){
+                    if(gClients[clientID].ADsta == 1)
+                        game.restTime = game.restTime - 50;//ゲージを減らす
+                    
+                    a = 3;
+                }
+                
                 if(wiimote.keys.up){
                     gClients[clientID].poi.x = gClients[clientID].poi.x-a;
                     dirflag = left_dir;
