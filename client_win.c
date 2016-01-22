@@ -27,7 +27,7 @@ int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
 int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と5はcommand.c内l.65のため同じ
-int stcol[3] = {0x0000ffff,0xffff00ff,0xff0000ff};//青,黄色,赤
+int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
@@ -155,7 +155,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        game.restTime = 300;/*残り30秒*/
+        game.restTime = 30000;/*残り30000ミリ（30）秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -303,7 +303,14 @@ void WindowEvent(int clientID)
                     break;
                 }
             }
-            else if(tflag == 1){
+
+            else if(tflag <= 8){
+                //8フレーム動きを止める
+                tflag++;
+                break;
+            }
+
+            else if(tflag == 9){
                 switch(dirflag){
                 case up_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
@@ -338,12 +345,13 @@ void WindowEvent(int clientID)
                 tflag++;
                 break;
             }
-            else if(wiimote.keys.two != 1)
+            else if(wiimote.keys.two != 1)//tflagが10以上かつ2が押されていない
             {
                 tflag = 0;
             }
             
             if(wiimote.keys.one){
+                game.restTime = game.restTime - 50;//ゲージを減らす
                 a = 4;
             }
             
@@ -481,12 +489,12 @@ void DisplayStatus(void)//自分のスタミナの描写
     SDL_BlitSurface(scbuf, NULL, gMainWindow, NULL);
     */
     
-    STrect.x = game.restTime*2;
-    STrect.w = 600 - game.restTime*2;
+    STrect.x = (game.restTime/100)*2;
+    STrect.w = 600 - (game.restTime/100)*2;
 //背景を水色に
-    if(game.restTime > 120)
+    if(game.restTime > 12000)
         SDL_FillRect(stbar,NULL,stcol[0]);
-    else if(game.restTime > 50)
+    else if(game.restTime > 5000)
         SDL_FillRect(stbar,NULL,stcol[1]);
     else 
         SDL_FillRect(stbar,NULL,stcol[2]);
