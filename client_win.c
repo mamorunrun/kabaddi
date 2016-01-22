@@ -389,7 +389,7 @@ void WindowEvent(int clientID)
 
         if(game.flag == 1){
             if(gClients[clientID].restart==0){
-                if(wiimote.keys.right)
+                if(wiimote.keys.plus)
                 {
                     if(continueflag==0)
                     {
@@ -402,7 +402,7 @@ void WindowEvent(int clientID)
                 {
                     continueflag=0;
                 }
-                if(wiimote.keys.left)
+                if(wiimote.keys.minus)
                 {
                     if(continueflag==0)
                     {
