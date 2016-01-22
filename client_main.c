@@ -180,10 +180,9 @@ int main(int argc,char *argv[])
         else{
             game.flag = 1;
             loop++;
-            WinDisplay();
+            WinDisplay(clientID);
             while(game.flag == 1){
                 WindowEvent(clientID);
-                
             }
 
             if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
