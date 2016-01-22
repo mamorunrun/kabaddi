@@ -225,8 +225,8 @@ int main(int argc,char *argv[])
 
     /* ½ªÎ»½èÍý */
     SDL_RemoveTimer(timer_id1);
-	DestroyWindow();
-	CloseSoc();
+    DestroyWindow();
+    CloseSoc();
 
     return 0;
 }
