@@ -388,7 +388,7 @@ void WindowEvent(int clientID)
         }
 
         if(game.flag == 1){
-            if(gClients[clientID].restart==0){
+            //if(gClients[clientID].restart==0){
                 if(wiimote.keys.plus)
                 {
                     if(continueflag==0)
@@ -421,10 +421,11 @@ void WindowEvent(int clientID)
                     SendData(data);
                 }
             }
-        }
         break;
-    }
+        }
+    //        break;
 }
+//}
 
 /*****
 static
