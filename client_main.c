@@ -186,15 +186,30 @@ int main(int argc,char *argv[])
                 
             }
 
-
+            if(loop+1 != cnum*3){//各プレイヤー3回ずつ攻撃を行う
             
-            if(GameWindows(clientID,name,loop)==-1){
-                fprintf(stderr,"setup failed : GameWindows\n");
-		return -1;
-                
+                if(GameWindows(clientID,name,loop)==-1){
+                    fprintf(stderr,"setup failed : GameWindows\n");
+                    return -1;
+                    
+                }
             }
-            timer.lev=SDL_GetTicks();//経過時間を更新
+
+            else{//3回ずつやった
+                game.flag = 1;
+                //無限ループ あとで処理を追加
+                while(1){
+                    WindowEvent(clientID);           
+                }
+
+
+            }
+            
+
+                timer.lev=SDL_GetTicks();//経過時間を更新
         }
+            
+        
        
 
         // timer.now=SDL_GetTicks();//現在時間を取得
