@@ -358,7 +358,7 @@ void WindowEvent(int clientID)
                 if(gClients[clientID].ADsta == 1)
                     game.restTime = game.restTime - 50;//ゲージを減らす
                 
-                a = 4;
+                a = 3;
             }
             
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
@@ -417,6 +417,19 @@ void WindowEvent(int clientID)
                 }
                 if(wiimote.keys.a)
                 {
+                    char comment[64];
+                    SDL_Rect dst_rect2 = { 350, 350 };
+                    SDL_Surface *gMessage_comment;
+                    
+                    SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+                    sprintf(comment,"待機中");
+                    gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
+                    SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
+                    SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
+                    
+                    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+                    SDL_Flip(gMainWindow);
+                    
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
                     SendData(data);
                 }
