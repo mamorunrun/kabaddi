@@ -186,7 +186,7 @@ int main(int argc,char *argv[])
                 
             }
 
-            if(loop+1 != cnum*3){//各プレイヤー3回ずつ攻撃を行う
+            if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
             
                 if(GameWindows(clientID,name,loop)==-1){
                     fprintf(stderr,"setup failed : GameWindows\n");
@@ -198,7 +198,8 @@ int main(int argc,char *argv[])
             else{//3回ずつやった
                 game.flag = 1;
                 //無限ループ あとで処理を追加
-                while(1){
+                while(game.flag == 1){
+                    printf("aaaaaaaaaa\n");
                     WindowEvent(clientID);           
                 }
 
