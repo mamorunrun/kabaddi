@@ -402,7 +402,7 @@ void WindowEvent(int clientID)
 
         if(game.flag == 1){
             if(gClients[clientID].restart==0){
-                if(wiimote.keys.right)
+                if(wiimote.keys.plus)
                 {
                     if(continueflag==0)
                     {
@@ -415,7 +415,7 @@ void WindowEvent(int clientID)
                 {
                     continueflag=0;
                 }
-                if(wiimote.keys.left)
+                if(wiimote.keys.minus)
                 {
                     if(continueflag==0)
                     {
@@ -491,7 +491,7 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
         resultflag=0;
         i = 0;
     }
-    else if(resultflag+1<cnum)
+    else if(resultflag<0)
     {
         resultflag=cnum-1;
         i = cnum-1;
