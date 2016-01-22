@@ -396,6 +396,7 @@ void WindowEvent(int clientID)
                         continueflag=1;
                         resultflag++;
                         WinDisplay(resultflag);
+                        break;
                     }
                 }
                 else if(continueflag==1)
@@ -408,7 +409,8 @@ void WindowEvent(int clientID)
                     {
                         continueflag=1;
                         resultflag--;
-                        WinDisplay(resultflag); 
+                        WinDisplay(resultflag);
+                        break; 
                     }
                 }
                 else if(continueflag==1)
@@ -473,15 +475,15 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
 
     i= ID;
 
-    if(resultflag>cnum)
+    if(resultflag>cnum-1)
     {
         resultflag=0;
         i = 0;
     }
-    else if(resultflag<cnum)
+    else if(resultflag<cnum-1)
     {
-        resultflag=cnum;
-        i = cnum;
+        resultflag=cnum-1;
+        i = cnum-1;
     }
 
     SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
