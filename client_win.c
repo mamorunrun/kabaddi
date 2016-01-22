@@ -13,6 +13,7 @@ static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
+static SDL_Surface *bufmain;//スタート画面,終了画面など
 SDL_Rect STrect = {0, 0, 0, 50};//スタミナゲージのため
 SDL_Rect srect = {400,0};//stbarの領域
 SDL_Rect brect = {0, 51};//bufferからの領域
@@ -73,6 +74,10 @@ int InitWindows(void)
         printf("failed to initialize videomode.\n");
         return -1;
     }
+    if((bufmain = SDL_SetVideoMode(1000,650, 32, SDL_SWSURFACE)) == NULL) {
+        printf("failed to initialize videomode.\n");
+        return -1;
+    }
     if((buffer = SDL_CreateRGBSurface(SDL_SWSURFACE,1000,600,32,0,0,0,0))==NULL){
         printf("failed to initialize videomode.\n");
         exit(-1);
@@ -98,17 +103,17 @@ int InitWindows(void)
     SDL_WM_SetCaption(title,NULL);
     
     /* 背景を白にする */
-    SDL_FillRect(buffer,NULL,0xffffffff);
+    SDL_FillRect(bufmain,NULL,0xffffffff);
 
     gMessage_title = TTF_RenderUTF8_Blended(font, "白熱カバッディ", /*0x191970ff*/colB);
     SDL_Rect src_rect = { 0, 0, gMessage_title->w,gMessage_title->h };
     gMessage_req = TTF_RenderUTF8_Blended(font2, "スペースキーを押すんだ！", /*0x191970ff*/colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_req->w,gMessage_req->h  };
 
-    SDL_BlitSurface(gMessage_title, &src_rect, buffer, &dst_rect);
-    SDL_BlitSurface(gMessage_req, &src_rect2, buffer, &dst_rect2);
+    SDL_BlitSurface(gMessage_title, &src_rect, bufmain, &dst_rect);
+    SDL_BlitSurface(gMessage_req, &src_rect2, bufmain, &dst_rect2);
 
-    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
+    SDL_BlitSurface(bufmain, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
 
     while(end){
@@ -126,13 +131,13 @@ int InitWindows(void)
         printf("aaa\n");
 
         /* 背景を白にする */
-        SDL_FillRect(buffer,NULL,0xffffffff);
+        SDL_FillRect(bufmain,NULL,0xffffffff);
 
         gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！", /*0x000000ff*/colB);
     SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
-        SDL_BlitSurface(gMessage_chotomate, &src_rect3, buffer, &dst_rect3);   
+        SDL_BlitSurface(gMessage_chotomate, &src_rect3, bufmain, &dst_rect3);   
 
-    SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
+    SDL_BlitSurface(bufmain, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
     
     return 0;
@@ -245,7 +250,7 @@ void DestroyWindow(void)
 
 void WindowEvent(int clientID)
 {
-    int a = 2;
+    int a = 1;
     int mflag = 1;//moveflag
     int befx,befy;
 
@@ -354,6 +359,7 @@ void WindowEvent(int clientID)
                 tflag = 0;
             }
             
+<<<<<<< HEAD
             if(wiimote.keys.one){
                 if(gClients[clientID].ADsta == 1)
                     game.restTime = game.restTime - 50;//ゲージを減らす
@@ -361,10 +367,21 @@ void WindowEvent(int clientID)
                 a = 3;
             }
             
+=======
+>>>>>>> a87f77606ed5bf1f6e0f20d24a08b2d11c14fb73
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 printf("WindowEvent\n");
                 
+                if(wiimote.keys.one){
+                    if(gClients[clientID].ADsta == 1)
+                        game.restTime = game.restTime - 50;//ゲージを減らす
+                    
+                    a = 2;
+                }
+                
+
+
                 if(wiimote.keys.up){
                     gClients[clientID].poi.x = gClients[clientID].poi.x-a;
                     dirflag = left_dir;
@@ -497,14 +514,14 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
         i = cnum-1;
     }
 
-    SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+    SDL_FillRect(bufmain,NULL,0xffffffff); /*背景を白にする*/
     sprintf(status,"%s score:%dpt",gClients[i].name,gClients[i].score);
     
     gMessage_score = TTF_RenderUTF8_Blended(font, status, colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
-    SDL_BlitSurface(gMessage_score, &src_rect2, buffer, &dst_rect2);
+    SDL_BlitSurface(gMessage_score, &src_rect2, bufmain, &dst_rect2);
     
-    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(bufmain, NULL, gMainWindow, NULL);
     SDL_Flip(gMainWindow);
 }
 
