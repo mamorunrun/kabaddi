@@ -139,10 +139,10 @@ int Collision(int clientID,int befx,int befy){
                         if((gClients[clientID].poi.y - (gClients[i].poi.y-20)) <= 70 && ((gClients[i].poi.y-20) - gClients[clientID].poi.y) <= 70){
                             if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
                             {
-                                gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
-                                gClients[clientID].Bflag++;//攻撃側にフラグ
-                                gClients[i].color=3;//攻撃
-                                gClients[clientID].color=2;//守備
+                                // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
+                                // gClients[clientID].Bflag++;//攻撃側にフラグ
+                                // gClients[i].color=3;//攻撃
+                                // gClients[clientID].color=2;//守備
                                 return i;//攻撃
                             }
                         }
@@ -165,10 +165,10 @@ int Collision(int clientID,int befx,int befy){
                     if((gClients[i].poi.y - (gClients[clientID].poi.y-20)) <= 70 && ((gClients[clientID].poi.y-20) - gClients[i].poi.y) <= 70){
                         if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                         {
-                            gClients[clientID].Bflag++;
-                            gClients[i].Bflag++;
-                            gClients[clientID].color=3;//攻撃
-                            gClients[i].color=2;//守備
+                            // gClients[clientID].Bflag++;
+                            //  gClients[i].Bflag++;
+                            // gClients[clientID].color=3;//攻撃
+                            // gClients[i].color=2;//守備
                             return i;//守備
                         //printf("%d\n",gClients[i].Bflag,gClients[clientID].Bflag);
                         // if(gClients[i].Bflag==0){

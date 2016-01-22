@@ -63,9 +63,14 @@ int ExecuteCommand(char *command)
         //  }
         //  break;
     case WIN:
+        gClients[id].Bflag++;
+        gClients[x].Bflag++;
+        gClients[id].color=3;//攻撃
+        gClients[x].color=2;//守備
+
         if(gClients[x].color==2)//守備の色が2なら
         {
-            gClients[id].score = gClients[id].score + gClients[id].Bflag;
+            gClients[id].score = gClients[id].score + gClients[x].Bflag;
             gClients[x].color=4;//2と同じ色でWINコマンドをループするのを防ぐため
         }
         break;
