@@ -27,6 +27,7 @@ int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
 
 int resultflag;//自分以外の人の結果を確認するため
+int continueflag;//連続入力の破棄
 
 int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と4はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
@@ -390,13 +391,29 @@ void WindowEvent(int clientID)
             if(gClients[clientID].restart==0){
                 if(wiimote.keys.right)
                 {
-                    resultflag++;
-                    WinDisplay(resultflag);
+                    if(continueflag==0)
+                    {
+                        continueflag=1;
+                        resultflag++;
+                        WinDisplay(resultflag);
+                    }
                 }
-                else if(wiimote.keys.left)
+                else if(continueflag==1)
                 {
-                    resultflag--;
-                    WinDisplay(resultflag); 
+                    continueflag=0;
+                }
+                if(wiimote.keys.left)
+                {
+                    if(continueflag==0)
+                    {
+                        continueflag=1;
+                        resultflag--;
+                        WinDisplay(resultflag); 
+                    }
+                }
+                else if(continueflag==1)
+                {
+                    continueflag=0;
                 }
                 if(wiimote.keys.a)
                 {
@@ -448,18 +465,27 @@ void DrawChara(int n,int cnum)
 
 void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
 {
+    int i;
     char   status[64];
 
     SDL_Rect dst_rect2 = { 350, 350 };
     SDL_Surface *gMessage_score;
 
+    i= ID;
+
     if(resultflag>cnum)
+    {
         resultflag=0;
+        i = 0;
+    }
     else if(resultflag<cnum)
+    {
         resultflag=cnum;
+        i = cnum;
+    }
 
     SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
-    sprintf(status,"%d score:%dpt",resultflag,gClients[resultflag].score);
+    sprintf(status,"%d score:%dpt",i,gClients[i].score);
     
     gMessage_score = TTF_RenderUTF8_Blended(font, status, colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
