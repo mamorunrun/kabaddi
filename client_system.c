@@ -114,7 +114,7 @@ void Move(int clientID,int befx,int befy)
     }
     
     if(end == 0){
-        sprintf(data,"kabaddi,%d,%d,%d,%d\0",END_COMMAND,0,0,0,0);
+        sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",END_COMMAND,0,0,0,0);
         SendData(data);
     }
 }
