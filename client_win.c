@@ -385,7 +385,7 @@ void WindowEvent(int clientID)
             if(gClients[clientID].restart==0){
                 if(wiimote.keys.a)
                 {
-                    sprintf(data,"kabaddi,%d,%d,%d,%d\0",RESTART,clientID,0,0);
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
                     SendData(data);
                 }
             }
