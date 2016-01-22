@@ -119,6 +119,7 @@ void Move(int clientID,int befx,int befy)
            1       :あたった
 ***************************************************/
 int Collision(int clientID,int befx,int befy){
+    char	data[MAX_DATA];
 
     int i,j;
     //グローバル変数で全体人数を設定
