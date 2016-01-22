@@ -485,7 +485,7 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
     }
 
     SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
-    sprintf(status,"%d score:%dpt",i,gClients[i].score);
+    sprintf(status,"%s score:%dpt",gClients[i].name,gClients[i].score);
     
     gMessage_score = TTF_RenderUTF8_Blended(font, status, colB);
     SDL_Rect src_rect2 = { 0, 0, gMessage_score->w,gMessage_score->h };
