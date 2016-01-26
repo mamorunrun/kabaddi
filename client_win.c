@@ -273,7 +273,7 @@ void WindowEvent(int clientID)
             SendEndCommand();
         }
 
-        if(game.flag == 0){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
+        if(game.flag == 1){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
             if(tflag == 0){
                 if(wiimote.keys.two){
@@ -391,54 +391,58 @@ void WindowEvent(int clientID)
                 break;
             }
         }
-
-        if(game.flag == 1){
+/**********************************************************************************
+game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバディ終了
+**********************************************************************************/
+        if(game.flag == 2){
             // if(gClients[clientID].restart==0){
-                if(wiimote.keys.plus)
+            if(wiimote.keys.plus)//プラスキー
+            {
+                if(continueflag==0)
                 {
-                    if(continueflag==0)
-                    {
-                        continueflag=1;
-                        resultflag++;
-                        WinDisplay(resultflag);
-                    }
+                    continueflag=1;
+                    resultflag++;
+                    WinDisplay(resultflag);
                 }
-                else if(continueflag==1)
+            }
+            else if(continueflag==1)
+            {
+                continueflag=0;
+            }
+            if(wiimote.keys.minus)//マイナスキー
+            {
+                if(continueflag==0)
                 {
-                    continueflag=0;
-                }
-                if(wiimote.keys.minus)
-                {
-                    if(continueflag==0)
-                    {
                         continueflag=2;
                         resultflag--;
                         WinDisplay(resultflag);
-                    }
-                }
-                else if(continueflag==2)
-                {
-                    continueflag=0;
-                }
-                if(wiimote.keys.a)
-                {
-                    char comment[64];
-                    SDL_Rect dst_rect2 = { 350, 350 };
-                    SDL_Surface *gMessage_comment;
-                    
-                    SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
-                    sprintf(comment,"待機中");
-                    gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
-                    SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
-                    SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
-                    
-                    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
-                    SDL_Flip(gMainWindow);
-                    
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
-                    SendData(data);
                 }
             }
+            else if(continueflag==2)
+            {
+                    continueflag=0;
+            }
+
+            /*Aボタン（リスタート）*/
+            if(wiimote.keys.a)
+            {
+                char comment[64];
+                SDL_Rect dst_rect2 = { 350, 350 };
+                SDL_Surface *gMessage_comment;
+                
+                SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+                sprintf(comment,"待機中");
+                gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
+                SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
+                SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
+                
+                SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+                SDL_Flip(gMainWindow);
+                
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                SendData(data);
+                }
+        }
         //   }
         break;
     }

@@ -167,37 +167,48 @@ int main(int argc,char *argv[])
             timer.lev=SDL_GetTicks();//経過時間を更新
             }*/
 
+
+        /********メイン画面ループ**************/
+        if(game.flag == 0){
+            //Mainwindow;
+            while(game.flag == 0)
+                WindowEvent(clientID);
+            game.flag = 1;//今だけ本当はwindoweventで変更
+
+        }
         
-        
-        if(game.restTime > 0 && game.flag == 0){
-            WindowEvent(clientID);  
-            printf("game.restTime:%d\n",game.restTime);
-            DrawChara(clientID,cnum);
+        else if(game.flag == 1){//ゲーム画面作成
             
+            if(GameWindows(clientID,name,loop)==-1){
+                fprintf(stderr,"setup failed : GameWindows\n");
+		return -1;}
             
+            /*********ゲーム画面ループ************/
+            while(game.restTime > 0){
+                WindowEvent(clientID);  
+                printf("game.restTime:%d\n",game.restTime);
+                DrawChara(clientID,cnum);
+            }
         }
         
         else{
-            game.flag = 1;
+            game.flag = 2;
             loop++;
             WinDisplay(clientID);
-            while(game.flag == 1){
+            while(game.flag == 2){
                 WindowEvent(clientID);
             }
-
-            if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
             
-                if(GameWindows(clientID,name,loop)==-1){
-                    fprintf(stderr,"setup failed : GameWindows\n");
-                    return -1;
-                    
-                }
-            }
-
-            else{//3回ずつやった
+            if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
+               
                 game.flag = 1;
+                //ゲーム画面ループに戻る
+            }
+            
+            else{//3回ずつやった
+                game.flag = 3;
                 //無限ループ あとで処理を追加
-                while(game.flag == 1){
+                while(game.flag == 3){
                     printf("aaaaaaaaaa\n");
                     WindowEvent(clientID);           
                 }
