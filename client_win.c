@@ -394,7 +394,28 @@ void WindowEvent(int clientID)
 /**********************************************************************************
 game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバディ終了
 **********************************************************************************/
-        if(game.flag == 2){
+        else if(game.flag == 0){//メイン画面
+            if(wiimote.keys.a)
+            {
+                char comment[64];
+                SDL_Rect dst_rect2 = { 350, 350 };
+                SDL_Surface *gMessage_comment;
+                
+                SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+                sprintf(comment,"待機中");
+                gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
+                SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
+                SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
+                
+                SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+                SDL_Flip(gMainWindow);
+                
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                SendData(data);
+                }
+        }
+
+        if(game.flag == 2){//各ピリオド終了
             // if(gClients[clientID].restart==0){
             if(wiimote.keys.plus)//プラスキー
             {
@@ -442,6 +463,29 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
                 SendData(data);
                 }
+        }
+
+        else if(game.flag == 3){
+
+            /*Aボタン（リスタート）*/
+            if(wiimote.keys.a)
+            {
+                char comment[64];
+                SDL_Rect dst_rect2 = { 350, 350 };
+                SDL_Surface *gMessage_comment;
+                
+                SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+                sprintf(comment,"待機中");
+                gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
+                SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
+                SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
+                
+                SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+                SDL_Flip(gMainWindow);
+                
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                SendData(data);
+            }   
         }
         //   }
         break;

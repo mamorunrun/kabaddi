@@ -73,7 +73,7 @@ int ExecuteCommand(char *command)
         break;
     case RESTART:
         j = 0;
-        gClients[id].restart=1;
+        gClients[id].restart=1;//相手のrestartを1にする
         for(i=0;i<cnum;i++)
         {
             if(gClients[i].restart == 1)

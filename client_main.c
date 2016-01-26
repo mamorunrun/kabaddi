@@ -171,10 +171,10 @@ int main(int argc,char *argv[])
         /********メイン画面ループ**************/
         if(game.flag == 0){
             //Mainwindow;
-            while(game.flag == 0)
+            printf("0"\n)
+            while(game.flag == 0){
                 WindowEvent(clientID);
-            game.flag = 1;//今だけ本当はwindoweventで変更
-
+            }
         }
         
         else if(game.flag == 1){//ゲーム画面作成
@@ -199,7 +199,7 @@ int main(int argc,char *argv[])
                 WindowEvent(clientID);
             }
             
-            if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
+            if(loop != cnum*3){//cnum*3回ずつ攻撃を行う
                
                 game.flag = 1;
                 //ゲーム画面ループに戻る
@@ -207,18 +207,15 @@ int main(int argc,char *argv[])
             
             else{//3回ずつやった
                 game.flag = 3;
+                //endwindow;
                 //無限ループ あとで処理を追加
                 while(game.flag == 3){
-                    printf("aaaaaaaaaa\n");
                     WindowEvent(clientID);           
                 }
-
-
             }
-            
-
-                timer.lev=SDL_GetTicks();//経過時間を更新
         }
+        timer.lev=SDL_GetTicks();//経過時間を更新
+        
             
         
        
