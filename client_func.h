@@ -17,6 +17,7 @@ extern int dflag;//移動したことの検知main,winで使用
 
 extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
+extern SDL_Rect chara_rect[MAX_CLIENTS] ={0,0,96,144};
 
 enum{
     up_dir          = 0, 
@@ -42,12 +43,14 @@ extern int  GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop);
 extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);
 
-extern void WindowEvent(int clientID);
+extern void WindowEvent(int clientID,int now);
 extern void WinDisplay(int clientID);
 
 /*client_system.c*/
 extern void UpdatePos(int n,int x,int y,int t);
-extern void Move(int clientID,int befx,int befy);
+extern void Move(int clientID,int befx,int befy,int now);
+extern void Animation(int now,int x,int y);
+
 //当たり判定
 extern int Collision(int clientID,int befx,int befy);
 

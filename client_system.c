@@ -22,11 +22,11 @@ void UpdatePos(int n,int x,int y,int t)
                    befx,befy:前のx座標y座標
 当たり判定（壁,キャラ）があればキャラの座標を戻す
 *********************************************************/
-void Move(int clientID,int befx,int befy)
+void Move(int clientID,int befx,int befy,int now)
 {
     char	data[MAX_DATA];
     int			dataSize = 0;
-
+    int x,y;
     int i = -1;
     int end=1;
 
@@ -38,18 +38,18 @@ void Move(int clientID,int befx,int befy)
     case 0:
         if(gClients[clientID].poi.x <= 0)
             gClients[clientID].poi.x = 0;
-        else if(gClients[clientID].poi.x + 30 >= 800)
-            gClients[clientID].poi.x = 800 - 30;
+        else if(gClients[clientID].poi.x + 96 >= 800)
+            gClients[clientID].poi.x = 800 - 96;
         if(gClients[clientID].poi.y <= 0)
             gClients[clientID].poi.y = 0;
-        else if(gClients[clientID].poi.y + 30 >= 600)
-            gClients[clientID].poi.y = 600 -30;
+        else if(gClients[clientID].poi.y + 144 >= 600)
+            gClients[clientID].poi.y = 600 -144;
         break;
     case 1:
         if(gClients[clientID].poi.x <= 0)
             gClients[clientID].poi.x = 0;
-        else if(gClients[clientID].poi.x + 30 >= 1000)
-            gClients[clientID].poi.x = 1000 - 30;
+        else if(gClients[clientID].poi.x + 96 >= 1000)
+            gClients[clientID].poi.x = 1000 - 96;
         //       if(gClients[clientID].poi.x >= 850){
         //  end=0;
         //   if(gClients[clientID].Bflag > 0){
@@ -60,8 +60,8 @@ void Move(int clientID,int befx,int befy)
 
         if(gClients[clientID].poi.y <= 0)
             gClients[clientID].poi.y = 0;
-        else if(gClients[clientID].poi.y + 30 >= 600)
-            gClients[clientID].poi.y = 600 -30;
+        else if(gClients[clientID].poi.y + 144 >= 600)
+            gClients[clientID].poi.y = 600 -144;
         break;
         
     }
@@ -85,6 +85,8 @@ void Move(int clientID,int befx,int befy)
         }
     } */   
     printf("%d\n",i);        
+
+    Animation(now,x,y);
     
     if( i == -1){
         if(gClients[clientID].ADsta == 1)
@@ -134,8 +136,8 @@ int Collision(int clientID,int befx,int befy){
     case 0:
         for(i=0;i<cnum;i++){
             if(i != clientID){
-                if((gClients[i].poi.x - gClients[clientID].poi.x) <= 30 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 30){
-                    if((gClients[i].poi.y - gClients[clientID].poi.y) <= 30 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 30){
+                if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+33)) <= 30 && ((gClients[clientID].poi.x+33) - (gClients[i].poi.x+33)) <= 30){
+                    if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+57)) <= 30 && ((gClients[clientID].poi.y+57) - (gClients[i].poi.y+57)) <= 30){
                         gClients[clientID].poi.x = befx;
                         gClients[clientID].poi.y = befy;
                     }
@@ -205,4 +207,14 @@ int Collision(int clientID,int befx,int befy){
     //printf("Collision\n");
 
     return -1;
+}
+
+void Animation(int now,int x, int y){
+
+
+
+
+
+
+
 }
