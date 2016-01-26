@@ -171,7 +171,7 @@ int main(int argc,char *argv[])
         /********メイン画面ループ**************/
         if(game.flag == 0){
             //Mainwindow;
-            printf("0"\n)
+            printf("now==%d\n\n",game.flag);
             while(game.flag == 0){
                 WindowEvent(clientID);
             }
@@ -195,6 +195,7 @@ int main(int argc,char *argv[])
             game.flag = 2;
             loop++;
             WinDisplay(clientID);
+              printf("now==%d\n\n",game.flag);
             while(game.flag == 2){
                 WindowEvent(clientID);
             }
@@ -205,17 +206,17 @@ int main(int argc,char *argv[])
                 //ゲーム画面ループに戻る
             }
             
-            else{//3回ずつやった
+            else{
+              /****エンド画面ループ**************/
                 game.flag = 3;
                 //endwindow;
-                //無限ループ あとで処理を追加
+                printf("now==%d\n\n",game.flag);
                 while(game.flag == 3){
                     WindowEvent(clientID);           
                 }
             }
         }
         timer.lev=SDL_GetTicks();//経過時間を更新
-        
             
         
        
