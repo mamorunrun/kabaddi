@@ -313,13 +313,13 @@ void WindowEvent(int clientID)
                 }
             }
 
-            else if(tflag <= 8){
-                //8フレーム動きを止める
+            else if(tflag <= 10){
+                //10フレーム動きを止める
                 tflag++;
                 break;
             }
-
-            else if(tflag == 9){
+/*
+            else if(tflag == 11){
                 switch(dirflag){
                 case up_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
@@ -354,6 +354,7 @@ void WindowEvent(int clientID)
                 tflag++;
                 break;
             }
+*/
             else if(wiimote.keys.two != 1)//tflagが10以上かつ2が押されていない
             {
                 tflag = 0;
