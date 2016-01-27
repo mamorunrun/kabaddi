@@ -169,7 +169,7 @@ int main(int argc,char *argv[])
 
 
         /********メイン画面ループ**************/
-        if(game.flag == 0){
+        if(game.flag == 0 || endFlag){
             //Mainwindow;
             printf("now==%d\n\n",game.flag);
             while(game.flag == 0){
@@ -184,18 +184,16 @@ int main(int argc,char *argv[])
 		return -1;}
             
             /*********ゲーム画面ループ************/
-            while(game.restTime > 0){
+            while( (game.restTime > 0 && game.flag == 1) || endFlag){
                 WindowEvent(clientID);  
                 printf("game.restTime:%d\n",game.restTime);
                 DrawChara(clientID,cnum);
             }
-        }
-        
-        else{
+            
             game.flag = 2;
             loop++;
             WinDisplay(clientID);
-              printf("now==%d\n\n",game.flag);
+            printf("now==%d\n\n",game.flag);
             while(game.flag == 2){
                 WindowEvent(clientID);
             }
@@ -211,7 +209,7 @@ int main(int argc,char *argv[])
                 game.flag = 3;
                 //endwindow;
                 printf("now==%d\n\n",game.flag);
-                while(game.flag == 3){
+                while(game.flag == 3 || endFlag){
                     WindowEvent(clientID);           
                 }
             }
