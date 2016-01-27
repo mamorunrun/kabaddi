@@ -112,11 +112,11 @@ int main(int argc,char *argv[])
                 }*/
     
    /*ゲームウィンドウの初期化*/
-    if(GameWindows(clientID,name,loop)==-1){
+    /*  if(GameWindows(clientID,name,loop)==-1){
 	fprintf(stderr,"setup failed : GameWindows\n");
 		return -1;
 
-    }
+                }*/
 
         printf("clientnum=%d\n",cnum);
 
