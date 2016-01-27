@@ -169,10 +169,10 @@ int main(int argc,char *argv[])
 
 
         /********メイン画面ループ**************/
-        if(game.flag == 0 || endFlag){
+        if(game.flag == 0){
             //Mainwindow;
             printf("now==%d\n\n",game.flag);
-            while(game.flag == 0){
+            while(game.flag == 0 || endFlag){
                 WindowEvent(clientID);
             }
         }
@@ -194,7 +194,7 @@ int main(int argc,char *argv[])
             loop++;
             WinDisplay(clientID);
             printf("now==%d\n\n",game.flag);
-            while(game.flag == 2){
+            while(game.flag == 2 || endFlag){
                 WindowEvent(clientID);
             }
             
