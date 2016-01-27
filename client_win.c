@@ -366,7 +366,7 @@ void WindowEvent(int clientID)
                     if(gClients[clientID].ADsta == 1)
                         game.restTime = game.restTime - 50;//ゲージを減らす
                     
-                    a = 3;
+                    a = 4;
                 }
                 
                 if(wiimote.keys.up){
