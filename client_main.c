@@ -208,7 +208,8 @@ int main(int argc,char *argv[])
                 game.flag = 4;
                 //endwindow;
                 printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
-                while(game.flag == 4){
+                while(game.flag != 0){
+                    printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
                     WindowEvent(clientID);
                 }
             }

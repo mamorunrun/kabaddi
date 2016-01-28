@@ -469,7 +469,7 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
         else if(game.flag == 4){
 
             /*Aボタン（リスタート）*/
-            if(wiimote.keys.a)
+            if(wiimote.keys.minus)
             {
                 /*
                 char comment[64];

@@ -86,7 +86,10 @@ int ExecuteCommand(char *command)
             switch(game.flag){
             case 0: game.flag = 1;//メインからゲームへ
                 break;
-                
+            case 1: game.flag = 0;
+                break;
+            case 2: game.flag = 0;
+                break;
             case 3: game.flag = 1;//各ピリオド終了からゲームへ
                 break;
                 
