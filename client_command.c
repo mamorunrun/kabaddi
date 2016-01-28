@@ -24,6 +24,8 @@ int ExecuteCommand(char *command)
     int x=atoi(strtok(NULL, ","));
     int y=atoi(strtok(NULL, ","));
     int t=atoi(strtok(NULL, ","));
+    int rect_x=atoi(strtok(NULL, ","));
+    int rect_y=atoi(strtok(NULL, ","));
     int	endFlag = 1;
 
     int i;
@@ -54,7 +56,7 @@ int ExecuteCommand(char *command)
     case CDRAW:
         printf("pos");
         if(id != clientID)
-            UpdatePos(id,x,y,t);
+            UpdatePos(id,x,y,t,rect_x,rect_y);
         break;
         case BUMP:
             if(gClients[x].color==0){
@@ -110,7 +112,7 @@ void SendEndCommand(void)
     printf("SendEndCommand()\n");
 #endif
    
-    sprintf(data,"endkabaddi,a,a,a,a,a\0");
+    sprintf(data,"endkabaddi,a,a,a,a,a,a,a\0");
     /* データの送信 */
     SendData(data);
 }

@@ -17,7 +17,7 @@ extern int dflag;//移動したことの検知main,winで使用
 
 extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
-extern SDL_Rect chara_rect[MAX_CLIENTS] ={0,0,96,144};
+extern SDL_Rect chara_rect[MAX_CLIENTS];
 
 enum{
     up_dir          = 0, 
@@ -47,7 +47,7 @@ extern void WindowEvent(int clientID,int now);
 extern void WinDisplay(int clientID);
 
 /*client_system.c*/
-extern void UpdatePos(int n,int x,int y,int t);
+extern void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y);
 extern void Move(int clientID,int befx,int befy,int now);
 extern void Animation(int now,int x,int y);
 

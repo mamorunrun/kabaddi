@@ -5,6 +5,7 @@
 
 #include<SDL/SDL.h>
 #include<SDL/SDL_ttf.h>
+#include <SDL/SDL_image.h>
 #include<SDL/SDL_gfxPrimitives.h>
 #include"common.h"
 #include"client_func.h"
@@ -41,7 +42,7 @@ static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
 static TTF_Font* Font;//DisplayStatus
 
-/*時間描画のためstatic*/
+ /*時間描画のためstatic*/
 static SDL_Rect Src_rect;//時間描画
 static SDL_Rect Dst_rect = {0,0};//転送先
 static SDL_Surface *mes;
@@ -206,9 +207,9 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
                 }*/
 
-            printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+            //printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
-            SDL_BlitSurface(gCharaImage,&chara_rect[i],buffer,gClients[i].poi);
+            SDL_BlitSurface(gCharaImage,&chara_rect[i],buffer,&gClients[i].poi);
 
 
 
@@ -232,7 +233,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         char   status[64];
 
         sprintf(status,"score:%dpt",gClients[clientID].score);
-        printf("%s\n",status);
+        //printf("%s\n",status);
     
         mes = TTF_RenderUTF8_Blended(font2, status, colB);
   
@@ -373,7 +374,7 @@ void WindowEvent(int clientID,int now)
 
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
-                printf("WindowEvent\n");
+                //printf("WindowEvent\n");
                 if(wiimote.keys.one){
                     if(gClients[clientID].ADsta == 1)
                         game.restTime = game.restTime - 50;//ゲージを減らす
@@ -446,7 +447,7 @@ void WindowEvent(int clientID,int now)
                     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
                     SDL_Flip(gMainWindow);
                     
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                     SendData(data);
                 }
             }
@@ -462,8 +463,35 @@ static
 void DrawChara(int n,int cnum)
 {
 
-    int i;
+    printf("%d  %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
+
+    int i,j,tmp;
     int num=3;
+
+    int s[]={0,1,2,3,4,5,6,7};
+
+    SDL_FillRect(buffer,NULL,0xffffffff);
+    DisplayStatus();
+
+    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
+
+
+    for(i=0;i<cnum;++i){
+        for(j=i+1;j<cnum;++j){
+            if(gClients[s[i]].poi.y > gClients[s[j]].poi.y){
+                tmp = s[i];
+                s[i]=s[j];
+                s[j]=tmp;
+            }
+        }
+    }
+
+    for(i=0;i<cnum;i++){
+        j=s[i];
+
+        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[i].poi);
+
+    }
 
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
@@ -471,10 +499,7 @@ void DrawChara(int n,int cnum)
 
     //printf("%d\n",n);
     //Judge(n,cnum);
-    SDL_FillRect(buffer,NULL,0xffffffff);
-    DisplayStatus();
 
-    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
     /*for(i=0;i<cnum;i++){
         if(gClients[i].ADsta==1){
@@ -484,6 +509,7 @@ void DrawChara(int n,int cnum)
         
         
         }*/
+
 
 
     
@@ -536,7 +562,7 @@ void DisplayStatus(void)//自分のスタミナの描写
     //  SDL_Surface *mes;
     //SDL_Rect dst_rect = {0,0};//転送先
     //SDL_Rect src_rect = {0,0,0,0};//転送元
-    printf("callback\n");
+    //printf("callback\n");
     /*
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime/10,gClients[clientID].score);

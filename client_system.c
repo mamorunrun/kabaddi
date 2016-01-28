@@ -2,13 +2,15 @@
 #include"client_func.h"
 
 
-void UpdatePos(int n,int x,int y,int t)
+void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
 {
     if(clientID == n)
         return;
 
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
+    chara_rect[n].x=rect_x;
+    chara_rect[n].y=rect_y;
     
     if(t >= 0)//攻撃側は時間を,守備側は-1を送っているため
         game.restTime = t;
@@ -84,23 +86,23 @@ void Move(int clientID,int befx,int befy,int now)
             
         }
     } */   
-    printf("%d\n",i);        
+    // printf("%d\n",i);        
 
     Animation(now,x,y);
     
     if( i == -1){
         if(gClients[clientID].ADsta == 1)
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,x,y);
         else
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1/*ダミー*/);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,x,y/*ダミー*/);
         SendData(data);
     }
     else if(gClients[clientID].ADsta == 1){
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",WIN,clientID,i/*当たった相手(守備)のid*/,0/*ダミー*/,0);
+        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i/*当たった相手(守備)のid*/,0/*ダミー*/,0,0,0);
         SendData(data);
     }
     else {
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",WIN,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0);
+        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
         SendData(data);
     }
     printf("%s\n",data);
@@ -109,14 +111,14 @@ void Move(int clientID,int befx,int befy,int now)
         if(gClients[clientID].poi.x >= 850){
             //end=0;
             if(gClients[clientID].Bflag > 0){
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",WIN,clientID,i,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i,0,0,0,0);
                 SendData(data);
             }
         }
     }
     
     if(end == 0){
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",END_COMMAND,0,0,0,0);
+        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",END_COMMAND,0,0,0,0,0,0);
         SendData(data);
     }
 }
@@ -144,8 +146,8 @@ int Collision(int clientID,int befx,int befy){
                 }
                         //printf("color\n");
                 if(gClients[i].ADsta==1){//相手が攻撃なら
-                    if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 70 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 70){//大きめの範囲で
-                        if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 70 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 70){
+                    if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 50 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 50){//大きめの範囲で
+                        if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 50 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 50){
                             if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
                             {
                                 // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
@@ -153,7 +155,7 @@ int Collision(int clientID,int befx,int befy){
                                 //gClients[i].color=3;//攻撃
                                 //gClients[clientID].color=2;//守備
 
-                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0);
+                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
                                 SendData(data);
 
                                 return i;//攻撃
@@ -174,8 +176,8 @@ int Collision(int clientID,int befx,int befy){
                         gClients[clientID].poi.y = befy;
                     }
                 }
-                if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+13)) <= 70 && ((gClients[clientID].poi.x+13) - (gClients[i].poi.x+33)) <= 70){
-                    if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+37)) <= 70 && ((gClients[clientID].poi.y+37) - (gClients[i].poi.y+57)) <= 70){
+                if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+13)) <= 50 && ((gClients[clientID].poi.x+13) - (gClients[i].poi.x+33)) <= 50){
+                    if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+37)) <= 50 && ((gClients[clientID].poi.y+37) - (gClients[i].poi.y+57)) <= 50){
                         if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                         {
                             // gClients[clientID].Bflag++;
@@ -183,7 +185,7 @@ int Collision(int clientID,int befx,int befy){
                             //gClients[clientID].color=3;//攻撃
                             //gClients[i].color=2;//守備
 
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/,0);
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/,0,0,0);
                             SendData(data);
 
                             return i;//守備
@@ -211,11 +213,49 @@ int Collision(int clientID,int befx,int befy){
 
 void Animation(int now,int x, int y){
 
-    if(now >= gClient[clientID].anime){
-        if(dirflag = up_dir && gClients[clientID].anipatnum){
+    if(now >= gClients[clientID].anime){
+        if(dirflag == up_dir || dirflag == down_dir){
+            if(gClients[clientID].anipatnum<6){
+                gClients[clientID].ADsta ? (chara_rect[clientID].y=0) : (chara_rect[clientID].y=144);
+                gClients[clientID].anipatnum++;
+                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+            }
+        }
 
+        else if(dirflag == right_dir || dirflag == left_dir){
+            if(gClients[clientID].anipatnum<6){
+                gClients[clientID].ADsta ? (chara_rect[clientID].y=288) : (chara_rect[clientID].y=432);
+                gClients[clientID].anipatnum++;
+                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+            }
+        }
 
+        else if(dirflag == up_right_dir || dirflag == down_left_dir){
+            if(gClients[clientID].anipatnum<6){
+                gClients[clientID].ADsta ? (chara_rect[clientID].y=288) : (chara_rect[clientID].y=720);
+                gClients[clientID].anipatnum++;
+                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+            }
+        }
+        
+        else if(dirflag == left_up_dir || dirflag == right_down_dir){
+            if(gClients[clientID].anipatnum<6){
+                gClients[clientID].ADsta ? (chara_rect[clientID].y=576) : (chara_rect[clientID].y=432);
+                gClients[clientID].anipatnum++;
+                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+            }
+        }
 
+        if(gClients[clientID].anipatnum >=6){
+            gClients[clientID].anipatnum=0;
+            chara_rect[clientID].x=0;
+        }
 
+        gClients[clientID].anime=now+50;
+
+    }
+
+    x=chara_rect[clientID].x;
+    y=chara_rect[clientID].y;
 
 }

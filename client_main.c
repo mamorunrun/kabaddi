@@ -172,7 +172,7 @@ int main(int argc,char *argv[])
         if(game.restTime > 0 && game.flag == 0){
             WindowEvent(clientID,ima);  
             ima=SDL_GetTicks();//現在時間を取得
-            printf("game.restTime:%d\n",game.restTime);
+            //printf("game.restTime:%d\n",game.restTime);
             DrawChara(clientID,cnum);
             
             
@@ -183,7 +183,7 @@ int main(int argc,char *argv[])
             loop++;
             WinDisplay(clientID);
             while(game.flag == 1){
-                WindowEvent(clientID);
+                WindowEvent(clientID,ima);
             }
 
             if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
@@ -200,7 +200,7 @@ int main(int argc,char *argv[])
                 //無限ループ あとで処理を追加
                 while(game.flag == 1){
                     printf("aaaaaaaaaa\n");
-                    WindowEvent(clientID);           
+                    WindowEvent(clientID,ima);           
                 }
 
 
