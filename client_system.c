@@ -144,8 +144,8 @@ int Collision(int clientID,int befx,int befy){
                 }
                         //printf("color\n");
                 if(gClients[i].ADsta==1){//相手が攻撃なら
-                    if((gClients[clientID].poi.x - (gClients[i].poi.x-20)) <= 70 && ((gClients[i].poi.x-20) - gClients[clientID].poi.x) <= 70){//大きめの範囲で
-                        if((gClients[clientID].poi.y - (gClients[i].poi.y-20)) <= 70 && ((gClients[i].poi.y-20) - gClients[clientID].poi.y) <= 70){
+                    if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 70 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 70){//大きめの範囲で
+                        if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 70 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 70){
                             if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
                             {
                                 // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
@@ -167,15 +167,15 @@ int Collision(int clientID,int befx,int befy){
     case 1:
         for(i=0;i<cnum;i++){
             if(i != clientID){
-                if((gClients[i].poi.x - gClients[clientID].poi.x) <= 30 && (gClients[clientID].poi.x - gClients[i].poi.x) <= 30){
-                    if((gClients[i].poi.y - gClients[clientID].poi.y) <= 30 && (gClients[clientID].poi.y - gClients[i].poi.y) <= 30){
+                if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+33)) <= 30 && ((gClients[clientID].poi.x+33) - (gClients[i].poi.x+33)) <= 30){
+                    if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+57)) <= 30 && ((gClients[clientID].poi.y+57) - (gClients[i].poi.y+57)) <= 30){
                         //printf("color\n");
                         gClients[clientID].poi.x = befx;
                         gClients[clientID].poi.y = befy;
                     }
                 }
-                if((gClients[i].poi.x - (gClients[clientID].poi.x-20)) <= 70 && ((gClients[clientID].poi.x-20) - gClients[i].poi.x) <= 70){
-                    if((gClients[i].poi.y - (gClients[clientID].poi.y-20)) <= 70 && ((gClients[clientID].poi.y-20) - gClients[i].poi.y) <= 70){
+                if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+13)) <= 70 && ((gClients[clientID].poi.x+13) - (gClients[i].poi.x+33)) <= 70){
+                    if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+37)) <= 70 && ((gClients[clientID].poi.y+37) - (gClients[i].poi.y+57)) <= 70){
                         if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                         {
                             // gClients[clientID].Bflag++;
@@ -211,7 +211,8 @@ int Collision(int clientID,int befx,int befy){
 
 void Animation(int now,int x, int y){
 
-
+    if(now >= gClient[clientID].anime){
+        if(dirflag = up_dir && gClients[clientID].anipatnum){
 
 
 
