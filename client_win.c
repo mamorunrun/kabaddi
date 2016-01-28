@@ -5,6 +5,7 @@
 
 #include<SDL/SDL.h>
 #include<SDL/SDL_ttf.h>
+#include <SDL/SDL_image.h>
 #include<SDL/SDL_gfxPrimitives.h>
 #include"common.h"
 #include"client_func.h"
@@ -13,6 +14,10 @@ static SDL_Surface *gMainWindow;
 static SDL_Surface *buffer;
 static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
+static SDL_Surface *gCharaImage;
+static char gPlayerImgFile[]   = "kabaddi.png";
+
+SDL_Rect chara_rect[MAX_CLIENTS] ={0,0,96,144};
 static SDL_Surface *bufmain;//スタート画面,終了画面など
 SDL_Rect STrect = {0, 0, 0, 50};//スタミナゲージのため
 SDL_Rect srect = {400,0};//stbarの領域
@@ -37,7 +42,7 @@ static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
 static TTF_Font* Font;//DisplayStatus
 
-/*時間描画のためstatic*/
+ /*時間描画のためstatic*/
 static SDL_Rect Src_rect;//時間描画
 static SDL_Rect Dst_rect = {0,0};//転送先
 static SDL_Surface *mes;
@@ -92,6 +97,12 @@ int InitWindows(void)
         exit(-1);
     }
 
+    if((gCharaImage= IMG_Load(gPlayerImgFile)) ==  NULL){
+        printf("failed to open player image.");
+        exit(-1);
+    }
+
+
     /* フォントの初期化 */
     TTF_Init();
 
@@ -133,7 +144,7 @@ int InitWindows(void)
         /* 背景を白にする */
         SDL_FillRect(bufmain,NULL,0xffffffff);
 
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれ！", /*0x000000ff*/colB);
+        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれい！", /*0x000000ff*/colB);
     SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
         SDL_BlitSurface(gMessage_chotomate, &src_rect3, bufmain, &dst_rect3);   
 
@@ -178,27 +189,29 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             if(i == (loop % cnum)){
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
-                gClients[i].poi.w=30;
-                gClients[i].poi.h=30;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
                 gClients[i].color=1;
             }
             else{
                 gClients[i].poi.x=200;
                 gClients[i].poi.y=100 + i*200;
-                gClients[i].poi.w=30;
-                gClients[i].poi.h=30;
+                chara_rect[i].y=144;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
                 gClients[i].color=0;
             }
+            gClients[i].anipatnum=0;
+            gClients[i].anime=100;
 
-            if(gClients[i].ADsta==1){
+
+            /*if(gClients[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
-            }
+                }*/
 
-            printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+            //printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
-            SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
+            SDL_BlitSurface(gCharaImage,&chara_rect[i],buffer,&gClients[i].poi);
+
+
 
 /***************************************************************************
             四角の上に文字を出力 SDL_BlitSurfaceの活用
@@ -220,7 +233,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         char   status[64];
 
         sprintf(status,"score:%dpt",gClients[clientID].score);
-        printf("%s\n",status);
+        //printf("%s\n",status);
     
         mes = TTF_RenderUTF8_Blended(font2, status, colB);
   
@@ -248,7 +261,7 @@ void DestroyWindow(void)
     SDL_Quit();
 }
 
-void WindowEvent(int clientID)
+void WindowEvent(int clientID,int now)
 {
     int a = 2;
     int mflag = 1;//moveflag
@@ -307,7 +320,7 @@ void WindowEvent(int clientID)
                         gClients[clientID].poi.y = gClients[clientID].poi.y-30;
                         break;
                     }
-                    Move(clientID,befx,befy);
+                    Move(clientID,befx,befy,now);
                     tflag++;
                     break;
                 }
@@ -362,7 +375,7 @@ void WindowEvent(int clientID)
 
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
-                printf("WindowEvent\n");
+                //printf("WindowEvent\n");
                 if(wiimote.keys.one){
                     if(gClients[clientID].ADsta == 1)
                         game.restTime = game.restTime - 50;//ゲージを減らす
@@ -447,7 +460,7 @@ void WindowEvent(int clientID)
                         //  }
                 }
                 mflag = 0;
-                Move(clientID,befx,befy);
+                Move(clientID,befx,befy,now);
                 break;
             }
         }
@@ -495,7 +508,7 @@ void WindowEvent(int clientID)
                     SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
                     SDL_Flip(gMainWindow);
                     
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                     SendData(data);
                 }
             }
@@ -511,8 +524,35 @@ static
 void DrawChara(int n,int cnum)
 {
 
-    int i;
+    printf("%d  %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
+
+    int i,j,tmp;
     int num=3;
+
+    int s[]={0,1,2,3,4,5,6,7};
+
+    SDL_FillRect(buffer,NULL,0xffffffff);
+    DisplayStatus();
+
+    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
+
+
+    for(i=0;i<cnum;++i){
+        for(j=i+1;j<cnum;++j){
+            if(gClients[s[i]].poi.y > gClients[s[j]].poi.y){
+                tmp = s[i];
+                s[i]=s[j];
+                s[j]=tmp;
+            }
+        }
+    }
+
+    for(i=0;i<cnum;i++){
+        j=s[i];
+
+        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[i].poi);
+
+    }
 
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
@@ -520,25 +560,26 @@ void DrawChara(int n,int cnum)
 
     //printf("%d\n",n);
     //Judge(n,cnum);
-    SDL_FillRect(buffer,NULL,0xffffffff);
-    DisplayStatus();
 
-    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
                        /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
-    for(i=0;i<cnum;i++){
+    /*for(i=0;i<cnum;i++){
         if(gClients[i].ADsta==1){
             rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0xaaaaaaff);
         }
         SDL_FillRect(buffer,&gClients[i].poi,color[gClients[i].color]);
         
         
-    }
+        }*/
+
+
+
     
     
     SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     
     SDL_Flip(gMainWindow);
     dflag = 0;
+
 }
 
 void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
@@ -582,7 +623,7 @@ void DisplayStatus(void)//自分のスタミナの描写
     //  SDL_Surface *mes;
     //SDL_Rect dst_rect = {0,0};//転送先
     //SDL_Rect src_rect = {0,0,0,0};//転送元
-    printf("callback\n");
+    //printf("callback\n");
     /*
     if(game.restTime > 0){
         sprintf(status,"残り%d秒 score:%dpt",game.restTime/10,gClients[clientID].score);

@@ -27,6 +27,7 @@ Uint32 now,//現在時間
 extern timers timer;
 extern int dflag;//移動したことの検知
 static int endFlag=1;
+int ima;
 
 int clientID;
 int cnum;
@@ -159,7 +160,6 @@ int main(int argc,char *argv[])
             timer.lev=SDL_GetTicks();//経過時間を更新
         }
 */
-        timer.now=SDL_GetTicks();//現在時間を取得
         timer.wit=timer.now-timer.lev;//待ち時間を計算
 
         /*if(timer.wit > 1000){
@@ -170,8 +170,9 @@ int main(int argc,char *argv[])
         
         
         if(game.restTime > 0 && game.flag == 0){
-            WindowEvent(clientID);  
-            printf("game.restTime:%d\n",game.restTime);
+            WindowEvent(clientID,ima);  
+            ima=SDL_GetTicks();//現在時間を取得
+            //printf("game.restTime:%d\n",game.restTime);
             DrawChara(clientID,cnum);
             
             
@@ -182,7 +183,7 @@ int main(int argc,char *argv[])
             loop++;
             WinDisplay(clientID);
             while(game.flag == 1){
-                WindowEvent(clientID);
+                WindowEvent(clientID,ima);
             }
 
             if(loop != cnum*3){//各プレイヤー3回ずつ攻撃を行う
@@ -199,7 +200,7 @@ int main(int argc,char *argv[])
                 //無限ループ あとで処理を追加
                 while(game.flag == 1){
                     printf("aaaaaaaaaa\n");
-                    WindowEvent(clientID);           
+                    WindowEvent(clientID,ima);           
                 }
 
 
