@@ -90,7 +90,7 @@ void Move(int clientID,int befx,int befy,int now)
 
     Animation(now); 
 
-     printf("anime =%d %d\n",chara_rect[clientID].x,chara_rect[clientID].x);
+     printf("anime =%d %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
     
     if( i == -1){
         if(gClients[clientID].ADsta == 1)
