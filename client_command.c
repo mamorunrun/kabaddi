@@ -87,10 +87,10 @@ int ExecuteCommand(char *command)
             case 0: game.flag = 1;//メインからゲームへ
                 break;
                 
-            case 2: game.flag = 1;//main内非2で次のステップへ
+            case 3: game.flag = 1;//各ピリオド終了からゲームへ
                 break;
                 
-            case 3: game.flag = 0;//エンドからメイン画面へ
+            case 4: game.flag = 0;//エンドからメイン画面へ
                 break;
             }
         }

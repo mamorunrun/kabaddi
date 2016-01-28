@@ -184,48 +184,40 @@ int main(int argc,char *argv[])
             if(GameWindows(clientID,name,loop)==-1){
                 fprintf(stderr,"setup failed : GameWindows\n");
 		return -1;}
-            
+        }
             /*********ゲーム画面ループ************/
-            while(game.restTime > 0 && game.flag == 1){
-                WindowEvent(clientID);  
-                printf("game.restTime:%d\n",game.restTime);
-                DrawChara(clientID,cnum);
-                 if(endFlag == 0)
-                    break;
-            }
-            
-            game.flag = 2;
+        else if(game.restTime > 0 && game.flag == 2){
+            WindowEvent(clientID);  
+            printf("game.restTime:%d\n",game.restTime);
+            DrawChara(clientID,cnum);
+        }
+        
+        else
+        {   
+            game.flag = 3;
             loop++;
             WinDisplay(clientID);
-            printf("now==%d\n\n",game.flag);
-            while(game.flag == 2){
+            printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
+            while(game.flag == 3){
                 WindowEvent(clientID);
-                if(endFlag == 0)
-                    break;
             }
             
-            if(loop != cnum*3){//cnum*3回ずつ攻撃を行う   
-                game.flag = 1;
-                //ゲーム画面ループに戻る
-            }
-            
-            else{
-              /****エンド画面ループ**************/
-                game.flag = 3;
+            if(loop == cnum*3){//cnum*3回ずつ攻撃を行ったら
+                /****エンド画面ループ**************/
+                printf("endloop\n\n\n\n\n\n\n\n\n\n\n");
+                game.flag = 4;
                 //endwindow;
-                printf("now==%d\n\n",game.flag);
-                while(game.flag == 3){
-                    WindowEvent(clientID); 
-                    if(endFlag == 0)
-                        break;
+                printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
+                while(game.flag == 4){
+                    WindowEvent(clientID);
                 }
             }
         }
         timer.lev=SDL_GetTicks();//経過時間を更新
-            
         
-       
-
+        
+        
+        
         // timer.now=SDL_GetTicks();//現在時間を取得
         //timer.wit=timer.now-timer.lev;//待ち時間を計算
         
@@ -233,13 +225,13 @@ int main(int argc,char *argv[])
             //    SDL_Delay(16-timer.wit);//16以下ならCPUを休ませる
         
         //timer.lev=SDL_GetTicks();//経過時間を更新
-
+        
     }
-
+    
     /* 終了処理 */
     SDL_RemoveTimer(timer_id1);
     DestroyWindow();
     CloseSoc();
-
+    
     return 0;
 }

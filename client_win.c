@@ -231,7 +231,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         
         SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
 	SDL_Flip(gMainWindow);
-        
+        game.flag = 2;
 
 	return 0;
 }
@@ -273,7 +273,7 @@ void WindowEvent(int clientID)
             SendEndCommand();
         }
 
-        if(game.flag == 1){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
+        if(game.flag == 2){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
             if(tflag == 0){
                 if(wiimote.keys.two){
@@ -413,10 +413,10 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
                 
                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
                 SendData(data);
-                }
+            }
         }
 
-        if(game.flag == 2){//各ピリオド終了
+        else if(game.flag == 3){//各ピリオド終了
             // if(gClients[clientID].restart==0){
             if(wiimote.keys.plus)//プラスキー
             {
@@ -435,9 +435,9 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
             {
                 if(continueflag==0)
                 {
-                        continueflag=2;
-                        resultflag--;
-                        WinDisplay(resultflag);
+                    continueflag=2;
+                    resultflag--;
+                    WinDisplay(resultflag);
                 }
             }
             else if(continueflag==2)
@@ -466,7 +466,7 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
                 }
         }
 
-        else if(game.flag == 3){
+        else if(game.flag == 4){
 
             /*Aボタン（リスタート）*/
             if(wiimote.keys.a)
