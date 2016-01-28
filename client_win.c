@@ -488,8 +488,9 @@ void DrawChara(int n,int cnum)
 
     for(i=0;i<cnum;i++){
         j=s[i];
-
-        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[i].poi);
+        printf("s[%d]=%d\n",i,j);
+        printf("%d  %d\n",gClients[j].poi.x,gClients[j].poi.y);
+        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
 
     }
 
