@@ -49,7 +49,7 @@ extern void WinDisplay(int clientID);
 /*client_system.c*/
 extern void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y);
 extern void Move(int clientID,int befx,int befy,int now);
-extern void Animation(int now,int x,int y);
+extern void Animation(int now);
 
 //当たり判定
 extern int Collision(int clientID,int befx,int befy);

@@ -463,7 +463,7 @@ static
 void DrawChara(int n,int cnum)
 {
 
-    printf("%d  %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
+    printf("crect = %d  %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
 
     int i,j,tmp;
     int num=3;
@@ -489,7 +489,7 @@ void DrawChara(int n,int cnum)
     for(i=0;i<cnum;i++){
         j=s[i];
         printf("s[%d]=%d\n",i,j);
-        printf("%d  %d\n",gClients[j].poi.x,gClients[j].poi.y);
+        printf("pos = %d  %d\n",gClients[j].poi.x,gClients[j].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
 
     }

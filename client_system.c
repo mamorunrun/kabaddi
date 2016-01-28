@@ -28,7 +28,7 @@ void Move(int clientID,int befx,int befy,int now)
 {
     char	data[MAX_DATA];
     int			dataSize = 0;
-    int x,y;
+    int *x,*y;
     int i = -1;
     int end=1;
 
@@ -88,13 +88,15 @@ void Move(int clientID,int befx,int befy,int now)
     } */   
     // printf("%d\n",i);        
 
-    Animation(now,x,y);
+    Animation(now); 
+
+     printf("anime =%d %d\n",chara_rect[clientID].x,chara_rect[clientID].x);
     
     if( i == -1){
         if(gClients[clientID].ADsta == 1)
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,x,y);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,chara_rect[clientID].x,chara_rect[clientID].y);
         else
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,x,y/*ダミー*/);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y/*ダミー*/);
         SendData(data);
     }
     else if(gClients[clientID].ADsta == 1){
@@ -211,7 +213,7 @@ int Collision(int clientID,int befx,int befy){
     return -1;
 }
 
-void Animation(int now,int x, int y){
+void Animation(int now){
 
     if(now >= gClients[clientID].anime){
         if(dirflag == up_dir || dirflag == down_dir){
@@ -254,8 +256,5 @@ void Animation(int now,int x, int y){
         gClients[clientID].anime=now+50;
 
     }
-
-    x=chara_rect[clientID].x;
-    y=chara_rect[clientID].y;
 
 }
