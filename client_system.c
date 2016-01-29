@@ -253,7 +253,7 @@ void Animation(int now){
             chara_rect[clientID].x=0;
         }
 
-        gClients[clientID].anime=now+50;
+        gClients[clientID].anime=now+25;
 
     }
 
