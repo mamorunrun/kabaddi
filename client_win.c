@@ -17,7 +17,7 @@ static SDL_Surface *stbar;//スタミナを表すバッファ
 static SDL_Surface *gCharaImage;
 static char gPlayerImgFile[]   = "kabaddi.png";
 
-SDL_Rect chara_rect[MAX_CLIENTS] ={0,0,96,144};
+SDL_Rect chara_rect[MAX_CLIENTS];
 static SDL_Surface *bufmain;//スタート画面,終了画面など
 SDL_Rect STrect = {0, 0, 0, 50};//スタミナゲージのため
 SDL_Rect srect = {400,0};//stbarの領域
@@ -178,8 +178,6 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
-
-
 	/* 背景を白にする */
 	SDL_FillRect(buffer,NULL,0xffffffff);
        
@@ -201,8 +199,10 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             gClients[i].anipatnum=0;
             gClients[i].anime=100;
-
-
+            gClients[i].poi.w=30;
+            gClients[i].poi.h=30;
+            chara_rect[i].w=96;
+            chara_rect[i].h=144;
             /*if(gClients[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
                 }*/
@@ -524,8 +524,7 @@ static
 void DrawChara(int n,int cnum)
 {
 
-    printf("%d  %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
-
+    //printf("crect = %d  %d\n",chara_rect[clientID].x,chara_rect[clientID].y);
     int i,j,tmp;
     int num=3;
 
@@ -536,6 +535,7 @@ void DrawChara(int n,int cnum)
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
 
+    printf("cnum = %d\n" ,cnum);
 
     for(i=0;i<cnum;++i){
         for(j=i+1;j<cnum;++j){
@@ -547,13 +547,20 @@ void DrawChara(int n,int cnum)
         }
     }
 
-    for(i=0;i<cnum;i++){
+    for(i=0;i<2;i++){
         j=s[i];
+        printf("s[%d]=%d\n",i,j);
+        printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
+        //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
+        }
 
-        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[i].poi);
-
-    }
-
+    /* printf("ID1= %d %d\n",gClients[1].poi.w,gClients[1].poi.h);
+    printf("ID0= %d %d\n",gClients[0].poi.w,gClients[0].poi.h);
+    SDL_FillRect(buffer,&gClients[1].poi,color[0]);
+    SDL_FillRect(buffer,&gClients[0].poi,color[1]);*/
+    //SDL_FillRect(buffer,&gClients[1].poi,color[0]);
+    
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
     //  }
