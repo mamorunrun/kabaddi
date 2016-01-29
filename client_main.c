@@ -212,9 +212,9 @@ int main(int argc,char *argv[])
             if(loop == cnum*3){
                 game.flag = 3;
             }
-            else 
+            else{ 
                 game.flag = 4;
-        }
+            }
             
             printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
             while(game.flag == 3){
@@ -243,13 +243,13 @@ int main(int argc,char *argv[])
             //  game.flag = 4;
                 //endwindow;
             //  printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
-                while(game.flag == 4){
-                    printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
-                    WindowEvent(clientID,ima); 
+            while(game.flag == 4){
+                printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
+                WindowEvent(clientID,ima); 
 //>>>>>>> color
-                }
             }
         }
+        
         timer.lev=SDL_GetTicks();//経過時間を更新
         
         
