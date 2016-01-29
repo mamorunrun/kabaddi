@@ -218,7 +218,9 @@ int main(int argc,char *argv[])
             
             printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
             while(game.flag == 3){
-                WindowEvent(clientID,ima); 
+                WindowEvent(clientID,ima);
+                if(endFlag == 0)
+                    break;
 //>>>>>>> color
             }
             
@@ -242,10 +244,10 @@ int main(int argc,char *argv[])
             //  printf("endloop\n\n\n\n\n\n\n\n\n\n\n");
             //  game.flag = 4;
                 //endwindow;
-            //  printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
             while(game.flag == 4){
-                printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
                 WindowEvent(clientID,ima); 
+                if(endFlag == 0)
+                    break;
 //>>>>>>> color
             }
         }
