@@ -146,8 +146,8 @@ int Collision(int clientID,int befx,int befy){
                     //        if((gClients[clientID].poi.y - (gClients[i].poi.y-20) <= 70) && ((gClients[i].poi.y-20) - gClients[clientID].poi.y <= 70){
                     if(gClients[clientID].poi.x < gClients[i].poi.x + gClients[i].poi.w + 20){
                         if(gClients[clientID].poi.y < gClients[i].poi.y + gClients[i].poi.h + 20){
-                            if(gClients[clientID].poi.x + gClients[clientID].poi.w < gClients[i].poi.x - 20){
-                                if(gClients[clientID].poi.y + gClients[clientID].poi.h < gClients[i].poi.y - 20){
+                            if(gClients[clientID].poi.x + gClients[clientID].poi.w > gClients[i].poi.x - 20){
+                                if(gClients[clientID].poi.y + gClients[clientID].poi.h > gClients[i].poi.y - 20){
                                     if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ                                                  {
                                         // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
                                         // gClients[clientID].Bflag++;//攻撃側にフラグ
@@ -185,8 +185,8 @@ int Collision(int clientID,int befx,int befy){
                 //              printf("judged y :%d    %d    \n",gClients[clientID].poi.y - 20, gClients[i].poi.y);
                 if(gClients[i].poi.x < gClients[clientID].poi.x + gClients[clientID].poi.w + 20){
                     if(gClients[i].poi.y < gClients[clientID].poi.y + gClients[clientID].poi.h + 20){
-                        if(gClients[i].poi.x + gClients[i].poi.w < gClients[clientID].poi.x - 20){
-                            if(gClients[i].poi.y + gClients[i].poi.h < gClients[clientID].poi.y - 20){
+                        if(gClients[i].poi.x + gClients[i].poi.w > gClients[clientID].poi.x - 20){
+                            if(gClients[i].poi.y + gClients[i].poi.h > gClients[clientID].poi.y - 20){
                                 if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                                 {
                                     // gClients[clientID].Bflag++;
