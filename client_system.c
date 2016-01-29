@@ -172,8 +172,8 @@ int Collision(int clientID,int befx,int befy){
                         gClients[clientID].poi.y = befy;
                     }
                 }
-                if((gClients[i].poi.x - (gClients[clientID].poi.x-20)) <= 70 && ((gClients[clientID].poi.x-20) - gClients[i].poi.x) <= 70){
-                    if((gClients[i].poi.y - (gClients[clientID].poi.y-20)) <= 70 && ((gClients[clientID].poi.y-20) - gClients[i].poi.y) <= 70){
+                if((gClients[i].poi.x - gClients[clientID].poi.x + 20) <= 70 && (gClients[clientID].poi.x - 20 - gClients[i].poi.x <= 70){
+                    if((gClients[i].poi.y - gClients[clientID].poi.y + 20) <= 70 && (gClients[clientID].poi.y - 20 - gClients[i].poi.y) <= 70){
                         if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                         {
                             // gClients[clientID].Bflag++;
