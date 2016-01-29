@@ -547,7 +547,7 @@ void DrawChara(int n,int cnum)
         }
     }
 
-    for(i=0;i<2;i++){
+    for(i=0;i<cnum;i++){
         j=s[i];
         printf("s[%d]=%d\n",i,j);
         printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
@@ -555,11 +555,7 @@ void DrawChara(int n,int cnum)
         //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
         }
 
-    /* printf("ID1= %d %d\n",gClients[1].poi.w,gClients[1].poi.h);
-    printf("ID0= %d %d\n",gClients[0].poi.w,gClients[0].poi.h);
-    SDL_FillRect(buffer,&gClients[1].poi,color[0]);
-    SDL_FillRect(buffer,&gClients[0].poi,color[1]);*/
-    //SDL_FillRect(buffer,&gClients[1].poi,color[0]);
+  
     
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
