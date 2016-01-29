@@ -465,7 +465,7 @@ void WindowEvent(int clientID,int now)
             }
         }
 /**********************************************************************************
-game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバディ終了
+game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオド終了　4カバディ終了
 **********************************************************************************/
         else if(game.flag == 0){//メイン画面
             if(wiimote.keys.a)
@@ -484,7 +484,7 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
                 SDL_Flip(gMainWindow);
                 */
                 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                 SendData(data);
             }
         }
@@ -516,31 +516,8 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
             else if(continueflag==2)
             {
                     continueflag=0;
-<<<<<<< HEAD
-                }
-                if(wiimote.keys.a)
-                {
-                    char comment[64];
-                    SDL_Rect dst_rect2 = { 350, 350 };
-                    SDL_Surface *gMessage_comment;
-                    
-                    SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
-                    sprintf(comment,"待機中");
-                    gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
-                    SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
-                    SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
-                    
-                    SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
-                    SDL_Flip(gMainWindow);
-                    
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
-                    SendData(data);
-                }
-=======
->>>>>>> color
+//<<<<<<< HEAD
             }
-
-            /*Aボタン（リスタート）*/
             if(wiimote.keys.a)
             {
                 char comment[64];
@@ -556,18 +533,41 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
                 SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
                 SDL_Flip(gMainWindow);
                 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                 SendData(data);
-                }
+            }
+//=======
+//>>>>>>> color
         }
+            
+            /*Aボタン（リスタート）*/
+//            if(wiimote.keys.a)
+//            {
+//                char comment[64];
+//                SDL_Rect dst_rect2 = { 350, 350 };
+//                SDL_Surface *gMessage_comment;
+                
+//                SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
+//                              sprintf(comment,"待機中");
+//                gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
+//                SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
+//                SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
+                
+//                SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
+//                SDL_Flip(gMainWindow);
+                
+//                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+//                SendData(data);
+//                }
+//        }
 
         else if(game.flag == 4){
-
+                
             /*Aボタン（リスタート）*/
             if(wiimote.keys.minus)
             {
                 /*
-                char comment[64];
+                  char comment[64];
                 SDL_Rect dst_rect2 = { 350, 350 };
                 SDL_Surface *gMessage_comment;
                 
@@ -581,7 +581,7 @@ game.flag: 0メイン画面 1ゲーム画面　2各ピリオド終了　3カバ�
                 SDL_Flip(gMainWindow);
                 */                
 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                 SendData(data);
             }   
         }

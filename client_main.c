@@ -173,30 +173,31 @@ int main(int argc,char *argv[])
             //Mainwindow;
             printf("now==%d\n\n",game.flag);
             while(game.flag == 0){
-                WindowEvent(clientID);
+                WindowEvent(clientID,ima);
                 if(endFlag == 0)
                     break;
             }
         }
         
-<<<<<<< HEAD
+//<<<<<<< HEAD
         
-        if(game.restTime > 0 && game.flag == 0){
-            WindowEvent(clientID,ima);  
-            ima=SDL_GetTicks();//現在時間を取得
+//        if(game.restTime > 0 && game.flag == 0){
+//            WindowEvent(clientID,ima);  
+//            ima=SDL_GetTicks();//現在時間を取得
             //printf("game.restTime:%d\n",game.restTime);
-=======
+//=======
         else if(game.flag == 1){//ゲーム画面作成
             
             if(GameWindows(clientID,name,loop)==-1){
                 fprintf(stderr,"setup failed : GameWindows\n");
 		return -1;}
         }
-            /*********ゲーム画面ループ************/
+        /*********ゲーム画面ループ************/
         else if(game.restTime > 0 && game.flag == 2){
-            WindowEvent(clientID);  
+            WindowEvent(clientID,ima);  
+            ima=SDL_GetTicks();//現在時間を取得
             printf("game.restTime:%d\n",game.restTime);
->>>>>>> color
+//>>>>>>> color
             DrawChara(clientID,cnum);
         }
         
@@ -205,31 +206,31 @@ int main(int argc,char *argv[])
             game.flag = 3;
             loop++;
             WinDisplay(clientID);
-<<<<<<< HEAD
-            while(game.flag == 1){
-                WindowEvent(clientID,ima);
-=======
+//<<<<<<< HEAD
+//            while(game.flag == 1){
+//                WindowEvent(clientID,ima);
+//=======
             printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
             while(game.flag == 3){
-                WindowEvent(clientID);
->>>>>>> color
+                WindowEvent(clientID,ima); 
+//>>>>>>> color
             }
             
-<<<<<<< HEAD
-                if(GameWindows(clientID,name,loop)==-1){
-                    fprintf(stderr,"setup failed : GameWindows\n");
-                    return -1;
+//<<<<<<< HEAD
+//              if(GameWindows(clientID,name,loop)==-1){
+//                    fprintf(stderr,"setup failed : GameWindows\n");
+//                    return -1;
                     
-                }
-            }
-
-            else{//3回ずつやった
-                game.flag = 1;
+//                }
+//            }
+//
+//            else{//3回ずつやった
+//                game.flag = 1;
                 //無限ループ あとで処理を追加
-                while(game.flag == 1){
-                    printf("aaaaaaaaaa\n");
-                    WindowEvent(clientID,ima);           
-=======
+//                while(game.flag == 1){
+//                    printf("aaaaaaaaaa\n");
+//                    WindowEvent(clientID,ima);           
+//=======
             if(loop == cnum*3){//cnum*3回ずつ攻撃を行ったら
                 /****エンド画面ループ**************/
                 printf("endloop\n\n\n\n\n\n\n\n\n\n\n");
@@ -238,8 +239,8 @@ int main(int argc,char *argv[])
                 printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
                 while(game.flag != 0){
                     printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
-                    WindowEvent(clientID);
->>>>>>> color
+                    WindowEvent(clientID,ima); 
+//>>>>>>> color
                 }
             }
         }
