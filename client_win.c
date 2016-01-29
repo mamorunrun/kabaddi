@@ -38,8 +38,15 @@ int continueflag;//連続入力の破棄
 int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と4はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
 SDL_Color colB = {0,0,0};//黒色（文字）
+
+char Pname[MAX_CLIENTS][MAX_NAME_SIZE+2];//キャラの名前
+SDL_Surface *PNAME[MAX_CLIENTS];//キャラの名前用サーフェイス
+SDL_Rect PNAME_srect[MAX_CLIENTS];//そのための四角形
+SDL_Rect PNAME_rrect[MAX_CLIENTS];//そのための四角形
+
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
 static TTF_Font* font2;
+static TTF_Font* font3;
 static TTF_Font* Font;//DisplayStatus
 
  /*時間描画のためstatic*/
@@ -107,8 +114,8 @@ int InitWindows(void)
     TTF_Init();
 
     font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
-    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);
-
+    font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);//得点の描写
+    font3 = TTF_OpenFont("kochi-gothic-subst.ttf",12);//名前用
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
     SDL_WM_SetCaption(title,NULL);
@@ -210,20 +217,19 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             //printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_BlitSurface(gCharaImage,&chara_rect[i],buffer,&gClients[i].poi);
-
-
-
-/***************************************************************************
-            四角の上に文字を出力 SDL_BlitSurfaceの活用
-            sprintf(Pname[i],"%d:%s",i,name);
-            
-            PNAME = TTF_RenderUTF8_Blended(font, Pname[i], );
-            SDL_Rect src_rect = {0,0 }
-            
-            SDL_BlitSurface(PNAME, &rect, SDL_GetVideoSurface(), &scr_rect);
+            printf("printf%s\n\n\n\n\n\n\n\n",gClients[i].name);
+/******************四角の上に文字を出力 SDL_BlitSurfaceの活用************************/
+            sprintf(Pname[i],"     ▼%s",gClients[i].name);
+            printf("sprintf%s\n\n\n\n\n\n\n\n",Pname[i]);
+            PNAME[i] = TTF_RenderUTF8_Blended(font3,Pname[i],colB);
+            PNAME_srect[i].w = PNAME[i]->w;
+            PNAME_srect[i].h = PNAME[i]->h ;
+            PNAME_rrect[i].x = gClients[i].poi.x;
+            PNAME_rrect[i].y = gClients[i].poi.y - 5;
+            SDL_BlitSurface(PNAME[i], &PNAME_srect[i], buffer,&PNAME_rrect[i]);
           
             
-*****************************************************************************/
+
         }
         printf("loop=%d\n",loop);
 
@@ -626,9 +632,13 @@ void DrawChara(int n,int cnum)
         printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
         //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
-        }
-
-  
+        //文字表示
+        PNAME_rrect[j].x = gClients[j].poi.x;
+        PNAME_rrect[j].y = gClients[j].poi.y - 5;
+        SDL_BlitSurface(PNAME[j], &PNAME_srect[j], buffer,&PNAME_rrect[j]);    
+    }
+    
+    
     
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
