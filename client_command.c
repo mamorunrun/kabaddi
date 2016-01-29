@@ -75,19 +75,29 @@ int ExecuteCommand(char *command)
         break;
     case RESTART:
         j = 0;
-        gClients[id].restart=1;
-        for(i=0;i<cnum;i++)
-        {
+        gClients[id].restart=1;//相手のrestartを1にする
+        for(i=0;i<cnum;i++){
             if(gClients[i].restart == 1)
                 j++;
         }
-        if(j == cnum)
-        {
-            for(i=0;i<cnum;i++)
-            {
+        if(j == cnum){
+            for(i=0;i<cnum;i++){
                 gClients[i].restart=0;
             }
-            game.flag = 0;
+            
+            switch(game.flag){
+            case 0: game.flag = 1;//メインからゲームへ
+                break;
+            case 1: game.flag = 0;
+                break;
+            case 2: game.flag = 0;
+                break;
+            case 3: game.flag = 1;//各ピリオド終了からゲームへ
+                break;
+                
+            case 4: game.flag = 0;//エンドからメイン画面へ
+                break;
+            }
         }
         break;
     }
