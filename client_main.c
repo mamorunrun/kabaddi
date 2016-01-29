@@ -171,7 +171,7 @@ int main(int argc,char *argv[])
         
         if(game.restTime > 0 && game.flag == 0){
             WindowEvent(clientID);  
-            printf("game.restTime:%d\n",game.restTime);
+            //printf("game.restTime:%d\n",game.restTime);
             DrawChara(clientID,cnum);
             
             
@@ -198,7 +198,7 @@ int main(int argc,char *argv[])
                 game.flag = 1;
                 //無限ループ あとで処理を追加
                 while(game.flag == 1){
-                    printf("aaaaaaaaaa\n");
+                    // printf("aaaaaaaaaa\n");
                     WindowEvent(clientID);           
                 }
 

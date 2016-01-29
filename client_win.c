@@ -196,7 +196,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
             }
 
-            printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+            //      printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_FillRect(buffer,&gClients[i].poi, color[gClients[i].ADsta]);
 
@@ -212,7 +212,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             
 *****************************************************************************/
         }
-        printf("loop=%d\n",loop);
+        //    printf("loop=%d\n",loop);
 
 /*******************************************************************************
 得点の描写
@@ -361,7 +361,7 @@ void WindowEvent(int clientID)
 
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
-                printf("WindowEvent\n");
+                //   printf("WindowEvent\n");
                 if(wiimote.keys.one){
                     if(gClients[clientID].ADsta == 1)
                         game.restTime = game.restTime - 50;//ゲージを減らす
@@ -371,38 +371,38 @@ void WindowEvent(int clientID)
                 
                 if(wiimote.keys.up){
                     if(wiimote.keys.left){
-                        printf("down_left_dir");
+                        //  printf("down_left_dir");
                         gClients[clientID].poi.x = gClients[clientID].poi.x-a/2;
                         gClients[clientID].poi.y = gClients[clientID].poi.y+a/2;
                         dirflag = down_left_dir;
                     }
                     else if(wiimote.keys.right){
-                        printf("left_up_dir");
+                        //      printf("left_up_dir");
                         gClients[clientID].poi.x = gClients[clientID].poi.x-a/2;
                         gClients[clientID].poi.y = gClients[clientID].poi.y-a/2;
                         dirflag = left_up_dir;
                     }
                     else{
-                        printf("left_dir");
+                        //    printf("left_dir");
                         gClients[clientID].poi.x = gClients[clientID].poi.x-a;
                         dirflag = left_dir;
                     }
                 }
                 else if (wiimote.keys.down){
                     if(wiimote.keys.left){
-                        printf("right_down_dir");
+                        //    printf("right_down_dir");
                         gClients[clientID].poi.x = gClients[clientID].poi.x+a/2;
                         gClients[clientID].poi.y = gClients[clientID].poi.y+a/2;
                         dirflag = right_down_dir;
                     }
                     else if(wiimote.keys.right){
-                        printf("up_right_dir");
+                        //     printf("up_right_dir");
                         gClients[clientID].poi.x = gClients[clientID].poi.x+a/2;
                         gClients[clientID].poi.y = gClients[clientID].poi.y-a/2;
                         dirflag = up_right_dir;
                     }
                     else{
-                        printf("right_dir");
+                        // printf("right_dir");
                         gClients[clientID].poi.x = gClients[clientID].poi.x+a;
                         dirflag = right_dir;
                     }
@@ -421,7 +421,7 @@ void WindowEvent(int clientID)
                         dirflag = right_down_dir;
                     }
                     else{*/
-                        printf("down_dir");
+                    //   printf("down_dir");
                         gClients[clientID].poi.y = gClients[clientID].poi.y+a;
                         dirflag = down_dir;
                         //    }
@@ -440,7 +440,7 @@ void WindowEvent(int clientID)
                         dirflag = up_right_dir;
                     }
                     else{*/
-                        printf("up_dir");
+                    //           printf("up_dir");
                         gClients[clientID].poi.y = gClients[clientID].poi.y-a;
                         dirflag = up_dir;
                         //  }
