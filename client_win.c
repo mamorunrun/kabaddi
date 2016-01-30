@@ -341,7 +341,7 @@ void WindowEvent(int clientID,int now)
                     tflag++;
                     if(dflag == 2){
                         gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
-                        gClients[clientID].poi.y += Ay - gClients[cID].poi.x;
+                        gClients[clientID].poi.y += Ay - gClients[cID].poi.y;
                     }
                     Ax = gClients[cID].poi.x;
                     Ay = gClients[cID].poi.y;
