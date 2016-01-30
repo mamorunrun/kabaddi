@@ -619,7 +619,7 @@ void DrawChara(int n,int cnum)
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
 
-    printf("cnum = %d\n" ,cnum);
+    //printf("cnum = %d\n" ,cnum);
 
     for(i=0;i<cnum;++i){
         for(j=i+1;j<cnum;++j){
@@ -633,8 +633,8 @@ void DrawChara(int n,int cnum)
 
     for(i=0;i<cnum;i++){
         j=s[i];
-        printf("s[%d]=%d\n",i,j);
-        printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+        //printf("s[%d]=%d\n",i,j);
+        //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
         //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
         //文字表示

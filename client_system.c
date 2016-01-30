@@ -260,9 +260,11 @@ void Animation(int now){
             }
         }
 
+        printf("color=%d\n",gClients[clientID].color);
+
         if(gClients[clientID].anipatnum >=6){
             gClients[clientID].anipatnum=0;
-            if(gClients[clientID].color==2)
+            if(gClients[clientID].color==4)
                 chara_rect[clientID].x=576;
             else
                 chara_rect[clientID].x=0;
