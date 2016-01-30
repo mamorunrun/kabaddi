@@ -16,12 +16,17 @@ static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
 static SDL_Surface *gCharaImage;
 static char gPlayerImgFile[]   = "kabaddi.png";
+static char StartImgFile[]   = "start.png";
+static char WaitingImgFile[]   = "waiting.png";
+static char SerecterImgFile[]   = "serecter.png";
 
 SDL_Rect chara_rect[MAX_CLIENTS];
 static SDL_Surface *bufmain;//スタート画面,終了画面など
 SDL_Rect STrect = {0, 0, 0, 50};//スタミナゲージのため
 SDL_Rect srect = {400,0};//stbarの領域
 SDL_Rect brect = {0, 51};//bufferからの領域
+SDL_Rect serect_gamestart_rect = {405, 297};//Topゲームスタート
+SDL_Rect serect_end_rect = {428, 367};//Topゲーム終了
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
@@ -34,6 +39,8 @@ int dirflag;//方向を表す
 
 int resultflag;//自分以外の人の結果を確認するため
 int continueflag;//連続入力の破棄
+
+int serectflag=0;//Top画面でゲームスタートか終了の対象を決める1スタート2終了
 
 int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と4はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
@@ -157,8 +164,36 @@ int InitWindows(void)
 
     SDL_BlitSurface(bufmain, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
+
+    TopWindows();
     
     return 0;
+}
+
+/*****************************************************************
+関数名	: topWindows
+機能	: スタート画面の表示を行う
+引数	: なし
+出力	: 正常に設定できたとき0，失敗したとき-1
+*****************************************************************/
+int TopWindows(void)
+{
+    if((bufmain = IMG_Load(StartImgFile)) ==  NULL){
+        printf("failed to open start image.");
+        exit(-1);
+    }
+
+    if((gCharaImage= IMG_Load(SerecterImgFile)) ==  NULL){
+        printf("failed to open serecter image.");
+        exit(-1);
+    }
+
+    SDL_BlitSurface(bufmain, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(bufmain, NULL, gMainWindow, &serect_gamestart_rect);
+    buttonflag=1;//ゲームスタート
+    SDL_Flip(gMainWindow);
+
+    InitWindows();
 }
 
 /*****************************************************************

@@ -26,6 +26,7 @@ Uint32 now,//現在時間
 }timers;
 extern timers timer;
 extern int dflag;//移動したことの検知
+extern int gametimes;//ゲームを繰り返す回数
 static int endFlag=1;
 int ima;
 
@@ -128,6 +129,7 @@ int main(int argc,char *argv[])
         case 1: wiimote.led.two   = 1; break; 
         case 2 :wiimote.led.three = 1; break;
 
+
         default: break;
         }
 
@@ -171,6 +173,7 @@ int main(int argc,char *argv[])
         /********メイン画面ループ**************/
         if(game.flag == 0){
             //Mainwindow;
+            //TopWindow;
             printf("now==%d\n\n",game.flag);
             while(game.flag == 0){
                 WindowEvent(clientID,ima);
@@ -209,7 +212,7 @@ int main(int argc,char *argv[])
 //            while(game.flag == 1){
 //                WindowEvent(clientID,ima);
 //=======
-            if(loop % (cnum*3) != 0){
+            if(loop % (cnum*gametimes) != 0){
                 game.flag = 3;
             }
             else{ 
