@@ -232,7 +232,8 @@ int EndWindow(void)
 {
     printf("EndWindow\n\n\n\n\n\n\n\n\n");
     SDL_Surface *gMessage_score;
-    SDL_Rect game_score_rect={561,321};
+    SDL_Rect game_score_rect={200,550};
+    SDL_Rect game_score_on_rect={350,650};
 
     int i;
 
@@ -246,10 +247,11 @@ int EndWindow(void)
     SDL_BlitSurface(gMessage_score, &src_rect, gMainWindow, &game_score_rect);
 
     for(i=0;i<cnum;i++){
+        game_score_on_rect.y+=50;
         sprintf(s,"%d",gClients[i].score);
         gMessage_score = TTF_RenderUTF8_Blended(font3, s,colB);
         SDL_Rect src_rect = { 0, 0, gMessage_score->w,gMessage_score->h };
-        SDL_BlitSurface(gMessage_score, &src_rect, gMainWindow, &game_score_rect);
+        SDL_BlitSurface(gMessage_score, &src_rect, gMainWindow, &game_score_on_rect);
     }
 
     SDL_Flip(gMainWindow);
