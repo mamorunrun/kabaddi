@@ -381,7 +381,8 @@ void WindowEvent(int clientID,int now)
                     tflag = 0;
                 }
             }
-            else if(dflag != 0 && dflag != 1){//gClients[clientID].ADsta == 1かつ
+            else if(dflag >= 2){//gClients[clientID].ADsta == 1かつ
+                printf("dflagの確認%dtflag%d\n\n\n",dflag,tflag);
                 tflag++;
                 if(tflag == 30){
                     dflag++;
