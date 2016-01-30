@@ -29,11 +29,13 @@
 #define END_COMMAND		'E'		  		/* プログラム終了コマンド */
 #define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
+#define TIMES           'T'                             /*ゲーム回数コマンド*/
 #define BUMP            'B'                             /*当たり判定のコマンド*/
 #define WIN             'W'                             /*勝ちコマンド*/
 #define LOSE            'L'                             /*負けコマンド*/
 
 #define RESTART         'R'                             /*リスタートコマンド*/
+
 
 extern int clientID; 
 typedef struct {

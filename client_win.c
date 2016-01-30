@@ -59,9 +59,9 @@ SDL_Rect PNAME_srect[MAX_CLIENTS];//そのための四角形
 SDL_Rect PNAME_rrect[MAX_CLIENTS];//そのための四角形
 
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
-
 static TTF_Font* font2;
 static TTF_Font* font3;
+static TTF_Font* font_times;
 static TTF_Font* Font;//DisplayStatus
 
  /*時間描画のためstatic*/
@@ -141,6 +141,7 @@ int InitWindows(void)
     font = TTF_OpenFont("kochi-gothic-subst.ttf",48); // フォントの設定kochi-gothic-substフォントを48ポイントで使用（読み込み）
     font2 = TTF_OpenFont("kochi-gothic-subst.ttf",24);//得点の描写
     font3 = TTF_OpenFont("kochi-gothic-subst.ttf",12);//名前用
+    font_times = TTF_OpenFont("kochi-gothic-subst.ttf",20);//ゲーム回数
     /* ウインドウのタイトルをセット */
     sprintf(title,"Kabaddi[%d]",clientID);
     SDL_WM_SetCaption(title,NULL);
@@ -209,7 +210,7 @@ int TopWindow(void)
     sprintf(s,"%d",gametimes);
 
 //    if(gametimes==1){
-        gMessage_times = TTF_RenderUTF8_Blended(font3, s,colB);
+        gMessage_times = TTF_RenderUTF8_Blended(font_times, s,colB);
         SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
         SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
 //    }
@@ -589,41 +590,44 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 //  buttonflag=0;
                 continueflag=0;
             }
-
-            if(wiimote.keys.plus)//プラスキー
-            {
-                if(continueflag==0)//continueflagは連続入力の防止
+            if(clientID==0){
+                if(wiimote.keys.plus)//プラスキー
                 {
-                    buttonflag=1;
-                    continueflag=3;
-                    gametimes++;//ゲーム回数の変更
-                    if(gametimes==6)
-                        gametimes=1;
+                    if(continueflag==0)//continueflagは連続入力の防止
+                    {
+                        buttonflag=1;
+                        continueflag=3;
+                        gametimes++;//ゲーム回数の変更
+                        if(gametimes==6)
+                            gametimes=1;
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        SendData(data);
+                    }
+                }
+                else if(continueflag==3)
+                {
+                    //  buttonflag=0;
+                    continueflag=0;
+                }
+                
+                if(wiimote.keys.minus)
+                {
+                    if(continueflag==0)
+                    {
+                        buttonflag=1;
+                        continueflag=4;
+                        gametimes--;
+                        if(gametimes==0)
+                            gametimes=5;
+                    }
+                }
+                else if(continueflag==4)
+                {
+                    //      buttonflag=0;
+                    continueflag=0;
                 }
             }
-            else if(continueflag==3)
-            {
-                //  buttonflag=0;
-                continueflag=0;
-            }
-
-            if(wiimote.keys.minus)
-            {
-                if(continueflag==0)
-                {
-                    buttonflag=1;
-                    continueflag=4;
-                    gametimes--;
-                    if(gametimes==0)
-                        gametimes=5;
-                }
-            }
-            else if(continueflag==4)
-            {
-                //      buttonflag=0;
-                continueflag=0;
-            }
-
+                
             if(serectflag == 1){
                 if(wiimote.keys.two){
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
@@ -644,7 +648,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                     SendEndCommand();
                 }
             }
-
+            
             if(buttonflag)
                 TopWindow();
             buttonflag=0;

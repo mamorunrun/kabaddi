@@ -58,7 +58,10 @@ int ExecuteCommand(char *command)
         if(id != clientID)
             UpdatePos(id,x,y,t,rect_x,rect_y);
         break;
-        case BUMP:
+    case TIMES://ゲーム回数を全クライアントに送る
+        gametimes=x;
+        buttonflag=1;
+    case BUMP:
             if(gClients[x].color==0){
                 gClients[id].Bflag++;
                 gClients[x].Bflag++;
