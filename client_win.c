@@ -30,6 +30,8 @@ SDL_Rect serect_end_rect = {428, 367};//Topゲーム終了
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
+
+
 void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
@@ -40,7 +42,9 @@ int dirflag;//方向を表す
 int resultflag;//自分以外の人の結果を確認するため
 int continueflag;//連続入力の破棄
 
-int serectflag=0;//Top画面でゲームスタートか終了の対象を決める1スタート2終了
+int gametimes;//ゲームを繰り返す回数
+
+int serectflag=1;//Top画面でゲームスタートか終了の対象を決める1スタート2終了
 
 int color[5] = {0x0000ffff,0xff0000ff,0x00ff00ff,0xff00ffff,0x00ff00ff};//2と4はcommand.c内l.65のため同じ
 int stcol[3] = {0x0000ff,0xffff00,0xff0000};//青,黄色,赤
@@ -52,6 +56,7 @@ SDL_Rect PNAME_srect[MAX_CLIENTS];//そのための四角形
 SDL_Rect PNAME_rrect[MAX_CLIENTS];//そのための四角形
 
 static TTF_Font* font;	// TrueTypeフォントデータへのポインタ
+
 static TTF_Font* font2;
 static TTF_Font* font3;
 static TTF_Font* Font;//DisplayStatus
@@ -165,7 +170,7 @@ int InitWindows(void)
     SDL_BlitSurface(bufmain, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
 
-    TopWindows();
+    TopWindow;
     
     return 0;
 }
@@ -176,8 +181,10 @@ int InitWindows(void)
 引数	: なし
 出力	: 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
-int TopWindows(void)
+int TopWindow(void)
 {
+    SDL_Rect game_times_rect={561,321};
+    SDL_Surface *gMessage_times;
     if((bufmain = IMG_Load(StartImgFile)) ==  NULL){
         printf("failed to open start image.");
         exit(-1);
@@ -189,11 +196,39 @@ int TopWindows(void)
     }
 
     SDL_BlitSurface(bufmain, NULL, gMainWindow, NULL);
-    SDL_BlitSurface(bufmain, NULL, gMainWindow, &serect_gamestart_rect);
-    buttonflag=1;//ゲームスタート
-    SDL_Flip(gMainWindow);
+    if(serectflag==1)//セレクト
+        SDL_BlitSurface(bufmain, NULL, gMainWindow, &serect_gamestart_rect);
+    else if(serectflag==2)
+        SDL_BlitSurface(bufmain, NULL, gMainWindow, &serect_end_rect);
+    if(gametimes==1){
+        gMessage_times = TTF_RenderUTF8_Blended(font3, "1",colB);
+        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
+        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+    }
+    if(gametimes==2){
+        gMessage_times = TTF_RenderUTF8_Blended(font3, "2",colB);
+        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
+        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+    }
+    if(gametimes==3){
+        gMessage_times = TTF_RenderUTF8_Blended(font3, "3",colB);
+        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
+        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+    }
+    if(gametimes==4){
+        gMessage_times = TTF_RenderUTF8_Blended(font3, "4",colB);
+        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
+        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+    }
+    if(gametimes==5){
+        gMessage_times = TTF_RenderUTF8_Blended(font3, "5",colB);
+        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
+        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+    }
 
-    InitWindows();
+    SDL_Flip(gMainWindow);
+    
+    return 0;
 }
 
 /*****************************************************************
@@ -512,24 +547,73 @@ void WindowEvent(int clientID,int now)
 game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオド終了　4カバディ終了
 **********************************************************************************/
         else if(game.flag == 0){//メイン画面
-            if(wiimote.keys.a)
+            if(wiimote.keys.left)
             {
-                /*     char comment[64];
-                SDL_Rect dst_rect2 = { 350, 350 };
-                SDL_Surface *gMessage_comment;
-                
-                SDL_FillRect(buffer,NULL,0xffffffff); //背景を白にする
-                sprintf(comment,"待機中");
-                gMessage_comment = TTF_RenderUTF8_Blended(font, comment, colB);
-                SDL_Rect src_rect2 = { 0, 0, gMessage_comment->w,gMessage_comment->h };
-                SDL_BlitSurface(gMessage_comment, &src_rect2, buffer, &dst_rect2);
-                
-                SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
-                SDL_Flip(gMainWindow);
-                */
-                
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
-                SendData(data);
+                if(continueflag==0)//continueflagは連続入力の防止
+                {
+                    continueflag=1;
+                    serectflag++;
+                    if(serectflag==3)
+                        serectflag=1;
+                }
+            }
+            else if(continueflag==3)
+            {
+                continueflag=0;
+            }
+            if(wiimote.keys.right)
+            {
+                if(continueflag==0)
+                {
+                    continueflag=4;
+                    serectflag--;
+                    if(serectflag==0)
+                        serectflag=2;
+                }
+            }
+            else if(continueflag==4)
+            {
+                continueflag=0;
+            }
+
+            if(wiimote.keys.plus)//プラスキー
+            {
+                if(continueflag==0)//continueflagは連続入力の防止
+                {
+                    continueflag=3;
+                    gametimes++;//ゲーム回数の変更
+                    if(serectflag==6)
+                        serectflag=1;
+                }
+            }
+            else if(continueflag==3)
+            {
+                continueflag=0;
+            }
+            if(wiimote.keys.minus)
+            {
+                if(continueflag==0)
+                {
+                    continueflag=4;
+                    gametimes--;
+                    if(serectflag==0)
+                        serectflag=5;
+                }
+            }
+            else if(continueflag==4)
+            {
+                continueflag=0;
+            }
+            
+            if(wiimote.keys.two){
+                if(serectflag == 1){
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+                    SendData(data);
+                }
+                else if(serectflag == 2){
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",END_COMMAND,clientID,0,0,0,0,0);
+                    SendData(data);
+                }
             }
         }
 
