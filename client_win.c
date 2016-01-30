@@ -296,7 +296,7 @@ void WindowEvent(int clientID,int now)
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
 
 /*************タックル（守備側のみ）*****************************************************************/
-            if(gClients[clientID].ADsta == 1){
+            if(gClients[clientID].ADsta == 0){
                 if(tflag == 0){
                     if(wiimote.keys.two){
                         switch(dirflag){
