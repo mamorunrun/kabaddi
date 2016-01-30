@@ -13,6 +13,7 @@
 static SDL_Surface *gMainWindow;
 static SDL_Surface *serect;
 static SDL_Surface *buffer;
+static SDL_Surface *startsur;
 static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
 static SDL_Surface *gCharaImage;
@@ -123,6 +124,16 @@ int InitWindows(void)
         exit(-1);
     }
 
+    if((startsur = IMG_Load(StartImgFile)) == NULL){
+        printf("failed to open start image.");
+        exit(-1);
+    }
+
+    if((serect = IMG_Load(SerecterImgFile)) == NULL){
+        printf("failed to open serecter image.");
+        exit(-1);
+    }
+
 
     /* フォントの初期化 */
     TTF_Init();
@@ -186,27 +197,23 @@ int TopWindow(void)
     printf("TopWindow\n\n\n\n\n\n\n\n\n");
     SDL_Rect game_times_rect={561,321};
     SDL_Surface *gMessage_times;
-    if((bufmain = IMG_Load(StartImgFile)) == NULL){
-        printf("failed to open start image.");
-        exit(-1);
-    }
 
-    if((serect = IMG_Load(SerecterImgFile)) == NULL){
-        printf("failed to open serecter image.");
-        exit(-1);
-    }
+    char s[64];
 
-    SDL_BlitSurface(bufmain, NULL, gMainWindow, NULL);
+    SDL_BlitSurface(startsur, NULL, gMainWindow, NULL);
     if(serectflag==1)//セレクト
         SDL_BlitSurface(serect, NULL, gMainWindow, &serect_gamestart_rect);
     else if(serectflag==2)
         SDL_BlitSurface(serect, NULL, gMainWindow, &serect_end_rect);
-    if(gametimes==1){
-        gMessage_times = TTF_RenderUTF8_Blended(font3, "1",colB);
+
+    sprintf(s,"%d",gametimes);
+
+//    if(gametimes==1){
+        gMessage_times = TTF_RenderUTF8_Blended(font3, s,colB);
         SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
         SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
-    }
-    if(gametimes==2){
+//    }
+        /*  if(gametimes==2){
         gMessage_times = TTF_RenderUTF8_Blended(font3, "2",colB);
         SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
         SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
@@ -226,7 +233,7 @@ int TopWindow(void)
         SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
         SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
     }
-
+        */
     SDL_Flip(gMainWindow);
 
     return 0;
@@ -552,9 +559,9 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
         else if(game.flag == 0){//メイン画面
             if(wiimote.keys.left)
             {
-                buttonflag=1;//extern ボタンを押されたらTopWindow実行
                 if(continueflag==0)//continueflagは連続入力の防止
                 {
+                    buttonflag=1;//extern ボタンを押されたらTopWindow実行
                     continueflag=1;
                     serectflag++;
                     if(serectflag==3)
@@ -568,9 +575,9 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
             }
             if(wiimote.keys.right)
             {
-                buttonflag=1;
                 if(continueflag==0)
                 {
+                    buttonflag=1;
                     continueflag=2;
                     serectflag--;
                     if(serectflag==0)
@@ -585,9 +592,9 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
 
             if(wiimote.keys.plus)//プラスキー
             {
-                buttonflag=1;
                 if(continueflag==0)//continueflagは連続入力の防止
                 {
+                    buttonflag=1;
                     continueflag=3;
                     gametimes++;//ゲーム回数の変更
                     if(gametimes==6)
@@ -602,9 +609,9 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
 
             if(wiimote.keys.minus)
             {
-                buttonflag=1;
                 if(continueflag==0)
                 {
+                    buttonflag=1;
                     continueflag=4;
                     gametimes--;
                     if(gametimes==0)
