@@ -160,7 +160,7 @@ int Collision(int clientID,int befx,int befy){
                                         // gClients[clientID].Bflag++;//攻撃側にフラグ
                                         //gClients[i].color=3;//攻撃
                                         //gClients[clientID].color=2;//守備
-                                        
+                                        chara_rect[clientID].x+=576;
                                         sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
                                         SendData(data);
                                         
@@ -196,7 +196,7 @@ int Collision(int clientID,int befx,int befy){
                                     // gClients[i].Bflag++;
                                     //gClients[clientID].color=3;//攻撃
                                     //gClients[i].color=2;//守備
-                                    
+                                    chara_rect[i].x+=576;
                                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/,0,0,0);
                                     SendData(data);
                                     
@@ -262,7 +262,10 @@ void Animation(int now){
 
         if(gClients[clientID].anipatnum >=6){
             gClients[clientID].anipatnum=0;
-            chara_rect[clientID].x=0;
+            if(gClients[clientID].color==2)
+                chara_rect[clientID].x=576;
+            else
+                chara_rect[clientID].x=0;
         }
 
         gClients[clientID].anime=now+25;
