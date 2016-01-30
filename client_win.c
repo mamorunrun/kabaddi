@@ -158,19 +158,17 @@ int InitWindows(void)
             }
         }
     }
-        printf("aaa\n");
-
-        /* 背景を白にする */
-        SDL_FillRect(bufmain,NULL,0xffffffff);
-
-        gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれい！", /*0x000000ff*/colB);
+    printf("aaa\n");
+    
+    /* 背景を白にする */
+    SDL_FillRect(bufmain,NULL,0xffffffff);
+    
+    gMessage_chotomate = TTF_RenderUTF8_Blended(font, "ちょっと待ってくれい！", /*0x000000ff*/colB);
     SDL_Rect src_rect3 = { 0, 0, gMessage_chotomate->w,gMessage_chotomate->h  }; 
-        SDL_BlitSurface(gMessage_chotomate, &src_rect3, bufmain, &dst_rect3);   
-
+    SDL_BlitSurface(gMessage_chotomate, &src_rect3, bufmain, &dst_rect3);   
+    
     SDL_BlitSurface(bufmain, NULL, gMainWindow, &brect);
     SDL_Flip(gMainWindow);
-
-    TopWindow;
     
     return 0;
 }
