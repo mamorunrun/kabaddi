@@ -58,13 +58,15 @@ int ExecuteCommand(char *command)
         if(id != clientID)
             UpdatePos(id,x,y,t,rect_x,rect_y);
         break;
-        case BUMP:
+    case BUMP:
             if(gClients[x].color==0){
                 gClients[id].Bflag++;
                 gClients[x].Bflag++;
                 gClients[id].color=3;
                 gClients[x].color=2;
-                dflag = 1;
+                if(dflag == 0){
+                    dflag = 1;
+                }
             }
             break;
     case WIN:
@@ -99,6 +101,13 @@ int ExecuteCommand(char *command)
             case 4: game.flag = 0;//エンドからメイン画面へ
                 break;
             }
+        }
+        break;
+    case TACKLE://当たった守備側から送られる
+        if(clientID == id){//自分が攻撃側なら
+            dflag++;
+            endFlag = 0;
+            
         }
         break;
     }

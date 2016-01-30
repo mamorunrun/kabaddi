@@ -18,7 +18,7 @@ extern int dflag;//移動したことの検知main,winで使用
 extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
 extern SDL_Rect chara_rect[MAX_CLIENTS];
-
+extern int tflag;//タックルのフラグ
 enum{
     up_dir          = 0, 
     up_right_dir    = 1, 

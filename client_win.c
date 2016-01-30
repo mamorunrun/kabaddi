@@ -27,7 +27,7 @@ CLIENT gClients[MAX_CLIENTS];
 
 void DisplayStatus(void);
 
-static int tflag;//タックルのフラグ
+int tflag;//タックルのフラグ
 
 int dflag;//グローバル変数,攻守反転
 int dirflag;//方向を表す

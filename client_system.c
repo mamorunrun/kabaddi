@@ -152,6 +152,13 @@ int Collision(int clientID,int befx,int befy){
                         if(gClients[clientID].poi.y+57 < gClients[i].poi.y+57+gClients[i].poi.h-114+20){
                             if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
                                 if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
+
+                                    if(dflag == 1){//攻守反転していて
+                                        if(tflag != 0){//自分がタックルしてたら
+                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
+                                            SendData(data);
+                                        }
+                                    } 
                                     if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
                                     {
                                         // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
@@ -171,7 +178,7 @@ int Collision(int clientID,int befx,int befy){
                 }
             }
         }
-                break;
+            break;
     case 1:
         for(i=0;i<cnum;i++){
             if(i != clientID){

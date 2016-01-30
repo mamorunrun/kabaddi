@@ -31,8 +31,8 @@
 #define CDRAW           'C'                             /*charadrawコマンド*/
 #define BUMP            'B'                             /*当たり判定のコマンド*/
 #define WIN             'W'                             /*勝ちコマンド*/
-#define LOSE            'L'                             /*負けコマンド*/
-
+#define LOSE            'L'                             /*負けコマンド   いる？*/
+#define TACKLE          'T'                             /*タックルコマンド*/
 #define RESTART         'R'                             /*リスタートコマンド*/
 
 extern int clientID; 
