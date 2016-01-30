@@ -339,8 +339,15 @@ void WindowEvent(int clientID,int now)
                 else if(tflag <= 30){
                     //30フレーム動きを止める
                     tflag++;
+                    if(dflag == 2){
+                        gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
+                        gClients[clientID].poi.y += Ay - gClients[cID].poi.x;
+                    }
+                    Ax = gClients[cID].poi.x;
+                    Ay = gClients[cID].poi.y;
                     break;
                 }
+            
 /*
   else if(tflag == 11){
                 switch(dirflag){
@@ -381,11 +388,6 @@ void WindowEvent(int clientID,int now)
                 else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                 }
-                
-                if(dflag == 2){
-                     gClients[clientID].poi.x =gClients[clientID].poi.x
-                }
-
             }
             else if(dflag >= 2){//gClients[clientID].ADsta == 1かつ
                 printf("dflagの確認%dtflag%d\n\n\n",dflag,tflag);
@@ -395,7 +397,6 @@ void WindowEvent(int clientID,int now)
                     tflag = 0;
                 }
             }
-
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
