@@ -173,7 +173,7 @@ int main(int argc,char *argv[])
         /********メイン画面ループ**************/
         if(game.flag == 0){
             //Mainwindow;
-            //TopWindow;
+            TopWindow;
             printf("now==%d\n\n",game.flag);
             while(game.flag == 0){
                 WindowEvent(clientID,ima);

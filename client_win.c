@@ -181,6 +181,7 @@ int InitWindows(void)
 *****************************************************************/
 int TopWindow(void)
 {
+    printf("TopWindow\n\n\n\n\n\n\n\n\n");
     SDL_Rect game_times_rect={561,321};
     SDL_Surface *gMessage_times;
     if((bufmain = IMG_Load(StartImgFile)) ==  NULL){
