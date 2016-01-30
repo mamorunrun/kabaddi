@@ -619,6 +619,8 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         gametimes--;
                         if(gametimes==0)
                             gametimes=5;
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        SendData(data);
                     }
                 }
                 else if(continueflag==4)
