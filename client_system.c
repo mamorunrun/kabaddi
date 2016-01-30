@@ -232,7 +232,7 @@ void Animation(int now){
             if(gClients[clientID].anipatnum<6){
                 gClients[clientID].ADsta ? (chara_rect[clientID].y=0) : (chara_rect[clientID].y=144);
                 gClients[clientID].anipatnum++;
-                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+                chara_rect[clientID].x += 96;
             }
         }
 
@@ -240,7 +240,7 @@ void Animation(int now){
             if(gClients[clientID].anipatnum<6){
                 gClients[clientID].ADsta ? (chara_rect[clientID].y=288) : (chara_rect[clientID].y=432);
                 gClients[clientID].anipatnum++;
-                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+                chara_rect[clientID].x += 96;
             }
         }
 
@@ -248,7 +248,7 @@ void Animation(int now){
             if(gClients[clientID].anipatnum<6){
                 gClients[clientID].ADsta ? (chara_rect[clientID].y=288) : (chara_rect[clientID].y=720);
                 gClients[clientID].anipatnum++;
-                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+                chara_rect[clientID].x += 96;
             }
         }
         
@@ -256,7 +256,7 @@ void Animation(int now){
             if(gClients[clientID].anipatnum<6){
                 gClients[clientID].ADsta ? (chara_rect[clientID].y=576) : (chara_rect[clientID].y=432);
                 gClients[clientID].anipatnum++;
-                chara_rect[clientID].x= gClients[clientID].anipatnum*96;
+                chara_rect[clientID].x += 96;
             }
         }
 

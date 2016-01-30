@@ -194,6 +194,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             if(i == (loop % cnum)){
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
+                chara_rect[i].y=0;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
                 gClients[i].color=1;
             }
@@ -206,6 +207,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             gClients[i].anipatnum=0;
             gClients[i].anime=100;
+            chara_rect[i].x=0;
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
             chara_rect[i].w=96;
