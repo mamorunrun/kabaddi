@@ -196,6 +196,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 gClients[i].poi.y=250;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
                 gClients[i].color=1;
+                cID = i;
             }
             else{
                 gClients[i].poi.x=200;
@@ -272,7 +273,7 @@ void WindowEvent(int clientID,int now)
     int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
-
+    static int Ax,Ay;
     char	data[MAX_DATA];
     
     befx = gClients[clientID].poi.x;
@@ -380,6 +381,11 @@ void WindowEvent(int clientID,int now)
                 else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                 }
+                
+                if(dflag == 2){
+                     gClients[clientID].poi.x =gClients[clientID].poi.x
+                }
+
             }
             else if(dflag >= 2){//gClients[clientID].ADsta == 1かつ
                 printf("dflagの確認%dtflag%d\n\n\n",dflag,tflag);
