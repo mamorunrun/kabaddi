@@ -14,6 +14,7 @@
 extern wiimote_t wiimote;
 extern wiimote_report_t report;
 extern int dflag;//移動したことの検知main,winで使用
+extern int gametimes;//ゲームを繰り返す回数
 
 extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
@@ -42,6 +43,7 @@ extern int  GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop);
 /*自分のID,全員の名前,何回目のループか*/
 extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);
+extern int TopWindow(void);
 
 extern void WindowEvent(int clientID,int now);
 extern void WinDisplay(int clientID);
