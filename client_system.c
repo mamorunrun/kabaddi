@@ -156,6 +156,7 @@ int Collision(int clientID,int befx,int befy){
                                     if(dflag == 1){//攻守反転していて
                                         if(tflag != 0){//自分がタックルしてたら
                                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
+                                            dflag = 2;/*自分にもフラグを*/
                                             SendData(data);
                                         }
                                     } 

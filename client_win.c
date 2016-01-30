@@ -381,15 +381,31 @@ void WindowEvent(int clientID,int now)
                     tflag = 0;
                 }
             }
-            
+            else if(dflag != 0 && dflag != 1){//gClients[clientID].ADsta == 1かつ
+                tflag++;
+                if(tflag == 30){
+                    dflag++;
+                    tflag = 0;
+                }
+            }
+
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
                 if(wiimote.keys.one){
-                    if(gClients[clientID].ADsta == 1)
+                    if(gClients[clientID].ADsta == 1){
                         game.restTime = game.restTime - 20;//ゲージを減らす
+                        if(dflag != 0){
+                            a = 4 - (dflag - 1);
+                            if(a == 0){
+                                game.flag = 3;
+                            }
+                        }
+                        else a = 4;
+                    }
+                    else
+                        a = 4;
                     
-                    a = 4;
                 }
                 
                 if(wiimote.keys.up){

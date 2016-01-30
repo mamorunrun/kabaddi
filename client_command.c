@@ -64,9 +64,9 @@ int ExecuteCommand(char *command)
                 gClients[x].Bflag++;
                 gClients[id].color=3;
                 gClients[x].color=2;
-                if(dflag == 0){
-                    dflag = 1;
-                }
+            }
+            if(dflag == 0){
+                dflag = 1;
             }
             break;
     case WIN:
@@ -103,11 +103,9 @@ int ExecuteCommand(char *command)
             }
         }
         break;
-    case TACKLE://当たった守備側から送られる
-        if(clientID == id){//自分が攻撃側なら
+    case TACKLE://タックルに成功した守備から送られる
+        if(gClients[clientID].ADsta == 1){//自分が攻撃側なら
             dflag++;
-            endFlag = 0;
-            
         }
         break;
     }
