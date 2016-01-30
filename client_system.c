@@ -31,8 +31,6 @@ void Move(int clientID,int befx,int befy,int now)
     int *x,*y;
     int i = -1;
     int end=1;
-
-    dflag = 1;
     
     //printf("Move\n");
 

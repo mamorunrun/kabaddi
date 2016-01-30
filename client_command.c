@@ -64,6 +64,7 @@ int ExecuteCommand(char *command)
                 gClients[x].Bflag++;
                 gClients[id].color=3;
                 gClients[x].color=2;
+                dflag = 1;
             }
             break;
     case WIN:

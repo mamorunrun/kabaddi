@@ -29,7 +29,7 @@ void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
 
-int dflag;//mainとのグローバル変数,動いたことの検知
+int dflag;//グローバル変数,攻守反転
 int dirflag;//方向を表す
 
 int resultflag;//自分以外の人の結果を確認するため
@@ -180,7 +180,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         SDL_Surface *PNAME[cnum];
 */      
 
-
+        dflag = 0;/*攻守反転フラグの初期化*/
         game.restTime = 20000;/*残り20000ミリ（20）秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -234,7 +234,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         printf("loop=%d\n",loop);
 
 /*******************************************************************************
-得点の描写
+　　　　　　得点の描写
  ****************************************************************************/
         char   status[64];
 
@@ -667,8 +667,7 @@ void DrawChara(int n,int cnum)
     SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     
     SDL_Flip(gMainWindow);
-    dflag = 0;
-
+   
 }
 
 void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
