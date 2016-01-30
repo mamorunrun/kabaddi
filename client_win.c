@@ -11,6 +11,7 @@
 #include"client_func.h"
 
 static SDL_Surface *gMainWindow;
+static SDL_Surface *serect;
 static SDL_Surface *buffer;
 static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
@@ -31,10 +32,11 @@ static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
 
-
 void DisplayStatus(void);
 
 static int tflag;//タックルのフラグ
+
+int buttonflag;
 
 int dflag;//mainとのグローバル変数,動いたことの検知
 int dirflag;//方向を表す
@@ -189,16 +191,16 @@ int TopWindow(void)
         exit(-1);
     }
 
-    if((gCharaImage= IMG_Load(SerecterImgFile)) == NULL){
+    if((serect = IMG_Load(SerecterImgFile)) == NULL){
         printf("failed to open serecter image.");
         exit(-1);
     }
 
     SDL_BlitSurface(bufmain, NULL, gMainWindow, NULL);
     if(serectflag==1)//セレクト
-        SDL_BlitSurface(bufmain, NULL, gMainWindow, &serect_gamestart_rect);
+        SDL_BlitSurface(serect, NULL, gMainWindow, &serect_gamestart_rect);
     else if(serectflag==2)
-        SDL_BlitSurface(bufmain, NULL, gMainWindow, &serect_end_rect);
+        SDL_BlitSurface(serect, NULL, gMainWindow, &serect_end_rect);
     if(gametimes==1){
         gMessage_times = TTF_RenderUTF8_Blended(font3, "1",colB);
         SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
@@ -550,6 +552,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
         else if(game.flag == 0){//メイン画面
             if(wiimote.keys.left)
             {
+                buttonflag=1;//extern ボタンを押されたらTopWindow実行
                 if(continueflag==0)//continueflagは連続入力の防止
                 {
                     continueflag=1;
@@ -558,65 +561,90 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         serectflag=1;
                 }
             }
-            else if(continueflag==3)
+            else if(continueflag==1)
             {
+                //    buttonflag=0;
                 continueflag=0;
             }
             if(wiimote.keys.right)
             {
+                buttonflag=1;
                 if(continueflag==0)
                 {
-                    continueflag=4;
+                    continueflag=2;
                     serectflag--;
                     if(serectflag==0)
                         serectflag=2;
                 }
             }
-            else if(continueflag==4)
+            else if(continueflag==2)
             {
+                //  buttonflag=0;
                 continueflag=0;
             }
 
             if(wiimote.keys.plus)//プラスキー
             {
+                buttonflag=1;
                 if(continueflag==0)//continueflagは連続入力の防止
                 {
                     continueflag=3;
                     gametimes++;//ゲーム回数の変更
-                    if(serectflag==6)
-                        serectflag=1;
+                    if(gametimes==6)
+                        gametimes=1;
                 }
             }
             else if(continueflag==3)
             {
+                //  buttonflag=0;
                 continueflag=0;
             }
+
             if(wiimote.keys.minus)
             {
+                buttonflag=1;
                 if(continueflag==0)
                 {
                     continueflag=4;
                     gametimes--;
-                    if(serectflag==0)
-                        serectflag=5;
+                    if(gametimes==0)
+                        gametimes=5;
                 }
             }
             else if(continueflag==4)
             {
+                //      buttonflag=0;
                 continueflag=0;
             }
 
-            if(wiimote.keys.two){
-                if(serectflag == 1){
+            if(serectflag == 1){
+                if(wiimote.keys.two){
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                     SendData(data);
+                    //wiimote_speaker_free(&wiimote);
+                    //wiimote_disconnect(&wiimote);
+                    //game.flag = 0;
+                    //SendEndCommand();
                 }
-                else if(serectflag == 2){
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",END_COMMAND,clientID,0,0,0,0,0);
-                    SendData(data);
+            }
+            else if(serectflag == 2){
+                if(wiimote.keys.two){
+                    //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+                    //SendData(data);
+                    wiimote_speaker_free(&wiimote);
+                    wiimote_disconnect(&wiimote);
+                    game.flag = 0;
+                    SendEndCommand();
                 }
-            }   
+            }
+
+            if(buttonflag)
+                TopWindow();
+            buttonflag=0;
         }
+    
+
+
 
         else if(game.flag == 3){//各ピリオド終了
             // if(gClients[clientID].restart==0){

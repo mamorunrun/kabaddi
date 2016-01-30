@@ -15,6 +15,7 @@ extern wiimote_t wiimote;
 extern wiimote_report_t report;
 extern int dflag;//移動したことの検知main,winで使用
 extern int gametimes;//ゲームを繰り返す回数
+extern int buttonflag;
 
 extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
