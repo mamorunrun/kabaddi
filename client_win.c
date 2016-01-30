@@ -181,7 +181,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
 
-        game.restTime = 30000;/*残り30000ミリ（30）秒*/
+        game.restTime = 20000;/*残り20000ミリ（20）秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
 
@@ -292,53 +292,56 @@ void WindowEvent(int clientID,int now)
             SendEndCommand();
         }
 
-        if(game.flag == 2){//ゲームフラグが1のときはAボタン以外の入力を受け付けない
+        if(game.flag == 2){//ゲームフラグが2以外のときはAボタン以外の入力を受け付けない
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
-            if(tflag == 0){
-                if(wiimote.keys.two){
-                    switch(dirflag){
-                    case up_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+
+/*************タックル（守備側のみ）*****************************************************************/
+            if(gClients[clientID].ADsta == 0){
+                if(tflag == 0){
+                    if(wiimote.keys.two){
+                        switch(dirflag){
+                        case up_dir:
+                            gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                            break;
+                        case up_right_dir:
+                            gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x+30;
                         break;
-                    case up_right_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                        gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        break;
-                    case right_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        break;
-                    case right_down_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        break;
-                    case down_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        break;
-                    case down_left_dir:
-                        gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                        gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        break;
-                    case left_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        break;
-                    case left_up_dir:
-                        gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                        gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                        case right_dir:
+                            gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                            break;
+                        case right_down_dir:
+                            gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                            break;
+                        case down_dir:
+                            gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                            break;
+                        case down_left_dir:
+                            gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                            break;
+                        case left_dir:
+                            gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                            break;
+                        case left_up_dir:
+                            gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                            break;
+                        }
+                        Move(clientID,befx,befy,now);
+                        tflag++;
                         break;
                     }
-                    Move(clientID,befx,befy,now);
+                }
+                
+                else if(tflag <= 30){
+                    //30フレーム動きを止める
                     tflag++;
                     break;
                 }
-            }
-
-            else if(tflag <= 10){
-                //10フレーム動きを止める
-                tflag++;
-                break;
-            }
 /*
-            else if(tflag == 11){
+  else if(tflag == 11){
                 switch(dirflag){
                 case up_dir:
                     gClients[clientID].poi.y = gClients[clientID].poi.y+30;
@@ -374,17 +377,17 @@ void WindowEvent(int clientID,int now)
                 break;
             }
 */
-            else if(wiimote.keys.two != 1)//tflagが10以上かつ2が押されていない
-            {
-                tflag = 0;
+                else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
+                    tflag = 0;
+                }
             }
-
+            
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
                 if(wiimote.keys.one){
                     if(gClients[clientID].ADsta == 1)
-                        game.restTime = game.restTime - 50;//ゲージを減らす
+                        game.restTime = game.restTime - 20;//ゲージを減らす
                     
                     a = 4;
                 }
@@ -728,8 +731,8 @@ void DisplayStatus(void)//自分のスタミナの描写
     SDL_BlitSurface(scbuf, NULL, gMainWindow, NULL);
     */
     
-    STrect.x = (game.restTime/100)*2;
-    STrect.w = 600 - (game.restTime/100)*2;
+    STrect.x = (game.restTime/100)*3;
+    STrect.w = 600 - (game.restTime/100)*3;
 //背景を水色に
     if(game.restTime > 12000)
         SDL_FillRect(stbar,NULL,stcol[0]);

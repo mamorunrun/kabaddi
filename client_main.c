@@ -209,7 +209,7 @@ int main(int argc,char *argv[])
 //            while(game.flag == 1){
 //                WindowEvent(clientID,ima);
 //=======
-            if(loop != cnum*3){
+            if(loop % (cnum*3) != 0){
                 game.flag = 3;
             }
             else{ 
