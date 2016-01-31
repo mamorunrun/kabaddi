@@ -296,7 +296,7 @@ void WindowEvent(int clientID,int now)
         if(game.flag == 2){//ゲームフラグが2以外のときはAボタン以外の入力を受け付けない
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
 
-/*************タックル（守備側のみ）*****************************************************************/
+/*************タックル（守備側のみ）**************************************/
             if(gClients[clientID].ADsta == 0){
                 if(tflag == 0){
                     if(wiimote.keys.two){
@@ -347,6 +347,8 @@ void WindowEvent(int clientID,int now)
                 else if(tflag <= 30){
                     //30フレーム動きを止める
                     tflag++;
+                    Ax = gClients[cID].poi.x;
+                    Ay = gClients[cID].poi.y;
                     break;
                 }
 /*
@@ -398,6 +400,8 @@ void WindowEvent(int clientID,int now)
                     tflag = 0;
                 }
             }
+
+
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
@@ -410,7 +414,6 @@ void WindowEvent(int clientID,int now)
                                 game.flag = 3;
                             }
                         }
-                        else a = 4;
                     }
                     else
                         a = 4;
@@ -495,6 +498,8 @@ void WindowEvent(int clientID,int now)
                 }
                 mflag = 0;
                 Move(clientID,befx,befy,now);
+                Ax = gClients[cID].poi.x;
+                Ay = gClients[cID].poi.y;  
                 break;
             }
         }
@@ -665,9 +670,6 @@ void DrawChara(int n,int cnum)
         PNAME_rrect[j].y = gClients[j].poi.y - 5;
         SDL_BlitSurface(PNAME[j], &PNAME_srect[j], buffer,&PNAME_rrect[j]);    
     }
-    
-    
-    
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
     //  }

@@ -106,7 +106,8 @@ int ExecuteCommand(char *command)
     case TACKLE://タックルに成功した守備から送られる
         if(gClients[clientID].ADsta == 1){//自分が攻撃側なら
             dflag++;
-            printf("dflagの確認%d\n\n\n",dflag);
+            while(1)
+                printf("dflagの確認%d\n\n\n",dflag);
         }
         break;
     }
