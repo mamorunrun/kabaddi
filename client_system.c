@@ -9,7 +9,7 @@ void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
     if(t >= 0){//攻撃側は時間を,守備側は-1を送っているため
         game.restTime = t;
         /*以下nは攻撃を指す*/
-        if(Af == 0){
+        if(Af == 1){
             Ax = gClients[n].poi.x; 
             Ay = gClients[n].poi.y;
             printf("changeAx,Ay:%d,%d\n",Ax,Ay);
@@ -162,6 +162,7 @@ int Collision(int clientID,int befx,int befy){
                                         if(tflag != 0){//自分がタックルしてたら
                                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
                                             gClients[clientID].tackle = 2;/*自分にもフラグを*/
+                                            Af = 1;
                                             SendData(data);
                                         }
                                     } 

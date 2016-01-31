@@ -179,7 +179,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         char Pname[cnum][MAX_NAME_SIZE+2];
         SDL_Surface *PNAME[cnum];
 */      
-
+        Af = 0;
         dflag = 0;/*攻守反転フラグの初期化*/
         tflag = 0;
         game.restTime = 20000;/*残り20000ミリ（20）秒*/
@@ -299,11 +299,11 @@ void WindowEvent(int clientID,int now)
             if(gClients[clientID].ADsta == 0){
                 if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
                     printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
-                    if(Af == 1){
+                    if(Af == 2){
                         gClients[clientID].poi.x += gClients[cID].poi.x - Ax;
                         gClients[clientID].poi.y += gClients[cID].poi.y - Ay;
                         Move(clientID,befx,befy,now);
-                        Af = 0;
+                        Af = 1;
                     }
                     break;
                 }
