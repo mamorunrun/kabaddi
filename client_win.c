@@ -270,25 +270,32 @@ int EndWindow(void)
     SDL_BlitSurface(gMessage_score, &src_score_rect, gMainWindow, &game_score_rect);
 
     for(i=0;i<cnum;i++){
-
-    }
-    for(i=0;i<cnum;i++){
-        sprintf(rank,"%s",i);
+        sprintf(rank,"%s",i);//各プレイヤーの順位
         gMessage_rank_on[i] = TTF_RenderUTF8_Blended(font2, rank,colB);
-        SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[i]->w,gMessage_rank_on[i]->h };
-        SDL_BlitSurface(gMessage_rank_on[i], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
 
         sprintf(name,"%s",gClients[i].name);//各プレイヤーの名前
         gMessage_name_on[i] = TTF_RenderUTF8_Blended(font2, name,colB);
-        SDL_Rect src_name_on_rect = { 0, 0, gMessage_name_on[i]->w,gMessage_name_on[i]->h };
-        SDL_BlitSurface(gMessage_name_on[i], &src_name_on_rect, gMainWindow, &game_name_on_rect);
 
         sprintf(score,"%d",gClients[i].score);//各プレイヤーの得点
         gMessage_score_on[i] = TTF_RenderUTF8_Blended(font2, score,colB);
+    }
+    for(i=0;i<cnum;i++){
+        //    sprintf(rank,"%s",i);
+        //    gMessage_rank_on[i] = TTF_RenderUTF8_Blended(font2, rank"位",colB);//各プレイヤーの順位
+        SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[i]->w,gMessage_rank_on[i]->h };
+        SDL_BlitSurface(gMessage_rank_on[i], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
+
+        //       sprintf(name,"%s",gClients[i].name);//各プレイヤーの名前
+        //   gMessage_name_on[i] = TTF_RenderUTF8_Blended(font2, name,colB);
+        SDL_Rect src_name_on_rect = { 0, 0, gMessage_name_on[i]->w,gMessage_name_on[i]->h };
+        SDL_BlitSurface(gMessage_name_on[i], &src_name_on_rect, gMainWindow, &game_name_on_rect);
+
+        //      sprintf(score,"%d",gClients[i].score);//各プレイヤーの得点
+        //      gMessage_score_on[i] = TTF_RenderUTF8_Blended(font2, score,colB);
         SDL_Rect src_score_on_rect = { 0, 0, gMessage_score_on[i]->w,gMessage_score_on[i]->h };
         SDL_BlitSurface(gMessage_score_on[i], &src_score_on_rect, gMainWindow, &game_score_on_rect);
 
-        //    game_rank_on_rect.y+=20;
+        game_rank_on_rect.y+=20;
         game_name_on_rect.y+=20;
         game_score_on_rect.y+=20;
     }
