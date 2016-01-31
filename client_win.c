@@ -231,27 +231,57 @@ int TopWindow(void)
 int EndWindow(void)
 {
     printf("EndWindow\n\n\n\n\n\n\n\n\n");
+    SDL_Surface *gMessage_name;
     SDL_Surface *gMessage_score;
-    SDL_Rect game_score_rect={200,550};
-    SDL_Rect game_score_on_rect={350,650};
+
+    SDL_Surface *gMessage_player_on[MAX_CLIENTS];
+    SDL_Surface *gMessage_name_on[MAX_CLIENTS];
+    SDL_Surface *gMessage_score_on[MAX_CLIENTS];
+
+    SDL_Rect game_name_rect={700,400};
+    SDL_Rect game_score_rect={850,400};
+
+    //  SDL_Rect game_rank_on_rect={650,500};
+    SDL_Rect game_name_on_rect={705,500};
+    SDL_Rect game_score_on_rect={855,500};
 
     int i;
 
-    char s[64];
+    //   char rank[64];
+    char name[64];
+    char score[64];
 
     SDL_BlitSurface(endsur, NULL, gMainWindow, NULL);
 
-    sprintf(s,"%d",gClients[clientID].score);
-    gMessage_score = TTF_RenderUTF8_Blended(font, s,colB);
-    SDL_Rect src_rect = { 0, 0, gMessage_score->w,gMessage_score->h };
-    SDL_BlitSurface(gMessage_score, &src_rect, gMainWindow, &game_score_rect);
+    sprintf(name,"%s",gClients[clientID].name);
+    gMessage_name = TTF_RenderUTF8_Blended(font, name,colB);
+    SDL_Rect src_name_rect = { 0, 0, gMessage_name->w,gMessage_name->h };
+    SDL_BlitSurface(gMessage_name, &src_name_rect, gMainWindow, &game_name_rect);
+
+    sprintf(score,"%d",gClients[clientID].score);
+    gMessage_score = TTF_RenderUTF8_Blended(font, score,colB);
+    SDL_Rect src_score_rect = { 0, 0, gMessage_score->w,gMessage_score->h };
+    SDL_BlitSurface(gMessage_score, &src_score_rect, gMainWindow, &game_score_rect);
 
     for(i=0;i<cnum;i++){
-        game_score_on_rect.y+=50;
-        sprintf(s,"%d",gClients[i].score);
-        gMessage_score = TTF_RenderUTF8_Blended(font3, s,colB);
-        SDL_Rect src_rect = { 0, 0, gMessage_score->w,gMessage_score->h };
-        SDL_BlitSurface(gMessage_score, &src_rect, gMainWindow, &game_score_on_rect);
+        //    sprintf(rank,"%s",i);
+        //  gMessage_rank_on[i] = TTF_RenderUTF8_Blended(font2, rank,colB);
+        //  SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[i]->w,gMessage_rank_on[i]->h };
+        //  SDL_BlitSurface(gMessage_rank_on[i], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
+
+        sprintf(name,"%s",gClients[i].name);
+        gMessage_name_on[i] = TTF_RenderUTF8_Blended(font2, name,colB);
+        SDL_Rect src_name_on_rect = { 0, 0, gMessage_name_on[i]->w,gMessage_name_on[i]->h };
+        SDL_BlitSurface(gMessage_name_on[i], &src_name_on_rect, gMainWindow, &game_name_on_rect);
+
+        sprintf(score,"%d",gClients[i].score);
+        gMessage_score_on[i] = TTF_RenderUTF8_Blended(font2, score,colB);
+        SDL_Rect src_score_on_rect = { 0, 0, gMessage_score_on[i]->w,gMessage_score_on[i]->h };
+        SDL_BlitSurface(gMessage_score_on[i], &src_score_on_rect, gMainWindow, &game_score_on_rect);
+
+        //    game_rank_on_rect.y+=20;
+        game_name_on_rect.y+=20;
+        game_score_on_rect.y+=20;
     }
 
     SDL_Flip(gMainWindow);
