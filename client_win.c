@@ -23,7 +23,7 @@ static char gPlayerImgFile[]   = "kabaddi.png";
 static char StartImgFile[] = "start.png";
 static char EndsurImgFile[] = "endsur.png";
 static char SerecterImgFile[] = "serecter.png";
-static char BacklineImgFile[] = "backline.png";
+//static char BacklineImgFile[] = "backline.png";
 
 SDL_Rect chara_rect[MAX_CLIENTS];
 static SDL_Surface *bufmain;//スタート画面,終了画面など
@@ -142,10 +142,10 @@ int InitWindows(void)
         exit(-1);
     }
 
-    if((backlinesur = IMG_Load(BacklineImgFile)) == NULL){
+/*    if((backlinesur = IMG_Load(BacklineImgFile)) == NULL){
         printf("failed to open backlinesur image.");
         exit(-1);
-        }
+        }*/
 
     /* フォントの初期化 */
     TTF_Init();
@@ -252,7 +252,9 @@ int EndWindow(void)
     SDL_Rect game_name_on_rect={705,500};
     SDL_Rect game_score_on_rect={855,500};
 
-    int i;
+    int i,j;
+    int s[]={0,1,2,3,4,5,6,7};
+    int tmp;
 
        char rank[64];
     char name[64];
@@ -281,31 +283,21 @@ int EndWindow(void)
 
     for(i=0;i<cnum;i++){
         j=s[i];
-        //printf("s[%d]=%d\n",i,j);
-        //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
-        SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
-        //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
-        //文字表示
-        PNAME_rrect[j].x = gClients[j].poi.x;
-        PNAME_rrect[j].y = gClients[j].poi.y - 5;
-        SDL_BlitSurface(PNAME[j], &PNAME_srect[j], buffer,&PNAME_rrect[j]);    
-    }
 
-    for(i=0;i<cnum;i++){
-        sprintf(rank,"%s",i);
-        gMessage_rank_on[i] = TTF_RenderUTF8_Blended(font2, rank"位",colB);//各プレイヤーの順位
-        SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[i]->w,gMessage_rank_on[i]->h };
-        SDL_BlitSurface(gMessage_rank_on[i], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
+        sprintf(rank,"%d",j+1);
+        gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
+        SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[j]->w,gMessage_rank_on[j]->h };
+        SDL_BlitSurface(gMessage_rank_on[j], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
         
-        sprintf(name,"%s",gClients[i].name);//各プレイヤーの名前
-        gMessage_name_on[i] = TTF_RenderUTF8_Blended(font2, name,colB);
-        SDL_Rect src_name_on_rect = { 0, 0, gMessage_name_on[i]->w,gMessage_name_on[i]->h };
-        SDL_BlitSurface(gMessage_name_on[i], &src_name_on_rect, gMainWindow, &game_name_on_rect);
+        sprintf(name,"%s",gClients[j].name);//各プレイヤーの名前
+        gMessage_name_on[j] = TTF_RenderUTF8_Blended(font2, name,colB);
+        SDL_Rect src_name_on_rect = { 0, 0, gMessage_name_on[j]->w,gMessage_name_on[j]->h };
+        SDL_BlitSurface(gMessage_name_on[j], &src_name_on_rect, gMainWindow, &game_name_on_rect);
         
-        sprintf(score,"%d",gClients[i].score);//各プレイヤーの得点
-        gMessage_score_on[i] = TTF_RenderUTF8_Blended(font2, score,colB);
-        SDL_Rect src_score_on_rect = { 0, 0, gMessage_score_on[i]->w,gMessage_score_on[i]->h };
-        SDL_BlitSurface(gMessage_score_on[i], &src_score_on_rect, gMainWindow, &game_score_on_rect);
+        sprintf(score,"%d",gClients[j].score);//各プレイヤーの得点
+        gMessage_score_on[j] = TTF_RenderUTF8_Blended(font2, score,colB);
+        SDL_Rect src_score_on_rect = { 0, 0, gMessage_score_on[j]->w,gMessage_score_on[j]->h };
+        SDL_BlitSurface(gMessage_score_on[j], &src_score_on_rect, gMainWindow, &game_score_on_rect);
         
         game_rank_on_rect.y+=20;
         game_name_on_rect.y+=20;
@@ -850,8 +842,8 @@ void DrawChara(int n,int cnum)
 
     int s[]={0,1,2,3,4,5,6,7};
 
-//    SDL_FillRect(bufmain,NULL,0xffffffff);//背景を白にする
-    SDL_BlitSurface(backlinesur, NULL, buffer, NULL);
+    SDL_FillRect(bufmain,NULL,0xffffffff);//背景を白にする
+//    SDL_BlitSurface(backlinesur, NULL, buffer, NULL);
     DisplayStatus();
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
