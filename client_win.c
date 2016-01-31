@@ -341,7 +341,7 @@ void WindowEvent(int clientID,int now)
                 
                         break;
                 }
-                else if(tflag <= 30){//30フレーム動きを止める
+                else if(tflag <= 50){//50フレーム動きを止める
                     tflag++;
                     break;
                 }
