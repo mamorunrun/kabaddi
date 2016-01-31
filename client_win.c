@@ -338,7 +338,7 @@ void WindowEvent(int clientID,int now)
                         printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
                         gClients[clientID].poi.x += Ax;
                         gClients[clientID].poi.y += Ay;  
-                
+                        Move(clientID,befx,befy,now);
                         break;
                 }
                 else if(tflag <= 50){//50フレーム動きを止める
