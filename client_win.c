@@ -297,6 +297,17 @@ void WindowEvent(int clientID,int now)
 
 /*************タックル（守備側のみ）**************************************/
             if(gClients[clientID].ADsta == 0){
+                if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
+                    printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
+                    if(Ax != 0 || Ay != 0){
+                        gClients[clientID].poi.x += Ax;
+                        gClients[clientID].poi.y += Ay;  
+                        Move(clientID,befx,befy,now);
+                        Ax = 0;
+                        Ay = 0;
+                    }
+                    break;
+                }
                 if(tflag == 0){
                     if(wiimote.keys.two){
                         switch(dirflag){
@@ -333,13 +344,6 @@ void WindowEvent(int clientID,int now)
                         tflag++;
                         break;
                     }
-                }
-                else if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
-                        printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
-                        gClients[clientID].poi.x += Ax;
-                        gClients[clientID].poi.y += Ay;  
-                        Move(clientID,befx,befy,now);
-                        break;
                 }
                 else if(tflag <= 50){//50フレーム動きを止める
                     tflag++;
