@@ -369,7 +369,7 @@ void WindowEvent(int clientID,int now)
                     if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
                         if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
-                            a = 4 - (gClients[clientID].tackle - 1);
+                            a = 4 - (gClients[clientID] - 1);
                             if(a == 0){
                                 printf("spead a = 0\n\n\n");
 //game.flag = 3;
