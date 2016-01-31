@@ -22,7 +22,7 @@
 
 
 #define MAX_CLIENTS		3				/* クライアント数の最大値 */
-#define MAX_NAME_SIZE	100 				/* ユーザー名の最大値*/
+#define MAX_NAME_SIZE	8 				/* ユーザー名の最大値*/
 
 #define MAX_DATA		200				/* 送受信するデータの最大値 */
 
