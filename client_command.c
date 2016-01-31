@@ -110,9 +110,8 @@ int ExecuteCommand(char *command)
         for(i=0;i<cnum;i++){
             if(gClients[i].ADsta == 1){//¹¶·â¤Î¿Í´Ö¤Ë
                 gClients[i].tackle++;
-                   while(1){
-                       printf("receive tackle command\ngClients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
-                   }
+                printf("receive tackle command\ngClients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+                endFlag = 0;
             }
         }
         break;
