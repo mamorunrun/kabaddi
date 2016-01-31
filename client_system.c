@@ -8,8 +8,10 @@ void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
         return;
     if(t >= 0){//攻撃側は時間を,守備側は-1を送っているため
         game.restTime = t;
-        Ax = x - gClients[n].poi.x; 
-        Ay = y - gClients[n].poi.y;
+        if(gClients[n].poi.x != x || gClients[n].poi.y != y){
+            Ax = x - gClients[n].poi.x; 
+            Ay = y - gClients[n].poi.y;
+        }
     }
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
