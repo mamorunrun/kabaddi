@@ -68,7 +68,9 @@ int ExecuteCommand(char *command)
             for(i=0;i<cnum;i++){
                 if(gClients[i].tackle == 0){
                    gClients[i].tackle = 1;
-                   printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+                   while(1){
+                       printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+                   }
                 }
             }
             break;
