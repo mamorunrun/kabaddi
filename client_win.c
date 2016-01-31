@@ -26,7 +26,7 @@ static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
 void DisplayStatus(void);
-int Ax,Ay;//攻撃の移動
+int Ax,Ay,Af;//攻撃の移動
 int tflag;//タックルのフラグ
 
 int dflag;//グローバル変数,攻守反転
@@ -299,12 +299,11 @@ void WindowEvent(int clientID,int now)
             if(gClients[clientID].ADsta == 0){
                 if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
                     printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
-                    if(Ax != 0 || Ay != 0){
-                        gClients[clientID].poi.x += Ax;
-                        gClients[clientID].poi.y += Ay;  
+                    if(Af == 1){
+                        gClients[clientID].poi.x += gClients[cID].poi.x - Ax;
+                        gClients[clientID].poi.y += gClients[cID].poi.y - Ay;
                         Move(clientID,befx,befy,now);
-                        Ax = 0;
-                        Ay = 0;
+                        Af = 0;
                     }
                     break;
                 }
