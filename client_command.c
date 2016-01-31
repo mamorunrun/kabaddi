@@ -67,10 +67,8 @@ int ExecuteCommand(char *command)
             }
             for(i=0;i<cnum;i++){
                 if(gClients[i].tackle == 0){
-                   gClients[i].tackle = 1;
-                   while(1){
-                       printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
-                   }
+                    gClients[i].tackle = 1;
+                    printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
                 }
             }
             break;
@@ -112,7 +110,9 @@ int ExecuteCommand(char *command)
         for(i=0;i<cnum;i++){
             if(gClients[i].ADsta == 1){//¹¶·â¤Î¿Í´Ö¤Ë
                 gClients[i].tackle++;
-                printf("receive tackle command\ngClients[i].tackle=%d\n\n\n",gClients[i].tackle);
+                   while(1){
+                       printf("receive tackle command\ngClients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+                   }
             }
         }
         break;
