@@ -275,7 +275,6 @@ void WindowEvent(int clientID,int now)
     int befx,befy;
     
     char	data[MAX_DATA];
-    printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -335,53 +334,17 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                else if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
-                    gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
-                    gClients[clientID].poi.y += Ay - gClients[cID].poi.y;   
-                    break;
-                }
                 else if(gClients[clientID].tackle <= 30){
                     //30フレーム動きを止める
                     tflag++;
+                    if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
+                        printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
+                        gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
+                        gClients[clientID].poi.y += Ay - gClients[cID].poi.y;  
+                    }
                     break;
                 }
-/*
-  else if(tflag == 11){
-                switch(dirflag){
-                case up_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;
-                case up_right_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;
-                case right_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;
-                case right_down_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;
-                case down_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;
-                case down_left_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;
-                case left_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;
-                case left_up_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;
-                }
-                //Move(clientID,befx,befy);
-                tflag++;
-                break;
-            }
-*/
+
                 else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                 }
