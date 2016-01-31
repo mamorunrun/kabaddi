@@ -334,7 +334,7 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                else if(gClients[clientID].tackle <= 30){
+                else if(tflag <= 30){
                     //30フレーム動きを止める
                     tflag++;
                     if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
