@@ -253,7 +253,7 @@ int EndWindow(void)
     SDL_Rect game_score_on_rect={855,500};
 
     int i,j;
-    int s[]={0,1,2,3,4,5,6,7};
+    int t[]={0,1,2,3,4,5,6,7};
     int tmp;
 
        char rank[64];
@@ -273,16 +273,16 @@ int EndWindow(void)
 
     for(i=0;i<cnum;++i){
         for(j=i+1;j<cnum;++j){
-            if(gClients[s[i]].poi.y > gClients[s[j]].poi.y){
-                tmp = s[i];
-                s[i]=s[j];
-                s[j]=tmp;
+            if(gClients[t[i]].poi.y > gClients[t[j]].poi.y){
+                tmp = t[i];
+                t[i]=t[j];
+                t[j]=tmp;
             }
         }
     }
 
     for(i=0;i<cnum;i++){
-        j=s[i];
+        j=t[i];
 
         sprintf(rank,"%d",j+1);
         gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
@@ -842,7 +842,8 @@ void DrawChara(int n,int cnum)
 
     int s[]={0,1,2,3,4,5,6,7};
 
-    SDL_FillRect(bufmain,NULL,0xffffffff);//背景を白にする
+        /* 背景を白にする */
+    SDL_FillRect(buffer,NULL,0xffffffff);
 //    SDL_BlitSurface(backlinesur, NULL, buffer, NULL);
     DisplayStatus();
 
