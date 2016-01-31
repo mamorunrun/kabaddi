@@ -163,7 +163,9 @@ int Collision(int clientID,int befx,int befy){
                                         if(tflag != 0){//自分がタックルしてたら
                                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
                                             gClients[clientID].tackle = 2;/*自分にもフラグを*/
-                                            Af = 1;
+                                            if(Af == 0){
+                                                Af = 1;
+                                            }
                                             SendData(data);
                                         }
                                     } 
