@@ -253,8 +253,7 @@ int EndWindow(void)
 
     SDL_BlitSurface(endsur, NULL, gMainWindow, NULL);
 
-    sprintf(name,"%s",gClients[clientID].name);
-    gMessage_name = TTF_RenderUTF8_Blended(font, name,colB);
+    gMessage_name = TTF_RenderUTF8_Blended(font, "You",colB);
     SDL_Rect src_name_rect = { 0, 0, gMessage_name->w,gMessage_name->h };
     SDL_BlitSurface(gMessage_name, &src_name_rect, gMainWindow, &game_name_rect);
 
