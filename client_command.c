@@ -65,8 +65,10 @@ int ExecuteCommand(char *command)
                 gClients[id].color=3;
                 gClients[x].color=2;
             }
-            if(dflag == 0){
-                dflag = 1;
+            for(i=0;i<cnum;i++){
+                if(gClients[i].tackle == 0){
+                   gClients[i].tackle = 1;
+                }
             }
             break;
     case WIN:
@@ -104,10 +106,11 @@ int ExecuteCommand(char *command)
         }
         break;
     case TACKLE://タックルに成功した守備から送られる
-        if(gClients[clientID].ADsta == 1){//自分が攻撃側なら
-            dflag++;
-            while(1)
-                printf("dflagの確認%d\n\n\n",dflag);
+        for(i=0;i<cnum;i++){
+            if(gClients[i].ADsta == 1){//攻撃の人間に
+                gClients[i].tackle++;
+                printf("receive tackle command\ngClients[i].tackle=%d\n",gClients[i].tackle);
+            }
         }
         break;
     }

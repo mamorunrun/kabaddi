@@ -55,6 +55,7 @@ typedef struct{
         int             score;//得点の保存
         int             color;
         int             restart;
+        int             tackle;
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];

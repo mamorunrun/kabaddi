@@ -181,6 +181,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
 */      
 
         dflag = 0;/*攻守反転フラグの初期化*/
+        tflag = 0;
         game.restTime = 20000;/*残り20000ミリ（20）秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -209,6 +210,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             gClients[i].anime=100;
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
+            gClients[i].tackle = 0;
             chara_rect[i].w=96;
             chara_rect[i].h=144;
             /*if(gClients[i].ADsta==1){
@@ -218,10 +220,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             //printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_BlitSurface(gCharaImage,&chara_rect[i],buffer,&gClients[i].poi);
-            printf("printf%s\n\n\n\n\n\n\n\n",gClients[i].name);
 /******************四角の上に文字を出力 SDL_BlitSurfaceの活用************************/
             sprintf(Pname[i],"     ▼%s",gClients[i].name);
-            printf("sprintf%s\n\n\n\n\n\n\n\n",Pname[i]);
             PNAME[i] = TTF_RenderUTF8_Blended(font3,Pname[i],colB);
             PNAME_srect[i].w = PNAME[i]->w;
             PNAME_srect[i].h = PNAME[i]->h ;
@@ -337,14 +337,14 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                else if(dflag == 2){
+                else if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
                     gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
                     gClients[clientID].poi.y += Ay - gClients[cID].poi.y;
                     Ax = gClients[cID].poi.x;
                     Ay = gClients[cID].poi.y;   
                     break;
                 }
-                else if(tflag <= 30){
+                else if(gClients[clientID].tackle <= 30){
                     //30フレーム動きを止める
                     tflag++;
                     Ax = gClients[cID].poi.x;
@@ -392,11 +392,11 @@ void WindowEvent(int clientID,int now)
                     tflag = 0;
                 }
             }
-            else if(dflag >= 2){//gClients[clientID].ADsta == 1かつ
-                printf("dflagの確認%dtflag%d\n\n\n",dflag,tflag);
+            else if(gClients[clientID].tackle >= 2){//gClients[clientID].ADsta == 1かつ
+                printf("tackleの確認%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
                 tflag++;
                 if(tflag == 30){
-                    dflag++;
+                    gClients[clientID].tackle++;
                     tflag = 0;
                 }
             }
@@ -408,10 +408,11 @@ void WindowEvent(int clientID,int now)
                 if(wiimote.keys.one){
                     if(gClients[clientID].ADsta == 1){
                         game.restTime = game.restTime - 20;//ゲージを減らす
-                        if(dflag != 0){
-                            a = 4 - (dflag - 1);
+                        if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
+                            a = 4 - (gClients[clientID].tackle - 1);
                             if(a == 0){
-                                game.flag = 3;
+                                printf("spead a = 0\n\n\n");
+//game.flag = 3;
                             }
                         }
                         else //攻撃側でdflag = 0
@@ -649,7 +650,7 @@ void DrawChara(int n,int cnum)
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
 
-    printf("cnum = %d\n" ,cnum);
+    //printf("cnum = %d\n" ,cnum);
 
     for(i=0;i<cnum;++i){
         for(j=i+1;j<cnum;++j){
@@ -663,8 +664,8 @@ void DrawChara(int n,int cnum)
 
     for(i=0;i<cnum;i++){
         j=s[i];
-        printf("s[%d]=%d\n",i,j);
-        printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
+        //printf("s[%d]=%d\n",i,j);
+        //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
         //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
         //文字表示
