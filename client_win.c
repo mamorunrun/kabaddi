@@ -414,8 +414,10 @@ void WindowEvent(int clientID,int now)
                                 game.flag = 3;
                             }
                         }
+                        else //攻撃側でdflag = 0
+                            a = 4;
                     }
-                    else
+                    else//守備側
                         a = 4;
                     
                 }
