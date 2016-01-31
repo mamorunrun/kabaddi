@@ -26,7 +26,7 @@ static int cID;
 CLIENT gClients[MAX_CLIENTS];
 
 void DisplayStatus(void);
-
+int Ax,Ay;//攻撃の移動
 int tflag;//タックルのフラグ
 
 int dflag;//グローバル変数,攻守反転
@@ -273,9 +273,9 @@ void WindowEvent(int clientID,int now)
     int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
-    static int Ax,Ay;
-    char	data[MAX_DATA];
     
+    char	data[MAX_DATA];
+    printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -332,23 +332,17 @@ void WindowEvent(int clientID,int now)
                         }
                         Move(clientID,befx,befy,now);
                         tflag++;
-                        Ax = gClients[cID].poi.x;
-                        Ay = gClients[cID].poi.y;   
                         break;
                     }
                 }
                 else if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
                     gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
-                    gClients[clientID].poi.y += Ay - gClients[cID].poi.y;
-                    Ax = gClients[cID].poi.x;
-                    Ay = gClients[cID].poi.y;   
+                    gClients[clientID].poi.y += Ay - gClients[cID].poi.y;   
                     break;
                 }
                 else if(gClients[clientID].tackle <= 30){
                     //30フレーム動きを止める
                     tflag++;
-                    Ax = gClients[cID].poi.x;
-                    Ay = gClients[cID].poi.y;
                     break;
                 }
 /*
@@ -501,8 +495,6 @@ void WindowEvent(int clientID,int now)
                 }
                 mflag = 0;
                 Move(clientID,befx,befy,now);
-                Ax = gClients[cID].poi.x;
-                Ay = gClients[cID].poi.y;  
                 break;
             }
         }

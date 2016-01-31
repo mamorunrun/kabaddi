@@ -19,6 +19,7 @@ extern int dirflag; //client_win.cキャラの方向
 extern int cnum;  /*クライアントの数*/
 extern SDL_Rect chara_rect[MAX_CLIENTS];
 extern int tflag;//タックルのフラグ
+extern int Ax,Ay;//攻撃が何ポイント移動したか
 enum{
     up_dir          = 0, 
     up_right_dir    = 1, 
