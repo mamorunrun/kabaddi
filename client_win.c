@@ -334,17 +334,17 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                else if(tflag <= 30){
-                    //30フレーム動きを止める
-                    tflag++;
-                    if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
+                else if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
                         printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
-                        gClients[clientID].poi.x += Ax - gClients[cID].poi.x;
-                        gClients[clientID].poi.y += Ay - gClients[cID].poi.y;  
-                    }
+                        gClients[clientID].poi.x += Ax;
+                        gClients[clientID].poi.y += Ay;  
+                
+                        break;
+                }
+                else if(tflag <= 30){//30フレーム動きを止める
+                    tflag++;
                     break;
                 }
-
                 else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                 }
