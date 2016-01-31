@@ -354,7 +354,7 @@ void WindowEvent(int clientID,int now)
                 }
             }
             else if(gClients[clientID].tackle >= 2){//gClients[clientID].ADsta == 1かつ
-                printf("tackleの確認%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
+                printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
                 tflag++;
                 if(tflag == 30){
                     gClients[clientID].tackle++;
