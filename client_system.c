@@ -12,6 +12,7 @@ void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
         if(Af == 1){
             Ax = gClients[n].poi.x; 
             Ay = gClients[n].poi.y;
+            Af = 2;
             printf("changeAx,Ay:%d,%d\n",Ax,Ay);
         }
     }
