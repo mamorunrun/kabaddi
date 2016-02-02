@@ -103,8 +103,8 @@ void Move(int clientID,int befx,int befy,int now)
             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y/*ダミー*/);
         SendData(data);
     }
-    /*else if(gClients[clientID].ADsta == 1){
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i/*当たった相手(守備)のid*/,0/*ダミー*/,0,0,0);
+    //else if(gClients[clientID].ADsta == 1){
+        //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i/*当たった相手(守備)のid*/,0/*ダミー*/,0,0,0);
 //SendData(data);
 //  }
 // else {
