@@ -245,12 +245,13 @@ int main(int argc,char *argv[])
             //  game.flag = 4;
                 //endwindow;
 
-            if(game.flag == 4)
+            if(game.flag == 4){
                 loop=0;
-            for(i=0;i<cnum;i++){
-                gClients[i].score=0;
-                gClients[i].restart=0;
-                // gametimes=3;
+                for(i=0;i<cnum;i++){
+                    gClients[i].score=0;
+                    gClients[i].restart=0;
+                    // gametimes=3;
+                }
             }
             while(game.flag == 4){
                 WindowEvent(clientID,ima);
