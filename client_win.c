@@ -281,8 +281,8 @@ int EndWindow(void)
         }
     }
 
-    for(i=0;i<cnum;i++){
-        j=t[i];
+    for(j=0;j<cnum;j++){
+        j=t[j];
 
         sprintf(rank,"%d",j+1);
         gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位

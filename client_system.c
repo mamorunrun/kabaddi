@@ -110,7 +110,7 @@ void Move(int clientID,int befx,int befy,int now)
     printf("%s\n",data);
     
     if(gClients[clientID].ADsta == 1){
-        if(gClients[clientID].poi.x >= 850){
+        if(gClients[clientID].poi.x+96 >= 850){
             //end=0;
             if(gClients[clientID].Bflag > 0){
                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i,0,0,0,0);
