@@ -203,11 +203,11 @@ int main(int argc,char *argv[])
 
         else
         {
-            if(gClients[clientID].ADsta==1 && game.restTime<=0){
+            /*if(gClients[clientID].ADsta==1 && game.restTime<=0){
                 gClients[clientID].score -= gClients[clientID].Bflag;
                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
                 SendData(data);
-            }
+                }*/
             
             loop++;
             WinDisplay(clientID);
