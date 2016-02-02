@@ -105,6 +105,8 @@ int ExecuteCommand(char *command)
             }
             
             switch(game.flag){
+            case 0: game.flag = 1;
+                break;
             case 1: game.flag = 0;
                 break;
             case 2: game.flag = 0;
