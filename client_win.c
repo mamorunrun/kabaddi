@@ -559,6 +559,7 @@ void WindowEvent(int clientID,int now)
                         if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
                             a = 4 - (gClients[clientID].tackle);
                             if(a <= 0){
+                                gClients[clientID].score -= gClients[clientID].Bflag;
                                 printf("spead a = 0\n\n\n");
                                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,0,0,0,0,0);
                                 SendData(data);
@@ -570,6 +571,7 @@ void WindowEvent(int clientID,int now)
                     else if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
                         a = 2 - (gClients[clientID].tackle);
                         if(a <= 0){
+                            gClients[clientID].score -= gClients[clientID].Bflag;
                             printf("spead a = 0\n\n\n");
                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,0,0,0,0,0);
                             SendData(data);

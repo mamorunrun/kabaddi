@@ -103,21 +103,21 @@ void Move(int clientID,int befx,int befy,int now)
             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y/*ダミー*/);
         SendData(data);
     }
-    else if(gClients[clientID].ADsta == 1){
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i/*当たった相手(守備)のid*/,0/*ダミー*/,0,0,0);
-        SendData(data);
-    }
-    else {
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
-        SendData(data);
-    }
+    //else if(gClients[clientID].ADsta == 1){
+        //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i/*当たった相手(守備)のid*/,0/*ダミー*/,0,0,0);
+//SendData(data);
+//  }
+// else {
+//      sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
+//      SendData(data);
+//  }
     printf("%s\n",data);
     
     if(gClients[clientID].ADsta == 1){
         if(gClients[clientID].poi.x+96 >= 850){
             //end=0;
             if(gClients[clientID].Bflag > 0){
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,i,0,0,0,0);
                 SendData(data);
             }
         }
