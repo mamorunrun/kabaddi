@@ -366,6 +366,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             gClients[i].cflag=0;
             chara_rect[i].w=96;
             chara_rect[i].h=144;
+            gClients[i].restart=0;
             /*if(gClients[i].ADsta==1){
                 rectangleColor(buffer,gClients[i].poi.x-20,gClients[i].poi.y-20,gClients[i].poi.x+50,gClients[i].poi.y+50,0x000000ff);
                 }*/

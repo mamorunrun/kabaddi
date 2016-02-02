@@ -168,8 +168,7 @@ int main(int argc,char *argv[])
 
         /********メイン画面ループ**************/
         if(game.flag == 0){
-            //Mainwindow;
-            gametimes=3;
+            //gametimes=3;
             TopWindow();
             printf("now==%d\n\n",game.flag);
             while(game.flag == 0){
@@ -250,6 +249,8 @@ int main(int argc,char *argv[])
                 loop=0;
             for(i=0;i<cnum;i++){
                 gClients[i].score=0;
+                gClients[i].restart=0;
+                gametimes=3;
             }
             while(game.flag == 4){
                 WindowEvent(clientID,ima);
