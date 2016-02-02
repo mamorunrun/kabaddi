@@ -703,38 +703,41 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 //  buttonflag=0;
                 continueflag=0;
             }
-            if(serectflag==1){
-                if(wiimote.keys.plus)//プラスキー
-                {
-                    if(continueflag==0)//continueflagは連続入力の防止
+
+
+            if(clientID==0){
+                if(serectflag==1){
+                    if(wiimote.keys.plus)//プラスキー
                     {
-                        buttonflag=1;
-                        continueflag=3;
-                        gametimes++;//ゲーム回数の変更
-                        if(gametimes==6)
-                            gametimes=1;
-                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
-                        SendData(data);
+                        if(continueflag==0)//continueflagは連続入力の防止
+                        {
+                            buttonflag=1;
+                            continueflag=3;
+                            gametimes++;//ゲーム回数の変更
+                            if(gametimes==6)
+                                gametimes=1;
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                            SendData(data);
+                        }
                     }
-                }
-                else if(continueflag==3)
-                {
-                    //  buttonflag=0;
-                    continueflag=0;
-                }
-                
+                    else if(continueflag==3)
+                    {
+                        //  buttonflag=0;
+                        continueflag=0;
+                    }
+                }   
                 if(wiimote.keys.minus)
                 {
                     if(continueflag==0)
-                    {
-                        buttonflag=1;
-                        continueflag=4;
-                        gametimes--;
-                        if(gametimes==0)
-                            gametimes=5;
-                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
-                        SendData(data);
-                    }
+                        {
+                            buttonflag=1;
+                            continueflag=4;
+                            gametimes--;
+                            if(gametimes==0)
+                                gametimes=5;
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                            SendData(data);
+                        }
                 }
                 else if(continueflag==4)
                 {
@@ -742,8 +745,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                     continueflag=0;
                 }
             }
-        }
-        if(clientID==0){
+            
             if(serectflag == 1){
                 if(wiimote.keys.two){
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
