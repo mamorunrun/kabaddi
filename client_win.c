@@ -490,7 +490,8 @@ void WindowEvent(int clientID,int now)
                             a = 4 - (gClients[clientID].tackle);
                             if(a <= 0){
                                 printf("spead a = 0\n\n\n");
-                                game.flag = 3;
+                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,0,0,0,0,0);
+                                SendData(data);
                             }
                         }
                         else //攻撃側でtackle = 0
@@ -500,7 +501,8 @@ void WindowEvent(int clientID,int now)
                         a = 2 - (gClients[clientID].tackle);
                         if(a <= 0){
                             printf("spead a = 0\n\n\n");
-                            game.flag = 3;
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,0,0,0,0,0);
+                            SendData(data);
                         }
                     }
                 }

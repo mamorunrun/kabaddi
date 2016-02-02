@@ -33,6 +33,7 @@
 #define BUMP            'B'                             /*当たり判定のコマンド*/
 #define WIN             'W'                             /*勝ちコマンド*/
 #define LOSE            'L'                             /*負けコマンド   いる？*/
+#define SCORE           'S'
 #define TACKLE          'A'                             /*タックルコマンド*/
 #define RESTART         'R'                             /*リスタートコマンド*/
 

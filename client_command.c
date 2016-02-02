@@ -119,6 +119,8 @@ int ExecuteCommand(char *command)
             }
         }
         break;
+    case SCORE:
+        game.flag=3;
     }
     return endFlag;
 }
