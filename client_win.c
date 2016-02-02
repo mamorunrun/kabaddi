@@ -273,7 +273,7 @@ int EndWindow(void)
 
     for(i=0;i<cnum;++i){
         for(j=i+1;j<cnum;++j){
-            if(gClients[t[i]].score > gClients[t[j]].score){
+            if(gClients[t[i]].score < gClients[t[j]].score){
                 tmp = t[i];
                 t[i]=t[j];
                 t[j]=tmp;
