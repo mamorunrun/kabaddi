@@ -67,7 +67,7 @@ int ExecuteCommand(char *command)
                 gClients[id].Bflag++;
                 gClients[x].Bflag++;
                 gClients[id].color=3;
-                gClients[x].color=2;
+                gClients[x].color=4;
             }
             /*for(i=0;i<cnum;i++){
                 if(gClients[i].tackle == 0){
