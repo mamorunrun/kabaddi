@@ -26,7 +26,7 @@
 
 #define MAX_DATA		200				/* 送受信するデータの最大値 */
 
-#define END_COMMAND		'E'		  		/* プログラム終了コマンド */
+#define END_COMMAND     'E'		  		/* プログラム終了コマンド */
 #define POS_COMMAND	'P'				/* posコマンド */
 #define CDRAW           'C'                             /*charadrawコマンド*/
 #define BUMP            'B'                             /*当たり判定のコマンド*/
@@ -34,6 +34,7 @@
 #define LOSE            'L'                             /*負けコマンド   いる？*/
 #define TACKLE          'T'                             /*タックルコマンド*/
 #define RESTART         'R'                             /*リスタートコマンド*/
+#define JUDGE_END       'J'                             /*ゲームの終了条件コマンド*/
 
 extern int clientID; 
 typedef struct {

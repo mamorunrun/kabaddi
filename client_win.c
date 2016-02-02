@@ -404,6 +404,8 @@ void WindowEvent(int clientID,int now)
                             a = 4 - (gClients[clientID].tackle);
                             if(a <= 0){
                                 printf("spead a = 0\n\n\n");
+                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",JUDGE_END,clientID,0,0,0,0,0);
+                                SendData(data);
                                 game.flag = 3;
                             }
                         }
@@ -414,6 +416,8 @@ void WindowEvent(int clientID,int now)
                         a = 2 - (gClients[clientID].tackle);
                         if(a <= 0){
                             printf("spead a = 0\n\n\n");
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",JUDGE_END,clientID,0,0,0,0,0);
+                            SendData(data);
                             game.flag = 3;
                         }
                     }

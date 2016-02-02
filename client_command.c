@@ -108,6 +108,10 @@ int ExecuteCommand(char *command)
             }
         }
         break;
+        
+    case JUDGE_END:
+        game.flag = 3;
+        break;
     }
     return endFlag;
 }
