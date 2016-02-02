@@ -685,7 +685,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
             }
             else if(continueflag==1)
             {
-                //    buttonflag=0;
+// buttonflag=0;
                 continueflag=0;
             }
             if(wiimote.keys.right)
@@ -701,73 +701,67 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
             }
             else if(continueflag==2)
             {
-                //  buttonflag=0;
+// buttonflag=0;
                 continueflag=0;
             }
-
-
             if(clientID==0){
-                if(serectflag==1){
-                    if(wiimote.keys.plus)//プラスキー
+                if(wiimote.keys.plus)//プラスキー
+                {
+                    if(continueflag==0)//continueflagは連続入力の防止
                     {
-                        if(continueflag==0)//continueflagは連続入力の防止
-                        {
-                            buttonflag=1;
-                            continueflag=3;
-                            gametimes++;//ゲーム回数の変更
-                            if(gametimes==6)
-                                gametimes=1;
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
-                            SendData(data);
-                        }
+                        buttonflag=1;
+                        continueflag=3;
+                        gametimes++;//ゲーム回数の変更
+                        if(gametimes==6)
+                            gametimes=1;
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        SendData(data);
                     }
-                    else if(continueflag==3)
-                    {
-                        //  buttonflag=0;
-                        continueflag=0;
-                    }
-                }   
+                }
+                else if(continueflag==3)
+                {
+// buttonflag=0;
+                    continueflag=0;
+                }
                 if(wiimote.keys.minus)
                 {
                     if(continueflag==0)
-                        {
-                            buttonflag=1;
-                            continueflag=4;
-                            gametimes--;
-                            if(gametimes==0)
-                                gametimes=5;
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
-                            SendData(data);
-                        }
+                    {
+                        buttonflag=1;
+                        continueflag=4;
+                        gametimes--;
+                        if(gametimes==0)
+                            gametimes=5;
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        SendData(data);
+                    }
                 }
                 else if(continueflag==4)
                 {
-                    //      buttonflag=0;
+// buttonflag=0;
                     continueflag=0;
                 }
             }
-            
             if(serectflag == 1){
                 if(wiimote.keys.two){
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                     SendData(data);
-                    //wiimote_speaker_free(&wiimote);
-                    //wiimote_disconnect(&wiimote);
-                    //game.flag = 0;
-                    //SendEndCommand();
+//wiimote_speaker_free(&wiimote);
+//wiimote_disconnect(&wiimote);
+//game.flag = 0;
+//SendEndCommand();
                 }
             }
             else if(serectflag == 2){
                 if(wiimote.keys.two){
-                    //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
-                    //SendData(data);
+//sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+//SendData(data);
                     wiimote_speaker_free(&wiimote);
                     wiimote_disconnect(&wiimote);
                     game.flag = 0;
                     SendEndCommand();
                 }
             }
-            
             if(buttonflag)
                 TopWindow();
             buttonflag=0;
