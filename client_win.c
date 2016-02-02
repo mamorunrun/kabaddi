@@ -286,7 +286,11 @@ int EndWindow(void)
     for(i=0;i<cnum;i++){
         j=t[i];
 
-        sprintf(rank,"%d",i+1);
+        //      if(gClients[j].score!=gClients[j+1].score)
+        //    sprintf(rank,"%d",i);
+        // else
+        //    sprintf(rank,"%d",i+1);
+
         gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
         SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[j]->w,gMessage_rank_on[j]->h };
         SDL_BlitSurface(gMessage_rank_on[j], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
@@ -700,48 +704,47 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 //  buttonflag=0;
                 continueflag=0;
             }
-            if(clientID==0){
-                if(serectflag==1){
-                    if(wiimote.keys.plus)//プラスキー
+            if(serectflag==1){
+                if(wiimote.keys.plus)//プラスキー
+                {
+                    if(continueflag==0)//continueflagは連続入力の防止
                     {
-                        if(continueflag==0)//continueflagは連続入力の防止
-                        {
-                            buttonflag=1;
-                            continueflag=3;
-                            gametimes++;//ゲーム回数の変更
-                            if(gametimes==6)
-                                gametimes=1;
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
-                            SendData(data);
-                        }
-                    }
-                    else if(continueflag==3)
-                    {
-                        //  buttonflag=0;
-                        continueflag=0;
-                    }
-                    
-                    if(wiimote.keys.minus)
-                    {
-                        if(continueflag==0)
-                        {
-                            buttonflag=1;
-                            continueflag=4;
-                            gametimes--;
-                            if(gametimes==0)
-                                gametimes=5;
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
-                            SendData(data);
-                        }
-                    }
-                    else if(continueflag==4)
-                    {
-                        //      buttonflag=0;
-                        continueflag=0;
+                        buttonflag=1;
+                        continueflag=3;
+                        gametimes++;//ゲーム回数の変更
+                        if(gametimes==6)
+                            gametimes=1;
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        SendData(data);
                     }
                 }
-            }
+                else if(continueflag==3)
+                {
+                    //  buttonflag=0;
+                    continueflag=0;
+                }
                 
+                if(wiimote.keys.minus)
+                {
+                    if(continueflag==0)
+                    {
+                        buttonflag=1;
+                        continueflag=4;
+                        gametimes--;
+                        if(gametimes==0)
+                            gametimes=5;
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        SendData(data);
+                    }
+                }
+                else if(continueflag==4)
+                {
+                    //      buttonflag=0;
+                    continueflag=0;
+                }
+            }
+        }
+        if(clientID==0){
             if(serectflag == 1){
                 if(wiimote.keys.two){
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
@@ -767,10 +770,10 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 TopWindow();
             buttonflag=0;
         }
+        
+        
     
-
-
-
+    
         else if(game.flag == 3){//各ピリオド終了
             // if(gClients[clientID].restart==0){
             if(wiimote.keys.plus)//プラスキー
@@ -803,7 +806,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
             if(wiimote.keys.a)
             {
                 char comment[64];
-                SDL_Rect dst_rect2 = { 350, 350 };
+                SDL_Rect dst_rect2 = { 420, 350 };
                 SDL_Surface *gMessage_comment;
                 
                 SDL_FillRect(buffer,NULL,0xffffffff); /*背景を白にする*/
