@@ -428,6 +428,8 @@ void WindowEvent(int clientID,int now)
     int mflag = 1;//moveflag
     int befx,befy;
     
+    printf("score == %d\n\n\n",gClients[clientID].score);
+
     char	data[MAX_DATA];
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
@@ -533,7 +535,6 @@ void WindowEvent(int clientID,int now)
                 }
 
                 if(tflag >=1 && tflag<200){//50フレーム動きを止める
-                    printf("aheaheahe\n\n\n");
                     tflag++;
                     break;
                 }
