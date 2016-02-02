@@ -69,6 +69,7 @@ int ExecuteCommand(char *command)
             gClients[x].Bflag++; 
             gClients[x].color=4;
             gClients[id].score = gClients[id].score + gClients[id].Bflag;
+            chara_rect[x].x+=576;
         }
             /*for(i=0;i<cnum;i++){
               if(gClients[i].tackle == 0){
