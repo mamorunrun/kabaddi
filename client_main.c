@@ -216,7 +216,7 @@ int main(int argc,char *argv[])
                 EndWindow();
             }
             
-            printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
+            printf("now==%dloop==%dcnum==%dgametimes=%d\n\n",game.flag,loop,cnum,gametimes);
             while(game.flag == 3){
                 WindowEvent(clientID,ima);
                 if(endFlag == 0)
