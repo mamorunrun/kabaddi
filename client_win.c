@@ -671,39 +671,39 @@ void WindowEvent(int clientID,int now)
 game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオド終了　4カバディ終了
 **********************************************************************************/
         else if(game.flag == 0){//メイン画面
-            if(wiimote.keys.left)
-            {
-                if(continueflag==0)//continueflagは連続入力の防止
-                {
-                    buttonflag=1;//extern ボタンを押されたらTopWindow実行
-                    continueflag=1;
-                    serectflag++;
-                    if(serectflag==3)
-                        serectflag=1;
-                }
-            }
-            else if(continueflag==1)
-            {
-                //    buttonflag=0;
-                continueflag=0;
-            }
-            if(wiimote.keys.right)
-            {
-                if(continueflag==0)
-                {
-                    buttonflag=1;
-                    continueflag=2;
-                    serectflag--;
-                    if(serectflag==0)
-                        serectflag=2;
-                }
-            }
-            else if(continueflag==2)
-            {
-                //  buttonflag=0;
-                continueflag=0;
-            }
             if(clientID==0){
+                if(wiimote.keys.left)
+                {
+                    if(continueflag==0)//continueflagは連続入力の防止
+                    {
+                        buttonflag=1;//extern ボタンを押されたらTopWindow実行
+                        continueflag=1;
+                        serectflag++;
+                        if(serectflag==3)
+                            serectflag=1;
+                    }
+                }
+                else if(continueflag==1)
+                {
+                    //    buttonflag=0;
+                    continueflag=0;
+                }
+                if(wiimote.keys.right)
+                {
+                    if(continueflag==0)
+                    {
+                        buttonflag=1;
+                        continueflag=2;
+                        serectflag--;
+                        if(serectflag==0)
+                            serectflag=2;
+                    }
+                }
+                else if(continueflag==2)
+                {
+                    //  buttonflag=0;
+                    continueflag=0;
+                }
                 if(serectflag==1){
                     if(wiimote.keys.plus)//プラスキー
                     {
@@ -744,34 +744,34 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                     }
                 }
             }
-                
+            
             if(serectflag == 1){
-                if(wiimote.keys.two){
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
-                    SendData(data);
-                    //wiimote_speaker_free(&wiimote);
-                    //wiimote_disconnect(&wiimote);
-                    //game.flag = 0;
+                 if(wiimote.keys.two){
+                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+                     SendData(data);
+                     //wiimote_speaker_free(&wiimote);
+                     //wiimote_disconnect(&wiimote);
+                     //game.flag = 0;
                     //SendEndCommand();
-                }
-            }
-            else if(serectflag == 2){
-                if(wiimote.keys.two){
+                 }
+             }
+             else if(serectflag == 2){
+                 if(wiimote.keys.two){
                     //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
                     //SendData(data);
                     wiimote_speaker_free(&wiimote);
                     wiimote_disconnect(&wiimote);
                     game.flag = 0;
                     SendEndCommand();
-                }
-            }
-            
-            if(buttonflag)
+                 }
+             }
+             
+             if(buttonflag)
                 TopWindow();
             buttonflag=0;
         }
-    
-
+        
+        
 
 
         else if(game.flag == 3){//各ピリオド終了
