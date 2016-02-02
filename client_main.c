@@ -64,6 +64,7 @@ int main(int argc,char *argv[])
 
     int		num;
     int loop = 0;
+    int i;//cnum繰り返すため
     char	name[MAX_CLIENTS][MAX_NAME_SIZE];
     char	localHostName[]="localhost";
     char	*serverName;
@@ -244,8 +245,14 @@ int main(int argc,char *argv[])
             //  printf("endloop\n\n\n\n\n\n\n\n\n\n\n");
             //  game.flag = 4;
                 //endwindow;
+
+            if(game.flag == 4)
+                loop=0;
+            for(i=0;i<cnum;i++){
+                gClients[i].score=0;
+            }
             while(game.flag == 4){
-                WindowEvent(clientID,ima); 
+                WindowEvent(clientID,ima);
                 if(endFlag == 0)
                     break;
 //>>>>>>> color
