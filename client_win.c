@@ -474,7 +474,7 @@ void WindowEvent(int clientID,int now)
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
                 tflag++;
-                if((tflag%100) == 0){
+                if((tflag%10) == 0){
                     gClients[clientID].tackle++;
                 }
             }
