@@ -61,13 +61,14 @@ int main(int argc,char *argv[])
 
 
     timers timer;
-
+    int lflag=0;
     int		num;
     int loop = 0;
     int i;//cnum繰り返すため
     char	name[MAX_CLIENTS][MAX_NAME_SIZE];
     char	localHostName[]="localhost";
     char	*serverName;
+    char	data[MAX_DATA];
     //int		clientID;
 
 //    SDL_TimerID timer_id1;	//　タイマ割り込みを行うためのタイマのID
@@ -199,9 +200,15 @@ int main(int argc,char *argv[])
 //>>>>>>> color
             DrawChara(clientID,cnum);
         }
-        
+
         else
         {
+            if(gClients[clientID].ADsta==1 && game.restTime<=0){
+                gClients[clientID].score -= gClients[clientID].Bflag;
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
+                SendData(data);
+            }
+            
             loop++;
             WinDisplay(clientID);
 //<<<<<<< HEAD
