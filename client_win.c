@@ -14,13 +14,16 @@ static SDL_Surface *gMainWindow;
 static SDL_Surface *serect;
 static SDL_Surface *buffer;
 static SDL_Surface *startsur;
+static SDL_Surface *endsur;
+static SDL_Surface *backlinesur;
 static SDL_Surface *scbuf;//得点を表すバッファ
 static SDL_Surface *stbar;//スタミナを表すバッファ
 static SDL_Surface *gCharaImage;
 static char gPlayerImgFile[]   = "kabaddi.png";
 static char StartImgFile[] = "start.png";
-static char WaitingImgFile[] = "waiting.png";
+static char EndsurImgFile[] = "endsur.png";
 static char SerecterImgFile[] = "serecter.png";
+//static char BacklineImgFile[] = "backline.png";
 
 SDL_Rect chara_rect[MAX_CLIENTS];
 static SDL_Surface *bufmain;//スタート画面,終了画面など
@@ -134,6 +137,15 @@ int InitWindows(void)
         exit(-1);
     }
 
+    if((endsur = IMG_Load(EndsurImgFile)) == NULL){
+        printf("failed to open endsur image.");
+        exit(-1);
+    }
+
+/*    if((backlinesur = IMG_Load(BacklineImgFile)) == NULL){
+        printf("failed to open backlinesur image.");
+        exit(-1);
+        }*/
 
     /* フォントの初期化 */
     TTF_Init();
@@ -188,7 +200,7 @@ int InitWindows(void)
 }
 
 /*****************************************************************
-関数名 : topWindows
+関数名 : TopWindows
 機能 : スタート画面の表示を行う
 引数 : なし
 出力 : 正常に設定できたとき0，失敗したとき-1
@@ -209,32 +221,89 @@ int TopWindow(void)
 
     sprintf(s,"%d",gametimes);
 
-//    if(gametimes==1){
-        gMessage_times = TTF_RenderUTF8_Blended(font_times, s,colB);
-        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
-        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
-//    }
-        /*  if(gametimes==2){
-        gMessage_times = TTF_RenderUTF8_Blended(font3, "2",colB);
-        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
-        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+    gMessage_times = TTF_RenderUTF8_Blended(font_times, s,colB);
+    SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
+    SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+
+    SDL_Flip(gMainWindow);
+
+    return 0;
+}
+/*****************************************************************
+関数名 : EndWindows
+機能 : スタート画面の表示を行う
+引数 : なし
+出力 : 正常に設定できたとき0，失敗したとき-1
+*****************************************************************/
+int EndWindow(void)
+{
+    printf("EndWindow\n\n\n\n\n\n\n\n\n");
+    SDL_Surface *gMessage_name;
+    SDL_Surface *gMessage_score;
+
+    SDL_Surface *gMessage_rank_on[MAX_CLIENTS];
+    SDL_Surface *gMessage_name_on[MAX_CLIENTS];
+    SDL_Surface *gMessage_score_on[MAX_CLIENTS];
+
+    SDL_Rect game_name_rect={700,400};
+    SDL_Rect game_score_rect={850,400};
+
+      SDL_Rect game_rank_on_rect={650,500};
+    SDL_Rect game_name_on_rect={705,500};
+    SDL_Rect game_score_on_rect={855,500};
+
+    int i,j;
+    int t[]={0,1,2,3,4,5,6,7};
+    int tmp;
+
+       char rank[64];
+    char name[64];
+    char score[64];
+
+    SDL_BlitSurface(endsur, NULL, gMainWindow, NULL);
+
+    gMessage_name = TTF_RenderUTF8_Blended(font, "You",colB);//Youの名前
+    SDL_Rect src_name_rect = { 0, 0, gMessage_name->w,gMessage_name->h };
+    SDL_BlitSurface(gMessage_name, &src_name_rect, gMainWindow, &game_name_rect);
+
+    sprintf(score,"%d",gClients[clientID].score);//Youの得点
+    gMessage_score = TTF_RenderUTF8_Blended(font, score,colB);
+    SDL_Rect src_score_rect = { 0, 0, gMessage_score->w,gMessage_score->h };
+    SDL_BlitSurface(gMessage_score, &src_score_rect, gMainWindow, &game_score_rect);
+
+    for(i=0;i<cnum;++i){
+        for(j=i+1;j<cnum;++j){
+            if(gClients[t[i]].score < gClients[t[j]].score){
+                tmp = t[i];
+                t[i]=t[j];
+                t[j]=tmp;
+            }
+        }
     }
-    if(gametimes==3){
-        gMessage_times = TTF_RenderUTF8_Blended(font3, "3",colB);
-        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
-        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
+
+    for(i=0;i<cnum;i++){
+        j=t[i];
+
+        sprintf(rank,"%d",i+1);
+        gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
+        SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[j]->w,gMessage_rank_on[j]->h };
+        SDL_BlitSurface(gMessage_rank_on[j], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
+        
+        sprintf(name,"%s",gClients[j].name);//各プレイヤーの名前
+        gMessage_name_on[j] = TTF_RenderUTF8_Blended(font2, name,colB);
+        SDL_Rect src_name_on_rect = { 0, 0, gMessage_name_on[j]->w,gMessage_name_on[j]->h };
+        SDL_BlitSurface(gMessage_name_on[j], &src_name_on_rect, gMainWindow, &game_name_on_rect);
+        
+        sprintf(score,"%d",gClients[j].score);//各プレイヤーの得点
+        gMessage_score_on[j] = TTF_RenderUTF8_Blended(font2, score,colB);
+        SDL_Rect src_score_on_rect = { 0, 0, gMessage_score_on[j]->w,gMessage_score_on[j]->h };
+        SDL_BlitSurface(gMessage_score_on[j], &src_score_on_rect, gMainWindow, &game_score_on_rect);
+        
+        game_rank_on_rect.y+=20;
+        game_name_on_rect.y+=20;
+        game_score_on_rect.y+=20;
     }
-    if(gametimes==4){
-        gMessage_times = TTF_RenderUTF8_Blended(font3, "4",colB);
-        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
-        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
-    }
-    if(gametimes==5){
-        gMessage_times = TTF_RenderUTF8_Blended(font3, "5",colB);
-        SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
-        SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
-    }
-        */
+
     SDL_Flip(gMainWindow);
 
     return 0;
@@ -775,7 +844,9 @@ void DrawChara(int n,int cnum)
 
     int s[]={0,1,2,3,4,5,6,7};
 
+        /* 背景を白にする */
     SDL_FillRect(buffer,NULL,0xffffffff);
+//    SDL_BlitSurface(backlinesur, NULL, buffer, NULL);
     DisplayStatus();
 
     lineColor(buffer, 800, 0, 800, 600,0x000000ff);
@@ -822,9 +893,6 @@ void DrawChara(int n,int cnum)
         
         
         }*/
-
-
-
     
     
     SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);

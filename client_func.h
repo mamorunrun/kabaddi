@@ -45,6 +45,7 @@ extern int  GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop);
 extern void DestroyWindow(void);
 extern void DrawChara(int n,int cnum);
 extern int TopWindow(void);
+extern int EndWindow(void);
 
 extern void WindowEvent(int clientID,int now);
 extern void WinDisplay(int clientID);

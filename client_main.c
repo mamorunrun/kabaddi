@@ -213,6 +213,7 @@ int main(int argc,char *argv[])
             }
             else{ 
                 game.flag = 4;
+                EndWindow();
             }
             
             printf("now==%dloop==%dcnum==%d\n\n",game.flag,loop,cnum);
