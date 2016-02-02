@@ -284,7 +284,7 @@ int EndWindow(void)
     for(i=0;i<cnum;i++){
         j=t[i];
 
-        sprintf(rank,"%d",j+1);
+        sprintf(rank,"%d",i+1);
         gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
         SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[j]->w,gMessage_rank_on[j]->h };
         SDL_BlitSurface(gMessage_rank_on[j], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
