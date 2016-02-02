@@ -473,7 +473,8 @@ void WindowEvent(int clientID,int now)
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
-                if((tflag%50) == 0){
+                tflag++;
+                if((tflag%100) == 0){
                     gClients[clientID].tackle++;
                 }
             }
@@ -482,14 +483,14 @@ void WindowEvent(int clientID,int now)
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right && tflag==0/*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
-                /*if(gClients[clientID].ADsta == 1){
+                if(gClients[clientID].ADsta == 1){
                     if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
                         if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
                             a = 4 - (gClients[clientID].tackle);
-                            if(a == 0){
+                            if(a <= 0){
                                 printf("spead a = 0\n\n\n");
-//game.flag = 3;
+                                game.flag = 3;
                             }
                         }
                         else //攻撃側でtackle = 0
@@ -497,15 +498,15 @@ void WindowEvent(int clientID,int now)
                     }//ダッシュしてない
                     else if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
                         a = 2 - (gClients[clientID].tackle);
-                        if(a == 0){
+                        if(a <= 0){
                             printf("spead a = 0\n\n\n");
-//game.flag = 3;
+                            game.flag = 3;
                         }
                     }
                 }
                 else if(wiimote.keys.one){//守備
                     a = 4;
-                    }*/
+                    }
                 
                 if(wiimote.keys.up){
                     if(wiimote.keys.left){
