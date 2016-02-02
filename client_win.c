@@ -352,10 +352,10 @@ void WindowEvent(int clientID,int now)
                     tflag = 0;
                 }
             }
-            else if(gClients[clientID].tackle >= 2){//gClients[clientID].ADsta == 1かつ
+            else if(gClients[clientID].tackle >= 2){//攻撃側で
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
                 tflag++;
-                if(tflag == 30){
+                if(tflag == 100){
                     gClients[clientID].tackle++;
                     tflag = 0;
                 }
@@ -365,14 +365,15 @@ void WindowEvent(int clientID,int now)
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
-                /*  if(gClients[clientID].ADsta == 1){
+                if(gClients[clientID].ADsta == 1){
                     if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
                         if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
-                            a = 4 - (gClients[clientID] - 1);
+                            a = 4 - (gClients[clientID].tackle - 1);
                             if(a == 0){
                                 printf("spead a = 0\n\n\n");
-//game.flag = 3;
+                                game.flag = 3;
+                                break;
                             }
                         }
                         else //攻撃側でtackle = 0
@@ -388,7 +389,7 @@ void WindowEvent(int clientID,int now)
                 }
                 else if(wiimote.keys.one){//守備
                     a = 4;
-                    }*/
+                    }
                 
                 if(wiimote.keys.up){
                     if(wiimote.keys.left){
