@@ -428,7 +428,7 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                else if(tflag ==1){
+                else if(tflag >=1 && tflag <= 10){
                     switch(dirflag){
                     case up_dir:
                         gClients[clientID].poi.y = gClients[clientID].poi.y-5;
