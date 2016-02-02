@@ -88,13 +88,6 @@ int ExecuteCommand(char *command)
     case RESTART:
         j = 0;
         gClients[id].restart=1;//相手のrestartを1にする
-        if(game.flag == 0){
-            if(gClients[0].restart == 1){
-                game.flag = 1;
-                break;
-            }
-        }
-
         for(i=0;i<cnum;i++){
             if(gClients[i].restart == 1)
                 j++;
@@ -105,7 +98,7 @@ int ExecuteCommand(char *command)
             }
             
             switch(game.flag){
-            case 0: game.flag = 1;
+            case 0: game.flag = 1;//メインからゲームへ
                 break;
             case 1: game.flag = 0;
                 break;
