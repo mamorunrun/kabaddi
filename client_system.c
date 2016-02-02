@@ -6,14 +6,20 @@ void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
 {
     if(clientID == n)
         return;
-
+    if(t >= 0){//攻撃側は時間を,守備側は-1を送っているため
+        game.restTime = t;
+        /*以下nは攻撃を指す*/
+        if(Af == 1){
+            Ax = gClients[n].poi.x; 
+            Ay = gClients[n].poi.y;
+            Af = 2;
+            printf("changeAx,Ay:%d,%d\n",Ax,Ay);
+        }
+    }
     gClients[n].poi.x=x;
     gClients[n].poi.y=y;
     chara_rect[n].x=rect_x;
     chara_rect[n].y=rect_y;
-    
-    if(t >= 0)//攻撃側は時間を,守備側は-1を送っているため
-        game.restTime = t;
 }
 
 /*********************************************************
@@ -31,8 +37,6 @@ void Move(int clientID,int befx,int befy,int now)
     int *x,*y;
     int i = -1;
     int end=1;
-
-    dflag = 1;
     
     //printf("Move\n");
 
@@ -154,6 +158,17 @@ int Collision(int clientID,int befx,int befy){
                         if(gClients[clientID].poi.y+57 < gClients[i].poi.y+57+gClients[i].poi.h-114+20){
                             if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
                                 if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
+
+                                    if(gClients[clientID].tackle == 1){//攻守反転していて
+                                        if(tflag != 0){//自分がタックルしてたら
+                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
+                                            gClients[clientID].tackle = 2;/*自分にもフラグを*/
+                                            if(Af == 0){
+                                                Af = 1;
+                                            }
+                                            SendData(data);
+                                        }
+                                    } 
                                     if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
                                     {
                                         // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
@@ -173,7 +188,7 @@ int Collision(int clientID,int befx,int befy){
                 }
             }
         }
-                break;
+            break;
     case 1:
         for(i=0;i<cnum;i++){
             if(i != clientID){

@@ -34,12 +34,14 @@ CLIENT gClients[MAX_CLIENTS];
 
 
 void DisplayStatus(void);
-
-static int tflag;//タックルのフラグ
+int Ax,Ay,Af;//攻撃の移動
+int tflag;//タックルのフラグ
 
 int buttonflag;
 
 int dflag;//mainとのグローバル変数,動いたことの検知
+//グローバル変数,攻守反転
+
 int dirflag;//方向を表す
 
 int resultflag;//自分以外の人の結果を確認するため
@@ -258,8 +260,9 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         char Pname[cnum][MAX_NAME_SIZE+2];
         SDL_Surface *PNAME[cnum];
 */      
-
-
+        Af = 0;
+        dflag = 0;/*攻守反転フラグの初期化*/
+        tflag = 0;
         game.restTime = 20000;/*残り20000ミリ（20）秒*/
         lineColor(buffer, 800, 0, 800, 600,0x000000ff);
         /*始点x座標，始点y座標，終点x座標，終点y座標，色*/
@@ -276,6 +279,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
                 chara_rect[i].y=0;
                 gClients[i].ADsta = 1;/*最初は攻撃*/
                 gClients[i].color=1;
+                cID = i;
             }
             else{
                 gClients[i].poi.x=200;
@@ -289,6 +293,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             chara_rect[i].x=0;
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
+            gClients[i].tackle = 0;
             chara_rect[i].w=96;
             chara_rect[i].h=144;
             /*if(gClients[i].ADsta==1){
@@ -298,10 +303,8 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             //printf("%d,%d,%d\n",i,gClients[i].poi.x,gClients[i].poi.y);
             gClients[i].Bflag = 0;
             SDL_BlitSurface(gCharaImage,&chara_rect[i],buffer,&gClients[i].poi);
-            printf("printf%s\n\n\n\n\n\n\n\n",gClients[i].name);
 /******************四角の上に文字を出力 SDL_BlitSurfaceの活用************************/
             sprintf(Pname[i],"     ▼%s",gClients[i].name);
-            printf("sprintf%s\n\n\n\n\n\n\n\n",Pname[i]);
             PNAME[i] = TTF_RenderUTF8_Blended(font3,Pname[i],colB);
             PNAME_srect[i].w = PNAME[i]->w;
             PNAME_srect[i].h = PNAME[i]->h ;
@@ -315,7 +318,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         printf("loop=%d\n",loop);
 
 /*******************************************************************************
-得点の描写
+　　　　　　得点の描写
  ****************************************************************************/
         char   status[64];
 
@@ -353,9 +356,8 @@ void WindowEvent(int clientID,int now)
     int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
-
-    char	data[MAX_DATA];
     
+    char	data[MAX_DATA];
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
 
@@ -376,8 +378,18 @@ void WindowEvent(int clientID,int now)
         if(game.flag == 2){//ゲームフラグが2以外のときはAボタン以外の入力を受け付けない
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
 
-/*************タックル（守備側のみ）*****************************************************************/
+/*************タックル（守備側のみ）**************************************/
             if(gClients[clientID].ADsta == 0){
+                if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
+                    printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
+                    if(Af == 2){
+                        gClients[clientID].poi.x += gClients[cID].poi.x - Ax;
+                        gClients[clientID].poi.y += gClients[cID].poi.y - Ay;
+                        Move(clientID,befx,befy,now);
+                        Af = 1;
+                    }
+                    break;
+                }
                 if(tflag == 0){
                     if(wiimote.keys.two){
                         switch(dirflag){
@@ -415,63 +427,51 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                
-                else if(tflag <= 30){
-                    //30フレーム動きを止める
+                else if(tflag <= 50){//50フレーム動きを止める
                     tflag++;
                     break;
                 }
-/*
-  else if(tflag == 11){
-                switch(dirflag){
-                case up_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;
-                case up_right_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;
-                case right_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    break;
-                case right_down_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;
-                case down_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    break;
-                case down_left_dir:
-                    gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;
-                case left_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    break;
-                case left_up_dir:
-                    gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                    gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                    break;
-                }
-                //Move(clientID,befx,befy);
-                tflag++;
-                break;
-            }
-*/
                 else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                 }
             }
-            
+            else if(gClients[clientID].tackle >= 2){//gClients[clientID].ADsta == 1かつ
+                printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
+                tflag++;
+                if(tflag == 30){
+                    gClients[clientID].tackle++;
+                    tflag = 0;
+                }
+            }
+
+
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
-                if(wiimote.keys.one){
-                    if(gClients[clientID].ADsta == 1)
+                /*  if(gClients[clientID].ADsta == 1){
+                    if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
-                    
-                    a = 4;
+                        if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
+                            a = 4 - (gClients[clientID].tackle - 1);
+                            if(a == 0){
+                                printf("spead a = 0\n\n\n");
+//game.flag = 3;
+                            }
+                        }
+                        else //攻撃側でtackle = 0
+                            a = 4;
+                    }//ダッシュしてない
+                    else if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
+                        a = 2 - (gClients[clientID].tackle - 1);
+                        if(a == 0){
+                            printf("spead a = 0\n\n\n");
+//game.flag = 3;
+                        }
+                    }
                 }
+                else if(wiimote.keys.one){//守備
+                    a = 4;
+                    }*/
                 
                 if(wiimote.keys.up){
                     if(wiimote.keys.left){
@@ -803,9 +803,6 @@ void DrawChara(int n,int cnum)
         PNAME_rrect[j].y = gClients[j].poi.y - 5;
         SDL_BlitSurface(PNAME[j], &PNAME_srect[j], buffer,&PNAME_rrect[j]);    
     }
-    
-    
-    
     //   for(i=0;i<num;i++){
         //    printf("%d %d\n",gClients[i].poi.x,gClients[i].poi.y);
     //  }
@@ -830,8 +827,7 @@ void DrawChara(int n,int cnum)
     SDL_BlitSurface(buffer, NULL, gMainWindow, &brect);
     
     SDL_Flip(gMainWindow);
-    dflag = 0;
-
+   
 }
 
 void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
