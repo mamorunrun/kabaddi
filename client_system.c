@@ -117,7 +117,7 @@ void Move(int clientID,int befx,int befy,int now)
         if(gClients[clientID].poi.x+96 >= 850){
             //end=0;
             if(gClients[clientID].Bflag > 0){
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",WIN,clientID,i,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,i,0,0,0,0);
                 SendData(data);
             }
         }
