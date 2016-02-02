@@ -63,19 +63,20 @@ int ExecuteCommand(char *command)
         buttonflag=1;
         break;
     case BUMP:
-            if(gClients[x].color==0){
-                gClients[id].Bflag++;
-                gClients[x].Bflag++;
-                gClients[id].color=3;
-                gClients[x].color=4;
-            }
+        if(gClients[x].color==0){
+            
+            gClients[id].Bflag++;
+            gClients[x].Bflag++; 
+            gClients[x].color=4;
+            gClients[id].score = gClients[id].score + gClients[id].Bflag;
+        }
             /*for(i=0;i<cnum;i++){
-                if(gClients[i].tackle == 0){
-                    gClients[i].tackle = 1;
-                    printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
-                }
-                }*/
-            break;
+              if(gClients[i].tackle == 0){
+              gClients[i].tackle = 1;
+              printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+              }
+              }*/
+        break;
     case WIN:
         if(gClients[x].color==2)//守備の色が2なら
         {
