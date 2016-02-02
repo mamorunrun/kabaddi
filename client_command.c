@@ -61,6 +61,7 @@ int ExecuteCommand(char *command)
     case TIMES://ゲーム回数を全クライアントに送る
         gametimes=x;
         buttonflag=1;
+        break;
     case BUMP:
             if(gClients[x].color==0){
                 gClients[id].Bflag++;
@@ -68,6 +69,12 @@ int ExecuteCommand(char *command)
                 gClients[id].color=3;
                 gClients[x].color=2;
             }
+            /*for(i=0;i<cnum;i++){
+                if(gClients[i].tackle == 0){
+                    gClients[i].tackle = 1;
+                    printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+                }
+                }*/
             break;
     case WIN:
         if(gClients[x].color==2)//守備の色が2なら
@@ -103,6 +110,17 @@ int ExecuteCommand(char *command)
             }
         }
         break;
+    case TACKLE://タックルに成功した守備から送られる
+        for(i=0;i<cnum;i++){
+            if(gClients[i].ADsta == 1){//攻撃の人間に
+                gClients[i].tackle++;
+                gClients[i].cflag++;
+                printf("receive tackle command\ngClients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
+            }
+        }
+        break;
+    case SCORE:
+        game.flag=3;
     }
     return endFlag;
 }

@@ -135,7 +135,7 @@ int main(int argc,char *argv[])
     // SDL_GetTicks関数を用いる時間管理
 	Uint32 next_frame=SDL_GetTicks();	// SDLライブラリの初期化からの経過ミリ秒数を取得
         
-        dflag = 0;
+        //dflag = 0;
         game.flag = 0;
         thr_net=SDL_CreateThread(thread_net,NULL);
         //thr_time=SDL_CreateThread(thread_time,NULL);
@@ -195,7 +195,7 @@ int main(int argc,char *argv[])
         else if(game.restTime > 0 && game.flag == 2){
             WindowEvent(clientID,ima);  
             ima=SDL_GetTicks();//現在時間を取得
-            printf("game.restTime:%d\n",game.restTime);
+            //printf("game.restTime:%d\n",game.restTime);
 //>>>>>>> color
             DrawChara(clientID,cnum);
         }

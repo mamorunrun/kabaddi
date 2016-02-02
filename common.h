@@ -32,8 +32,9 @@
 #define TIMES           'T'                             /*ゲーム回数コマンド*/
 #define BUMP            'B'                             /*当たり判定のコマンド*/
 #define WIN             'W'                             /*勝ちコマンド*/
-#define LOSE            'L'                             /*負けコマンド*/
-
+#define LOSE            'L'                             /*負けコマンド   いる？*/
+#define SCORE           'S'
+#define TACKLE          'A'                             /*タックルコマンド*/
 #define RESTART         'R'                             /*リスタートコマンド*/
 
 
@@ -57,6 +58,8 @@ typedef struct{
         int             score;//得点の保存
         int             color;
         int             restart;
+        int             tackle;
+        int cflag;
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];
