@@ -432,6 +432,8 @@ void WindowEvent(int clientID,int now)
     int mflag = 1;//moveflag
     int befx,befy;
     
+    printf("score == %d\n\n\n",gClients[clientID].score);
+
     char	data[MAX_DATA];
     befx = gClients[clientID].poi.x;
     befy = gClients[clientID].poi.y;
@@ -537,7 +539,6 @@ void WindowEvent(int clientID,int now)
                 }
 
                 if(tflag >=1 && tflag<200){//50フレーム動きを止める
-                    printf("aheaheahe\n\n\n");
                     tflag++;
                     break;
                 }
@@ -565,7 +566,7 @@ void WindowEvent(int clientID,int now)
                             if(a <= 0){
                                 gClients[clientID].score -= gClients[clientID].Bflag;
                                 printf("spead a = 0\n\n\n");
-                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,0,0,0,0,0);
+                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
                                 SendData(data);
                             }
                         }
@@ -577,7 +578,7 @@ void WindowEvent(int clientID,int now)
                         if(a <= 0){
                             gClients[clientID].score -= gClients[clientID].Bflag;
                             printf("spead a = 0\n\n\n");
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,0,0,0,0,0);
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
                             SendData(data);
                         }
                     }

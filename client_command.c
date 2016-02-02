@@ -122,6 +122,7 @@ int ExecuteCommand(char *command)
         }
         break;
     case SCORE:
+        gClients[id].score=x;
         game.flag=3;
     }
     return endFlag;
