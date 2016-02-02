@@ -407,6 +407,7 @@ void WindowEvent(int clientID,int now)
                                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",JUDGE_END,clientID,0,0,0,0,0);
                                 SendData(data);
                                 game.flag = 3;
+                                break;
                             }
                         }
                         else //攻撃側でtackle = 0
@@ -419,6 +420,7 @@ void WindowEvent(int clientID,int now)
                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",JUDGE_END,clientID,0,0,0,0,0);
                             SendData(data);
                             game.flag = 3;
+                            break;
                         }
                     }
                 }
