@@ -36,7 +36,7 @@ CLIENT gClients[MAX_CLIENTS];
 void DisplayStatus(void);
 int Ax,Ay,Af;//攻撃の移動
 int tflag;//タックルのフラグ
-
+int cflag;
 int buttonflag;
 
 int dflag;//mainとのグローバル変数,動いたことの検知
@@ -294,6 +294,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
             gClients[i].tackle = 0;
+            gClients[i].cflag=0;
             chara_rect[i].w=96;
             chara_rect[i].h=144;
             /*if(gClients[i].ADsta==1){
@@ -380,7 +381,7 @@ void WindowEvent(int clientID,int now)
 
 /*************タックル（守備側のみ）**************************************/
             if(gClients[clientID].ADsta == 0){
-                if(gClients[clientID].tackle == 2){//tackle = 0通常 1反転 2タックルに成功
+                if(gClients[clientID].tackle == 1){//tackle = 0通常 1反転 2タックルに成功
                     printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
                     if(Af == 2){
                         gClients[clientID].poi.x += gClients[cID].poi.x - Ax;
@@ -390,36 +391,36 @@ void WindowEvent(int clientID,int now)
                     }
                     break;
                 }
-                if(tflag == 0){
+                else if(tflag == 0){
                     if(wiimote.keys.two){
                         switch(dirflag){
                         case up_dir:
-                            gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             break;
                         case up_right_dir:
-                            gClients[clientID].poi.y = gClients[clientID].poi.y-30;
-                            gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                        break;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y-5;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                            break;
                         case right_dir:
-                            gClients[clientID].poi.x = gClients[clientID].poi.x+30;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             break;
                         case right_down_dir:
-                            gClients[clientID].poi.x = gClients[clientID].poi.x+30;
-                            gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             break;
                         case down_dir:
-                            gClients[clientID].poi.y = gClients[clientID].poi.y+30;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             break;
                         case down_left_dir:
-                            gClients[clientID].poi.y = gClients[clientID].poi.y+30;
-                            gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y+5;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             break;
                         case left_dir:
-                            gClients[clientID].poi.x = gClients[clientID].poi.x-30;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             break;
                         case left_up_dir:
-                            gClients[clientID].poi.x = gClients[clientID].poi.x-30;
-                            gClients[clientID].poi.y = gClients[clientID].poi.y-30;
+                            gClients[clientID].poi.x = gClients[clientID].poi.x-5;
+                            gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             break;
                         }
                         Move(clientID,befx,befy,now);
@@ -427,32 +428,64 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                 }
-                else if(tflag <= 50){//50フレーム動きを止める
+                else if(tflag ==1){
+                    switch(dirflag){
+                    case up_dir:
+                        gClients[clientID].poi.y = gClients[clientID].poi.y-5;
+                        break;
+                    case up_right_dir:
+                        gClients[clientID].poi.y = gClients[clientID].poi.y-5;
+                        gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                        break;
+                    case right_dir:
+                        gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                        break;
+                    case right_down_dir:
+                        gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                        gClients[clientID].poi.y = gClients[clientID].poi.y+5;
+                        break;
+                    case down_dir:
+                        gClients[clientID].poi.y = gClients[clientID].poi.y+5;
+                        break;
+                    case down_left_dir:
+                        gClients[clientID].poi.y = gClients[clientID].poi.y+5;
+                        gClients[clientID].poi.x = gClients[clientID].poi.x-5;
+                        break;
+                    case left_dir:
+                        gClients[clientID].poi.x = gClients[clientID].poi.x-5;
+                        break;
+                    case left_up_dir:
+                        gClients[clientID].poi.x = gClients[clientID].poi.x-5;
+                        gClients[clientID].poi.y = gClients[clientID].poi.y-5;
+                        break;
+                    }
+                    Move(clientID,befx,befy,now);
+                    break;   
+                }
+                if(tflag >1 && tflag<200){//50フレーム動きを止める
                     tflag++;
                     break;
                 }
-                else if(wiimote.keys.two != 1){//tflagが10以上かつ2が押されていない
+                else{//tflagが10以上かつ2が押されていない
                     tflag = 0;
                 }
             }
-            else if(gClients[clientID].tackle >= 2){//gClients[clientID].ADsta == 1かつ
+            else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
-                tflag++;
-                if(tflag == 30){
+                if((tflag%50) == 0){
                     gClients[clientID].tackle++;
-                    tflag = 0;
                 }
             }
-
-
-            if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right /*&& mflag*/)
+            
+            
+            if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right && tflag==0/*&& mflag*/)
             {    
                 //printf("WindowEvent\n");
-                /*  if(gClients[clientID].ADsta == 1){
+                 if(gClients[clientID].ADsta == 1){
                     if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
                         if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
-                            a = 4 - (gClients[clientID].tackle - 1);
+                            a = 4 - (gClients[clientID].tackle);
                             if(a == 0){
                                 printf("spead a = 0\n\n\n");
 //game.flag = 3;
@@ -462,7 +495,7 @@ void WindowEvent(int clientID,int now)
                             a = 4;
                     }//ダッシュしてない
                     else if(gClients[clientID].tackle != 0){//dflag = 0通常 1反転 2タックルに成功
-                        a = 2 - (gClients[clientID].tackle - 1);
+                        a = 2 - (gClients[clientID].tackle);
                         if(a == 0){
                             printf("spead a = 0\n\n\n");
 //game.flag = 3;
@@ -471,7 +504,7 @@ void WindowEvent(int clientID,int now)
                 }
                 else if(wiimote.keys.one){//守備
                     a = 4;
-                    }*/
+                    }
                 
                 if(wiimote.keys.up){
                     if(wiimote.keys.left){

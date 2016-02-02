@@ -69,12 +69,12 @@ int ExecuteCommand(char *command)
                 gClients[id].color=3;
                 gClients[x].color=2;
             }
-            for(i=0;i<cnum;i++){
+            /*for(i=0;i<cnum;i++){
                 if(gClients[i].tackle == 0){
                     gClients[i].tackle = 1;
                     printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
                 }
-            }
+                }*/
             break;
     case WIN:
         if(gClients[x].color==2)//守備の色が2なら
@@ -114,6 +114,7 @@ int ExecuteCommand(char *command)
         for(i=0;i<cnum;i++){
             if(gClients[i].ADsta == 1){//攻撃の人間に
                 gClients[i].tackle++;
+                gClients[i].cflag++;
                 printf("receive tackle command\ngClients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
             }
         }

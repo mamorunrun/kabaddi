@@ -58,6 +58,7 @@ typedef struct{
         int             color;
         int             restart;
         int             tackle;
+        int cflag;
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];
