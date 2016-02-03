@@ -769,7 +769,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
             }
             if(serectflag == 1){
                 if(wiimote.keys.two){
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,game.flag,0,0,0,0,0);
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
                     SendData(data);
 //wiimote_speaker_free(&wiimote);
 //wiimote_disconnect(&wiimote);
@@ -839,7 +839,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
                 SDL_Flip(gMainWindow);
                 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,game.flag,0,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,3,0,0,0,0,0);
                 SendData(data);
             }
 //=======
@@ -887,7 +887,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 SDL_Flip(gMainWindow);
                 */                
 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,game.flag,0,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,4,0,0,0,0,0);
                 SendData(data);
             }   
         }
