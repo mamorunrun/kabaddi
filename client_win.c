@@ -569,6 +569,7 @@ void WindowEvent(int clientID,int now)
                 else{//tflagが10以上かつ2が押されていない
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
+                    chara_rect[clientID].y=144;
                     chara_rect[clientID].w=96;
                 }
             }
