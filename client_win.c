@@ -257,6 +257,7 @@ int EndWindow(void)
     int i,j;
     int t[]={0,1,2,3,4,5,6,7};
     int tmp;
+    int bef;
 
     char rank[64];
     char name[64];
@@ -286,18 +287,18 @@ int EndWindow(void)
     for(i=0;i<cnum;i++){
         j=t[i];
 
-        if(i-1=>0){
-              if(gClients[j].score!=gClients[j-1].score){
-                  sprintf(rank[i],"%d",i+1);
-                  bef=i+1;
-              }
-              else{
-                  sprintf(rank[i],"%d",bef);
-              }
+        if(i-1>=0){
+            if(gClients[j].score!=gClients[j-1].score){
+                sprintf(rank,"%d",i+1);
+                bef=i+1;
+            }
+            else{
+                sprintf(rank,"%d",bef);
+            }
         }
         else{
-                   sprintf(rank,"%d",i+1);
-                   bef=i+1;
+            sprintf(rank,"%d",i+1);
+            bef=i+1;
         }
 
 
