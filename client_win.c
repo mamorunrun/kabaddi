@@ -288,7 +288,7 @@ int EndWindow(void)
         j=t[i];
 
         if(i-1>=0){
-            if(gClients[j].score!=gClients[j-1].score){
+            if(gClients[t[i]].score!=gClients[t[i-1]].score){
                 sprintf(rank,"%d",i+1);
                 bef=i+1;
             }
