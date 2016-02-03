@@ -210,8 +210,13 @@ int InitWindows(void)
 int TopWindow(void)
 {
     printf("TopWindow\n\n\n\n\n\n\n\n\n");
-    SDL_Rect game_times_rect={571,321};
+    SDL_Surface *gMessage_explain_2;
+    // SDL_Surface *gMessage_explain_updown;
     SDL_Surface *gMessage_times;
+
+    SDL_Rect explain_2_rect={800,620};
+    //   SDL_Rect explain_updown_rect={800,635};
+    SDL_Rect game_times_rect={571,321};
 
     char s[64];
 
@@ -221,8 +226,15 @@ int TopWindow(void)
     else if(serectflag==2)
         SDL_BlitSurface(serect, NULL, gMainWindow, &serect_end_rect);
 
-    sprintf(s,"%d",gametimes);
+    gMessage_explain_2 = TTF_RenderUTF8_Blended(font3, "Enter -> Please Pless Button 2",colB);
+    SDL_Rect src_explain_2_rect = { 0, 0, gMessage_explain_2->w,gMessage_explain_2->h };
+    SDL_BlitSurface(gMessage_explain_2, &src_explain_2_rect, gMainWindow, &explain_2_rect);
 
+    //   gMessage_explain_updown = TTF_RenderUTF8_Blended(font3, "Select -> Please Pless Button up or down",colB);
+    // SDL_Rect src_explain_updown_rect = { 0, 0, gMessage_explain_updown->w,gMessage_explain_updown->h };
+    //SDL_BlitSurface(gMessage_explain_updown, &src_explain_updown_rect, gMainWindow, &explain_updown_rect);
+
+    sprintf(s,"%d",gametimes);
     gMessage_times = TTF_RenderUTF8_Blended(font_times, s,colB);
     SDL_Rect src_rect = { 0, 0, gMessage_times->w,gMessage_times->h };
     SDL_BlitSurface(gMessage_times, &src_rect, gMainWindow, &game_times_rect);
@@ -240,6 +252,8 @@ int TopWindow(void)
 int EndWindow(void)
 {
     printf("EndWindow\n\n\n\n\n\n\n\n\n");
+    SDL_Surface *gMessage_explain;
+
     SDL_Surface *gMessage_name;
     SDL_Surface *gMessage_score;
 
@@ -247,12 +261,14 @@ int EndWindow(void)
     SDL_Surface *gMessage_name_on[MAX_CLIENTS];
     SDL_Surface *gMessage_score_on[MAX_CLIENTS];
 
-    SDL_Rect game_name_rect={700,400};
-    SDL_Rect game_score_rect={850,400};
+    SDL_Rect explain_rect={800,620};
 
-      SDL_Rect game_rank_on_rect={650,500};
-    SDL_Rect game_name_on_rect={705,500};
-    SDL_Rect game_score_on_rect={855,500};
+    SDL_Rect game_name_rect={700,380};
+    SDL_Rect game_score_rect={850,380};
+    
+    SDL_Rect game_rank_on_rect={650,480};
+    SDL_Rect game_name_on_rect={705,480};
+    SDL_Rect game_score_on_rect={855,480};
 
     int i,j;
     int t[]={0,1,2,3,4,5,6,7};
@@ -264,6 +280,10 @@ int EndWindow(void)
     char score[64];
 
     SDL_BlitSurface(endsur, NULL, gMainWindow, NULL);
+
+    gMessage_explain = TTF_RenderUTF8_Blended(font3, "Next -> Please Pless Button A",colB);
+    SDL_Rect src_explain_rect = { 0, 0, gMessage_explain->w,gMessage_explain->h };
+    SDL_BlitSurface(gMessage_explain, &src_explain_rect, gMainWindow, &explain_rect);
 
     gMessage_name = TTF_RenderUTF8_Blended(font, "You",colB);//Youの名前
     SDL_Rect src_name_rect = { 0, 0, gMessage_name->w,gMessage_name->h };
@@ -799,6 +819,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
     
         else if(game.flag == 3){//各ピリオド終了
             // if(gClients[clientID].restart==0){
+
             if(wiimote.keys.plus)//プラスキー
             {
                 if(continueflag==0)
@@ -872,7 +893,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
         else if(game.flag == 4){
                 
             /*Aボタン（リスタート）*/
-            if(wiimote.keys.minus)
+            if(wiimote.keys.a)
             {
                 /*
                   char comment[64];
@@ -912,11 +933,15 @@ void DrawChara(int n,int cnum)
     int s[]={0,1,2,3,4,5,6,7};
 
         /* 背景を白にする */
-    SDL_FillRect(buffer,NULL,0xffffffff);
-//    SDL_BlitSurface(backlinesur, NULL, buffer, NULL);
+    SDL_FillRect(buffer,NULL,0xdd7a33);
+    //SDL_BlitSurface(backlinesur, NULL, buffer, NULL);
     DisplayStatus();
 
-    lineColor(buffer, 800, 0, 800, 600,0x000000ff);
+    lineColor(buffer, 800, 0, 800, 600,0xffffffff);
+    lineColor(buffer, 801, 0, 801, 600,0xffffffff);
+    lineColor(buffer, 802, 0, 802, 600,0xffffffff);
+    lineColor(buffer, 803, 0, 803, 600,0xffffffff);
+    lineColor(buffer, 804, 0, 804, 600,0xffffffff);
 
     //printf("cnum = %d\n" ,cnum);
 
@@ -969,9 +994,16 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
 {
     int i;
     char   status[64];
-
-    SDL_Rect dst_rect2 = { 350, 350 };
+    
+    SDL_Surface *gMessage_explain_a;
+    SDL_Surface *gMessage_explain_p;//plus
+    SDL_Surface *gMessage_explain_m;//minus
     SDL_Surface *gMessage_score;
+    
+    SDL_Rect explain_a_rect={800,620};
+    SDL_Rect explain_p_rect={465,290};
+    SDL_Rect explain_m_rect={465,410};
+    SDL_Rect dst_rect2 = { 350, 350 };
 
     i= ID;
 
@@ -987,6 +1019,19 @@ void WinDisplay(int ID)//引数clientID,WindowEventからの場合はresultflag
     }
 
     SDL_FillRect(bufmain,NULL,0xffffffff); /*背景を白にする*/
+
+    gMessage_explain_a = TTF_RenderUTF8_Blended(font3, "Next -> Please Pless Button A",colB);//操作説明
+    SDL_Rect src_explain_a_rect = { 0, 0, gMessage_explain_a->w,gMessage_explain_a->h };
+    SDL_BlitSurface(gMessage_explain_a, &src_explain_a_rect, gMainWindow, &explain_a_rect);
+    
+    gMessage_explain_p = TTF_RenderUTF8_Blended(font, "+",colB);
+    SDL_Rect src_explain_p_rect = { 0, 0, gMessage_explain_p->w,gMessage_explain_p->h };
+    SDL_BlitSurface(gMessage_explain_p, &src_explain_p_rect, gMainWindow, &explain_p_rect);
+    
+    gMessage_explain_m = TTF_RenderUTF8_Blended(font, "-",colB);
+    SDL_Rect src_explain_m_rect = { 0, 0, gMessage_explain_m->w,gMessage_explain_m->h };
+    SDL_BlitSurface(gMessage_explain_m, &src_explain_m_rect, gMainWindow, &explain_m_rect);
+
     sprintf(status,"%s score:%dpt",gClients[i].name,gClients[i].score);
     
     gMessage_score = TTF_RenderUTF8_Blended(font, status, colB);
@@ -1024,7 +1069,7 @@ void DisplayStatus(void)//自分のスタミナの描写
     SDL_BlitSurface(mes, NULL, scbuf, NULL);
     SDL_BlitSurface(scbuf, NULL, gMainWindow, NULL);
     */
-    
+
     STrect.x = (game.restTime/100)*3;
     STrect.w = 600 - (game.restTime/100)*3;
 //背景を水色に
@@ -1036,7 +1081,7 @@ void DisplayStatus(void)//自分のスタミナの描写
         SDL_FillRect(stbar,NULL,stcol[2]);
 
 
-    SDL_FillRect(stbar,&STrect,0xffffffff);
+    SDL_FillRect(stbar,&STrect,0x696969);
    
     SDL_BlitSurface(stbar, NULL, gMainWindow, &srect);
     //SDL_Flip(gMainWindow);
