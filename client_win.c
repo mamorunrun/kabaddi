@@ -258,7 +258,7 @@ int EndWindow(void)
     int t[]={0,1,2,3,4,5,6,7};
     int tmp;
 
-       char rank[64];
+    char rank[64];
     char name[64];
     char score[64];
 
@@ -286,14 +286,22 @@ int EndWindow(void)
     for(i=0;i<cnum;i++){
         j=t[i];
 
-        //if(i-1=>0)
-        //      if(gClients[j].score!=gClients[j-1].score)
-        //    sprintf(rank[i],"%d",i+1);
-        // else
-        //    rank[i]=rank[i-1]
-//sprintf(rank[i],"%d",i+1);
+        if(i-1=>0){
+              if(gClients[j].score!=gClients[j-1].score){
+                  sprintf(rank[i],"%d",i+1);
+                  bef=i+1;
+              }
+              else{
+                  sprintf(rank[i],"%d",bef);
+              }
+        }
+        else{
+                   sprintf(rank,"%d",i+1);
+                   bef=i+1;
+        }
 
-        sprintf(rank,"%d",i+1);
+
+        // sprintf(rank,"%d",i+1);
         gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
         SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[j]->w,gMessage_rank_on[j]->h };
         SDL_BlitSurface(gMessage_rank_on[j], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
