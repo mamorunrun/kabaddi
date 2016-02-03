@@ -29,7 +29,7 @@ extern int dflag;//移動したことの検知
 extern int gametimes;//ゲームを繰り返す回数
 static int endFlag=1;
 int ima;
-
+int loop;
 int clientID;
 int cnum;
 
@@ -63,7 +63,6 @@ int main(int argc,char *argv[])
     timers timer;
     int lflag=0;
     int		num;
-    int loop = 0;
     int i;//cnum繰り返すため
     char	name[MAX_CLIENTS][MAX_NAME_SIZE];
     char	localHostName[]="localhost";
@@ -169,6 +168,7 @@ int main(int argc,char *argv[])
 
         /********メイン画面ループ**************/
         if(game.flag == 0){
+            loop=1;
             gametimes=3;
             TopWindow();
             printf("now==%d\n\n",game.flag);
@@ -178,14 +178,6 @@ int main(int argc,char *argv[])
                     break;
             }
         }
-        
-//<<<<<<< HEAD
-        
-//        if(game.restTime > 0 && game.flag == 0){
-//            WindowEvent(clientID,ima);  
-//            ima=SDL_GetTicks();//現在時間を取得
-            //printf("game.restTime:%d\n",game.restTime);
-//=======
         else if(game.flag == 1){//ゲーム画面作成
             
             if(GameWindows(clientID,name,loop)==-1){
@@ -200,72 +192,38 @@ int main(int argc,char *argv[])
 //>>>>>>> color
             DrawChara(clientID,cnum);
         }
-
-        else
+        
+        else if(game.flag == 3 || game.restTime <= 0)
         {
+            game.flag = 3;
             if(gClients[clientID].ADsta==1 && game.restTime<=0){
                 gClients[clientID].score -= gClients[clientID].Bflag;
                 sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0,0);
                 SendData(data);
                 }
-            
-            loop++;
             WinDisplay(clientID);
-//<<<<<<< HEAD
-//            while(game.flag == 1){
-//                WindowEvent(clientID,ima);
-//=======
-            if(loop % (cnum*gametimes) != 0){
-                game.flag = 3;
-            }
-            else{ 
-                game.flag = 4;
-                EndWindow();
-            }
             
             printf("now==%dloop==%dcnum==%dgametimes=%d\n\n",game.flag,loop,cnum,gametimes);
             while(game.flag == 3){
                 WindowEvent(clientID,ima);
                 if(endFlag == 0)
                     break;
-//>>>>>>> color
             }
-            
-//<<<<<<< HEAD
-//              if(GameWindows(clientID,name,loop)==-1){
-//                    fprintf(stderr,"setup failed : GameWindows\n");
-//                    return -1;
-                    
-//                }
-//            }
-//
-//            else{//3回ずつやった
-//                game.flag = 1;
-                //無限ループ あとで処理を追加
-//                while(game.flag == 1){
-//                    printf("aaaaaaaaaa\n");
-//                    WindowEvent(clientID,ima);           
-//=======
-            //   if(loop == cnum*3){//cnum*3回ずつ攻撃を行ったら
-                /****エンド画面ループ**************/
-            //  printf("endloop\n\n\n\n\n\n\n\n\n\n\n");
-            //  game.flag = 4;
-                //endwindow;
-
-            if(game.flag == 4){
-                loop=0;
-                for(i=0;i<cnum;i++){
-                    gClients[i].score=0;
-                    gClients[i].restart=0;
-                    // gametimes=3;
-                }
+        }
+        else if(game.flag == 4){
+            //loop=0;
+            for(i=0;i<cnum;i++){
+                gClients[i].score=0;
+                gClients[i].restart=0;
+                // gametimes=3;
             }
+            EndWindow();
             while(game.flag == 4){
                 WindowEvent(clientID,ima);
                 if(endFlag == 0)
                     break;
-//>>>>>>> color
-            }
+            }    
+            
         }
         
         timer.lev=SDL_GetTicks();//経過時間を更新
