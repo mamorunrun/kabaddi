@@ -241,7 +241,15 @@ int Collision(int clientID,int befx,int befy){
 void Animation(int now){
 
     if(now >= gClients[clientID].anime){
-        if(dirflag == up_dir || dirflag == down_dir){
+
+        if(tflag >=1){
+            if(gClients[clientID].anipatnum < 5){
+                chara_rect[clientID].x = gClients[clientID].anipatnum*144;
+                gClients[clientID].anipatnum++;
+            }
+        }
+        
+        else if(dirflag == up_dir || dirflag == down_dir){
             if(gClients[clientID].anipatnum<6){
                 gClients[clientID].ADsta ? (chara_rect[clientID].y=0) : (chara_rect[clientID].y=144);
                 gClients[clientID].anipatnum++;
