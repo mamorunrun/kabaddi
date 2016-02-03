@@ -2,7 +2,7 @@
 #include"client_func.h"
 
 
-void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
+void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y,int rect_w)
 {
     if(clientID == n)
         return;
@@ -20,6 +20,7 @@ void UpdatePos(int n,int x,int y,int t,int rect_x,int rect_y)
     gClients[n].poi.y=y;
     chara_rect[n].x=rect_x;
     chara_rect[n].y=rect_y;
+    chara_rect[n].w=rect_w;
 }
 
 /*********************************************************
@@ -98,9 +99,9 @@ void Move(int clientID,int befx,int befy,int now)
     
     if( i == -1){
         if(gClients[clientID].ADsta == 1)
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,chara_rect[clientID].x,chara_rect[clientID].y);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
         else
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y/*ダミー*/);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w/*ダミー*/);
         SendData(data);
     }
     //else if(gClients[clientID].ADsta == 1){
@@ -117,14 +118,14 @@ void Move(int clientID,int befx,int befy,int now)
         if(gClients[clientID].poi.x+96 >= 850){
             //end=0;
             //if(gClients[clientID].Bflag > 0){
-            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
+            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0,0);
                 SendData(data);
                 // }
         }
     }
     
     if(end == 0){
-        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",END_COMMAND,0,0,0,0,0,0);
+        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",END_COMMAND,0,0,0,0,0,0,0);
         SendData(data);
     }
 }
@@ -161,7 +162,7 @@ int Collision(int clientID,int befx,int befy){
 
                                     if(gClients[clientID].tackle == 0){//攻守反転していて
                                         if(tflag != 0){//自分がタックルしてたら
-                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
+                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                             gClients[clientID].tackle = 1;/*自分にもフラグを*/
                                             if(Af == 0){
                                                 Af = 1;
@@ -175,7 +176,7 @@ int Collision(int clientID,int befx,int befy){
                                         // gClients[clientID].Bflag++;//攻撃側にフラグ
                                         //gClients[i].color=3;//攻撃
                                         //gClients[clientID].color=2;//守備
-                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0);
+                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                         SendData(data);
                                         
                                         return i;//攻撃
@@ -210,7 +211,7 @@ int Collision(int clientID,int befx,int befy){
                                     // gClients[i].Bflag++;
                                     //gClients[clientID].color=3;//攻撃
                                     //gClients[i].color=2;//守備
-                                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/,0,0,0);
+                                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,clientID/*当たった相手(攻撃)のid*/,i,0/*ダミー*/,0,0,0,0);
                                     SendData(data);
                                     
                                     return i;//守備
@@ -242,9 +243,9 @@ void Animation(int now){
 
     if(now >= gClients[clientID].anime){
 
-        if(tflag >=1){
+        if(tflag >=1 && dirflag != up_dir && dirflag != down_dir){
             if(gClients[clientID].anipatnum < 5){
-                chara_rect[clientID].x = gClients[clientID].anipatnum*144;
+                chara_rect[clientID].x = gClients[clientID].anipatnum*192;
                 gClients[clientID].anipatnum++;
             }
         }

@@ -205,7 +205,7 @@ int main(int argc,char *argv[])
         {
             if(gClients[clientID].ADsta==1 && game.restTime<=0){
                 gClients[clientID].score -= gClients[clientID].Bflag;
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0,0);
                 SendData(data);
                 }
             

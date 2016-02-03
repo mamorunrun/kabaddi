@@ -26,6 +26,7 @@ int ExecuteCommand(char *command)
     int t=atoi(strtok(NULL, ","));
     int rect_x=atoi(strtok(NULL, ","));
     int rect_y=atoi(strtok(NULL, ","));
+    int rect_w=atoi(strtok(NULL, ","));
     int	endFlag = 1;
 
     int i;
@@ -56,7 +57,7 @@ int ExecuteCommand(char *command)
     case CDRAW:
         printf("pos");
         if(id != clientID)
-            UpdatePos(id,x,y,t,rect_x,rect_y);
+            UpdatePos(id,x,y,t,rect_x,rect_y,rect_w);
         break;
     case TIMES://ゲーム回数を全クライアントに送る
         gametimes=x;
@@ -146,7 +147,7 @@ void SendEndCommand(void)
     printf("SendEndCommand()\n");
 #endif
    
-    sprintf(data,"endkabaddi,a,a,a,a,a,a,a\0");
+    sprintf(data,"endkabaddi,a,a,a,a,a,a,a,a\0");
     /* データの送信 */
     SendData(data);
 }

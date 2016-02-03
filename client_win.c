@@ -480,15 +480,18 @@ void WindowEvent(int clientID,int now)
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             chara_rect[clientID].y =1008;
+                            chara_rect[clientID].w=192;
                             break;
                         case right_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             chara_rect[clientID].y =1008;
+                            chara_rect[clientID].w=192;
                             break;
                         case right_down_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             chara_rect[clientID].y =1008;
+                            chara_rect[clientID].w=192;
                             break;
                         case down_dir:
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
@@ -497,15 +500,18 @@ void WindowEvent(int clientID,int now)
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             chara_rect[clientID].y =864;
+                            chara_rect[clientID].w=192;
                             break;
                         case left_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             chara_rect[clientID].y =864;
+                            chara_rect[clientID].w=192;
                             break;
                         case left_up_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             chara_rect[clientID].y =864;
+                            chara_rect[clientID].w=192;
                             break;
                         }
                         Move(clientID,befx,befy,now);
@@ -554,6 +560,7 @@ void WindowEvent(int clientID,int now)
                 else{//tflagが10以上かつ2が押されていない
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
+                    chara_rect[clientID].w=96;
                 }
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
@@ -576,7 +583,7 @@ void WindowEvent(int clientID,int now)
                             if(a <= 0){
                                 gClients[clientID].score -= gClients[clientID].Bflag;
                                 printf("spead a = 0\n\n\n");
-                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
+                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0,0);
                                 SendData(data);
                             }
                         }
@@ -588,7 +595,7 @@ void WindowEvent(int clientID,int now)
                         if(a <= 0){
                             gClients[clientID].score -= gClients[clientID].Bflag;
                             printf("spead a = 0\n\n\n");
-                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0);
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",SCORE,clientID,gClients[clientID].score,0,0,0,0,0);
                             SendData(data);
                         }
                     }
@@ -724,7 +731,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         gametimes++;//ゲーム回数の変更
                         if(gametimes==6)
                             gametimes=1;
-                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0,0);
                         SendData(data);
                     }
                 }
@@ -742,7 +749,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         gametimes--;
                         if(gametimes==0)
                             gametimes=5;
-                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0);
+                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TIMES,clientID,gametimes,0,0,0,0,0);
                         SendData(data);
                     }
                 }
@@ -754,7 +761,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
             }
             if(serectflag == 1){
                 if(wiimote.keys.two){
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
                     SendData(data);
 //wiimote_speaker_free(&wiimote);
 //wiimote_disconnect(&wiimote);
@@ -824,7 +831,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
                 SDL_Flip(gMainWindow);
                 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
                 SendData(data);
             }
 //=======
@@ -872,7 +879,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 SDL_Flip(gMainWindow);
                 */                
 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
                 SendData(data);
             }   
         }
