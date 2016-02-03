@@ -357,7 +357,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         int i,x,y;
 
         for(i=0;i<cnum;i++){
-            if(i == (loop % cnum)){
+            if(i == ( (loop - 1) % cnum)){
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
                 chara_rect[i].y=0;
