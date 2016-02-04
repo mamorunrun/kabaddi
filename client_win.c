@@ -486,6 +486,7 @@ void WindowEvent(int clientID,int now)
             resultflag=clientID;//l.389のためゲームが開始されるとresultflagに自分のclientIDを代入
 
 /*************タックル（守備側のみ）**************************************/
+
             if(gClients[clientID].ADsta == 0){
                 if(gClients[clientID].tackle == 1){//tackle = 0通常 1反転 2タックルに成功
                     printf("Ax,Ay=%d,%d\ngClients[cID].poi.x,gClients[cID].poi.y=%d,%d\n",Ax,Ay,gClients[cID].poi.x,gClients[cID].poi.y);
@@ -588,14 +589,15 @@ void WindowEvent(int clientID,int now)
                     break;
                 }
                 else {//tflagが10以上かつ2が押されていない
+                    printf("tflag==0\n\n");
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
                     chara_rect[clientID].x=0;
                     chara_rect[clientID].y=144;
                     chara_rect[clientID].w=96;
-                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
+                    /*sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
                     SendData(data);
-                    break;
+                    break;*/
                 }
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
@@ -609,7 +611,7 @@ void WindowEvent(int clientID,int now)
             
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right && tflag==0/*&& mflag*/)
             {    
-                //printf("WindowEvent\n");
+                printf("WindowEvent\n\n");
                 if(gClients[clientID].ADsta == 1){
                     if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
