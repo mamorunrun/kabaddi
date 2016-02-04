@@ -543,6 +543,7 @@ void WindowEvent(int clientID,int now)
                             chara_rect[clientID].w=192;
                             break;
                         }
+                        gClients[clientID].anipatnum=0;
                         Move(clientID,befx,befy,now);
                         tflag++;
                         break;
