@@ -161,7 +161,7 @@ int Collision(int clientID,int befx,int befy){
                                 if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
 
                                     if(gClients[clientID].tackle == 0){//攻守反転していて
-                                        if(tflag != 0){//自分がタックルしてたら
+                                        if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
                                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                             gClients[clientID].tackle = 1;/*自分にもフラグを*/
                                             if(Af == 0){
@@ -245,14 +245,13 @@ void Animation(int now){
 
     if(now >= gClients[clientID].anime){
         
-        if(tflag >=1){
+        if(tflag >=1 && gClients[clientID].ADsta==0){
             if(dirflag != up_dir && dirflag != down_dir){
-                if(gClients[clientID].anipatnum < 4){
+                if(chara_rect[clientID].x <768){
                     printf("tackle\n");
                     printf("%d   %d   %d  \n\n",chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w );
                     
                     chara_rect[clientID].x += 192;
-                    gClients[clientID].anipatnum++;
                 }
             }
         }

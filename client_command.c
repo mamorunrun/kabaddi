@@ -5,8 +5,6 @@
 
 #include"common.h"
 #include"client_func.h"
-
-
 /*****************************************************************
 関数名	: ExecuteCommand
 機能	: サーバーから送られてきたコマンドを元に，
@@ -88,7 +86,10 @@ int ExecuteCommand(char *command)
         break;
     case RESTART:
         j = 0;
-        gClients[id].restart=1;//相手のrestartを1にする
+        if(game.flag == x)
+            gClients[id].restart=1;//相手のrestartを1にする
+        else
+            break;
         for(i=0;i<cnum;i++){
             if(gClients[i].restart == 1)
                 j++;
@@ -105,9 +106,16 @@ int ExecuteCommand(char *command)
                 break;
             case 2: game.flag = 0;
                 break;
-            case 3: game.flag = 1;//各ピリオド終了からゲームへ
+            case 3: {//各ピリオド終了からゲームへ
+                if(loop % (cnum*gametimes) != 0){
+                    game.flag = 1;
+                }
+                else {
+                    game.flag = 4;
+                }
+                loop++;
+            }
                 break;
-                
             case 4: game.flag = 0;//エンドからメイン画面へ
                 break;
             }
