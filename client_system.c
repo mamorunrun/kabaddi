@@ -155,10 +155,16 @@ int Collision(int clientID,int befx,int befy){
                 if(gClients[i].ADsta==1){//相手が攻撃なら
                     //  if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 50 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 50){//大きめの範囲で
                     //     if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 50 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 50){
-                    if(gClients[clientID].poi.x+33 < gClients[i].poi.x+33+gClients[i].poi.w-66+20){
+                    /* if(gClients[clientID].poi.x+33 < gClients[i].poi.x+33+gClients[i].poi.w-66+20){
                         if(gClients[clientID].poi.y+57 < gClients[i].poi.y+57+gClients[i].poi.h-114+20){
                             if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
                                 if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
+                    */
+                    
+                    if(gClients[clientID].poi.x+33 < gClients[i].poi.x+gClients[i].poi.w){
+                        if(gClients[clientID].poi.y+57 < gClients[i].poi.y+58){
+                            if(gClients[clientID].poi.x+gClients[clientID].poi.w > gClients[i].poi.x+30){
+                                if(gClients[clientID].poi.y + 58 > gClients[i].poi.y){
 
                                     if(gClients[clientID].tackle == 0){//攻守反転していて
                                         if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
