@@ -142,7 +142,7 @@ int Collision(int clientID,int befx,int befy){
     //グローバル変数で全体人数を設定
 
     switch(gClients[clientID].ADsta){
-    case 0:
+    case 0://守備
         for(i=0;i<cnum;i++){
             if(i != clientID){
                 if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+33)) <= 30 && ((gClients[clientID].poi.x+33) - (gClients[i].poi.x+33)) <= 30){
@@ -162,10 +162,10 @@ int Collision(int clientID,int befx,int befy){
                     */
                     
                     if(gClients[clientID].poi.x+ Dfx < gClients[i].poi.x+ Atx + Atw){
-                        if(gClients[clientID].poi.x + Dfx > gClients[i].poi.x + Atx + Atw){
+                        if(gClients[clientID].poi.x + Dfx +Dfw > gClients[i].poi.x + Atx){
                             if(gClients[clientID].poi.y + Dfy < gClients[i].poi.y + Aty + Ath){
-                                if(gClients[clientID].poi.y + Dfy > gClients[i].poi.y + Aty +Ath){
-
+                                if(gClients[clientID].poi.y + Dfy + Dfh> gClients[i].poi.y + Aty){
+                                    
                                     if(gClients[clientID].tackle == 0){//攻守反転していて
                                         if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
                                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
@@ -212,9 +212,9 @@ int Collision(int clientID,int befx,int befy){
                         if(gClients[i].poi.x+33 + gClients[i].poi.w-66 > gClients[clientID].poi.x+33-20){
                         if(gClients[i].poi.y+57+gClients[i].poi.h-144 > gClients[clientID].poi.y+57-20){*/
                 if(gClients[i].poi.x+ Dfx < gClients[clientID].poi.x+ Atx + Atw){
-                    if(gClients[i].poi.x + Dfx > gClients[clientID].poi.x + Atx + Atw){
+                    if(gClients[i].poi.x + Dfx + Dfw > gClients[clientID].poi.x + Atx){
                         if(gClients[i].poi.y + Dfy < gClients[clientID].poi.y+ Aty+ Ath){
-                            if(gClients[i].poi.y + Dfy > gClients[clientID].poi.y + Aty +Ath){
+                            if(gClients[i].poi.y + Dfy +Dfh > gClients[clientID].poi.y + Aty){
                                 
                                 
                                 if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
