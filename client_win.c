@@ -2,7 +2,6 @@
 ファイル名	: client_win.c
 機能		: クライアントのユーザーインターフェース処理
 *****************************************************************/
-
 #include<SDL/SDL.h>
 #include<SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
@@ -303,7 +302,7 @@ int EndWindow(void)
             }
         }
     }
-
+/*
     for(i=0;i<cnum;i++){
         j=t[i];
 
@@ -343,7 +342,7 @@ int EndWindow(void)
     }
 
     SDL_Flip(gMainWindow);
-
+*/
     return 0;
 }
 
@@ -360,11 +359,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
     
      /* 引き数チェック */
         assert(0<num && cnum<=MAX_CLIENTS);
-	
-/*　　　文字関係
-        char Pname[cnum][MAX_NAME_SIZE+2];
-        SDL_Surface *PNAME[cnum];
-*/      
+
         Af = 0;
         dflag = 0;/*攻守反転フラグの初期化*/
         tflag = 0;
@@ -378,7 +373,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
         int i,x,y;
 
         for(i=0;i<cnum;i++){
-            if(i == (loop % cnum)){
+            if(i == ( (loop - 1) % cnum)){
                 gClients[i].poi.x=700;
                 gClients[i].poi.y=250;
                 chara_rect[i].y=0;
@@ -418,23 +413,18 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             PNAME_rrect[i].x = gClients[i].poi.x;
             PNAME_rrect[i].y = gClients[i].poi.y - 5;
             SDL_BlitSurface(PNAME[i], &PNAME_srect[i], buffer,&PNAME_rrect[i]);
-          
-            
-
         }
         printf("loop=%d\n",loop);
 
-/*******************************************************************************
-　　　　　　得点の描写
- ****************************************************************************/
+/**********************得点の描写*********************************************************/
         char   status[64];
-
+        
         sprintf(status,"score:%dpt",gClients[clientID].score);
         //printf("%s\n",status);
     
         mes = TTF_RenderUTF8_Blended(font2, status, colB);
-  
-    // 背景を白にする 
+        
+        // 背景を白にする 
         SDL_FillRect(scbuf,NULL,0xffffffff);
         SDL_BlitSurface(mes, NULL, scbuf, NULL);
         SDL_BlitSurface(scbuf, NULL, gMainWindow, NULL);
@@ -463,6 +453,7 @@ void WindowEvent(int clientID,int now)
     int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
+
 
     char	data[MAX_DATA];
     befx = gClients[clientID].poi.x;
@@ -737,10 +728,8 @@ void WindowEvent(int clientID,int now)
 game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオド終了　4カバディ終了
 **********************************************************************************/
         else if(game.flag == 0){//メイン画面
-            if(wiimote.keys.left)
-            {
-                if(continueflag==0)//continueflagは連続入力の防止
-                {
+            if(wiimote.keys.left){
+                if(continueflag==0){//continueflagは連続入力の防止
                     buttonflag=1;//extern ボタンを押されたらTopWindow実行
                     continueflag=1;
                     serectflag++;
@@ -748,15 +737,12 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         serectflag=1;
                 }
             }
-            else if(continueflag==1)
-            {
+            else if(continueflag==1){
 // buttonflag=0;
                 continueflag=0;
             }
-            if(wiimote.keys.right)
-            {
-                if(continueflag==0)
-                {
+            if(wiimote.keys.right){
+                if(continueflag==0){
                     buttonflag=1;
                     continueflag=2;
                     serectflag--;
@@ -764,16 +750,13 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         serectflag=2;
                 }
             }
-            else if(continueflag==2)
-            {
+            else if(continueflag==2){
 // buttonflag=0;
                 continueflag=0;
             }
             if(clientID==0){
-                if(wiimote.keys.plus)//プラスキー
-                {
-                    if(continueflag==0)//continueflagは連続入力の防止
-                    {
+                if(wiimote.keys.plus){//プラスキー
+                    if(continueflag==0){//continueflagは連続入力の防止
                         buttonflag=1;
                         continueflag=3;
                         gametimes++;//ゲーム回数の変更
@@ -783,15 +766,12 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         SendData(data);
                     }
                 }
-                else if(continueflag==3)
-                {
+                else if(continueflag==3){
 // buttonflag=0;
                     continueflag=0;
                 }
-                if(wiimote.keys.minus)
-                {
-                    if(continueflag==0)
-                    {
+                if(wiimote.keys.minus){
+                    if(continueflag==0){
                         buttonflag=1;
                         continueflag=4;
                         gametimes--;
@@ -801,8 +781,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                         SendData(data);
                     }
                 }
-                else if(continueflag==4)
-                {
+                else if(continueflag==4){
 // buttonflag=0;
                     continueflag=0;
                 }
@@ -880,7 +859,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 SDL_BlitSurface(buffer, NULL, gMainWindow, NULL);
                 SDL_Flip(gMainWindow);
                 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,3,0,0,0,0,0);
                 SendData(data);
             }
 //=======
@@ -928,7 +907,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 SDL_Flip(gMainWindow);
                 */                
 
-                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
+                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,4,0,0,0,0,0);
                 SendData(data);
             }   
         }
