@@ -46,7 +46,7 @@ enum{
     Talx=0,
     Tarx=112,
     Tay=55,
-    Taw=192,
+    Taw=80,
     Tah=52
 };
 
