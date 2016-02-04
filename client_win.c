@@ -507,17 +507,20 @@ void WindowEvent(int clientID,int now)
                         case up_right_dir:
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                            chara_rect[clientID].x=0;
                             chara_rect[clientID].y =1008;
                             chara_rect[clientID].w=192;
                             break;
                         case right_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                            chara_rect[clientID].x=0;
                             chara_rect[clientID].y =1008;
                             chara_rect[clientID].w=192;
                             break;
                         case right_down_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
+                            chara_rect[clientID].x=0;
                             chara_rect[clientID].y =1008;
                             chara_rect[clientID].w=192;
                             break;
@@ -527,17 +530,20 @@ void WindowEvent(int clientID,int now)
                         case down_left_dir:
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
+                            chara_rect[clientID].x=0;
                             chara_rect[clientID].y =864;
                             chara_rect[clientID].w=192;
                             break;
                         case left_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
+                            chara_rect[clientID].x=0;
                             chara_rect[clientID].y =864;
                             chara_rect[clientID].w=192;
                             break;
                         case left_up_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
+                            chara_rect[clientID].x=0;
                             chara_rect[clientID].y =864;
                             chara_rect[clientID].w=192;
                             break;
