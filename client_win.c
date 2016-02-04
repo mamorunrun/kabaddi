@@ -582,11 +582,7 @@ void WindowEvent(int clientID,int now)
                     break;   
                 }
 
-                else if(tflag >=1 && tflag<200){//50フレーム動きを止める
-                    tflag++;
-                    break;
-                }
-                else {//tflagが10以上かつ2が押されていない
+                else if(tflag >= 200){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
                     chara_rect[clientID].x=0;
@@ -596,6 +592,13 @@ void WindowEvent(int clientID,int now)
                     SendData(data);
                     break;
                 }
+
+
+                if(tflag >=1 && tflag<200){//50フレーム動きを止める
+                    tflag++;
+                    break;
+                }
+
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
