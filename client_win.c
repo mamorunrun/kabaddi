@@ -917,7 +917,7 @@ void DrawChara(int n,int cnum)
         //printf("s[%d]=%d\n",i,j);
         //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
-        //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
+        SDL_FillRect(buffer,&gClients[i].poi,color[0]);
         //文字表示
         PNAME_rrect[j].x = gClients[j].poi.x;
         PNAME_rrect[j].y = gClients[j].poi.y - 5;
