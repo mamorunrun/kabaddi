@@ -247,12 +247,11 @@ void Animation(int now){
         
         if(tflag >=1 && gClients[clientID].ADsta==0){
             if(dirflag != up_dir && dirflag != down_dir){
-                if(gClients[clientID].anipatnum < 4){
+                if(gClients[clientID].x <=960){
                     printf("tackle\n");
                     printf("%d   %d   %d  \n\n",chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w );
                     
                     chara_rect[clientID].x += 192;
-                    gClients[clientID].anipatnum++;
                 }
             }
         }
