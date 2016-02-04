@@ -43,7 +43,8 @@ enum{
     Dfy=57,
     Dfw=30,
     Dfh=30,
-    Tax=0,
+    Talx=0,
+    Tarx=112,
     Tay=55,
     Taw=192,
     Tah=52

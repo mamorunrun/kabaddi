@@ -931,13 +931,18 @@ void DrawChara(int n,int cnum)
             touch.y = gClients[j].poi.y + Dfy;
             touch.w = Dfw;
             touch.h = Dfh;
-
+            
         }else{
-            touch.x = gClients[j].poi.x + Tax;
+            /*if(dirflag == up_dir)       
+            else if(dirflag == down_dir)
+            else */if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
+                touch.x = gClients[j].poi.x + Tarx;
+            else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
+                touch.x = gClients[j].poi.x + Talx;
             touch.y = gClients[j].poi.y + Tay;
             touch.w = Taw;
             touch.h = Tah;
-}
+        }
 
                 
         SDL_FillRect(buffer,&touch,color[0]);

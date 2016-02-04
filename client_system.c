@@ -139,6 +139,7 @@ int Collision(int clientID,int befx,int befy){
     char	data[MAX_DATA];
 
     int i,j;
+    int touchx,touchy;
     //グローバル変数で全体人数を設定
 
     switch(gClients[clientID].ADsta){
@@ -152,26 +153,7 @@ int Collision(int clientID,int befx,int befy){
                     }
                 }
             }
-            if(gClients[i].ADsta==1){
-                if(gClients[clientID].tackle == 0){//攻守反転していて
-                    if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
-                        if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
-                            if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
-                                if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
-                                    if(gClients[clientID].poi.y + Dfy + Dfh > gClients[i].poi.y + Aty){
-                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                        gClients[clientID].tackle = 1;/*自分にもフラグを*/
-                                        if(Af == 0){
-                                            Af = 1;
-                                        }
-                                        SendData(data);
-                                    }
-                                }       
-                            }
-                            }
-                    }
-                }
-            }
+        }
             //printf("color\n");
             if(gClients[i].ADsta==1){//相手が攻撃なら
                 //  if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 50 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 50){//大きめの範囲で
@@ -181,11 +163,22 @@ int Collision(int clientID,int befx,int befy){
                             if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
                                 if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
                     */
-                                    
+                
                 if(gClients[clientID].tackle == 0){//攻守反転していて
                     if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
-                        if(gClients[clientID].poi.x + Tax       < gClients[i].poi.x + Atx + Atw){
-                            if(gClients[clientID].poi.x + Tax + Taw > gClients[i].poi.x + Atx){
+                        /*if(dirflag == up_dir)       
+                        else if(dirflag == down_dir)
+                        else */
+                        if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
+                            touchx = Tarx;
+                        else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
+                            touchx = Talx;
+                    
+                        
+                        
+                        
+                        if(gClients[clientID].poi.x + touchx       < gClients[i].poi.x + Atx + Atw){
+                            if(gClients[clientID].poi.x + touchx + Taw > gClients[i].poi.x + Atx){
                                 if(gClients[clientID].poi.y + Tay       < gClients[i].poi.y + Aty + Ath){
                                     if(gClients[clientID].poi.y + Tay + Tah > gClients[i].poi.y + Aty){
                                         sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
@@ -210,8 +203,8 @@ int Collision(int clientID,int befx,int befy){
                                         
                                         // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
                                         // gClients[clientID].Bflag++;//攻撃側にフラグ
-                                            //gClients[i].color=3;//攻撃
-                                            //gClients[clientID].color=2;//守備
+                                        //gClients[i].color=3;//攻撃
+                                        //gClients[clientID].color=2;//守備
                                         sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                         SendData(data);
                                         
@@ -223,7 +216,7 @@ int Collision(int clientID,int befx,int befy){
                     }
                 }
             }
-        }
+    
         
             break;
     case 1:
