@@ -343,7 +343,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             else{
                 gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*200;
+                gClients[i].poi.y=100 + i*100;
                 chara_rect[i].y=144;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
                 gClients[i].color=0;
