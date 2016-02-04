@@ -149,9 +149,22 @@ int Collision(int clientID,int befx,int befy){
                     if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+57)) <= 30 && ((gClients[clientID].poi.y+57) - (gClients[i].poi.y+57)) <= 30){
                         gClients[clientID].poi.x = befx;
                         gClients[clientID].poi.y = befy;
+                        if(gClients[i].ADsta==1){
+                            if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
+                        
+                            // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
+                            // gClients[clientID].Bflag++;//攻撃側にフラグ
+                            //gClients[i].color=3;//攻撃
+                            //gClients[clientID].color=2;//守備
+                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                            SendData(data);
+                            
+                            return i;//攻撃
+                            }
+                        }
                     }
                 }
-                        //printf("color\n");
+                //printf("color\n");
                 if(gClients[i].ADsta==1){//相手が攻撃なら
                     //  if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 50 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 50){//大きめの範囲で
                     //     if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 50 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 50){
@@ -175,17 +188,6 @@ int Collision(int clientID,int befx,int befy){
                                             }
                                             SendData(data);
                                         }
-                                    } 
-                                    if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
-                                    {
-                                        // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
-                                        // gClients[clientID].Bflag++;//攻撃側にフラグ
-                                        //gClients[i].color=3;//攻撃
-                                        //gClients[clientID].color=2;//守備
-                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                        SendData(data);
-                                        
-                                        return i;//攻撃
                                     }
                                 }
                             }
