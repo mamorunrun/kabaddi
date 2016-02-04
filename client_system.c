@@ -163,8 +163,8 @@ int Collision(int clientID,int befx,int befy){
                     
                     if(gClients[clientID].poi.x+ Dfx < gClients[i].poi.x+ Atx + Atw){
                         if(gClients[clientID].poi.y + Dfy < gClients[i].poi.y+ Ath){
-                            if(gClients[clientID].poi.x + Atx > gClients[i].poi.x + Dfx + Dfw){
-                                if(gClients[clientID].poi.y + Aty > gClients[i].poi.y + Dfy +Dfh){
+                            if(gClients[clientID].poi.x + Dfx > gClients[i].poi.x + Atx + Atw){
+                                if(gClients[clientID].poi.y + Dfy > gClients[i].poi.y + Aty +Ath){
 
                                     if(gClients[clientID].tackle == 0){//攻守反転していて
                                         if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
@@ -213,8 +213,8 @@ int Collision(int clientID,int befx,int befy){
                         if(gClients[i].poi.y+57+gClients[i].poi.h-144 > gClients[clientID].poi.y+57-20){*/
                 if(gClients[i].poi.x+ Dfx < gClients[clientID].poi.x+ Atx + Atw){
                     if(gClients[i].poi.y + Dfy < gClients[clientID].poi.y+ Ath){
-                        if(gClients[i].poi.x + Atx > gClients[clientID].poi.x + Dfx + Dfw){
-                            if(gClients[i].poi.y + Aty > gClients[clientID].poi.y + Dfy +Dfh){
+                        if(gClients[i].poi.x + Dfx > gClients[clientID].poi.x + Atx + Atw){
+                            if(gClients[i].poi.y + Dfy > gClients[clientID].poi.y + Aty +Ath){
                                 
                                 
                                 if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
