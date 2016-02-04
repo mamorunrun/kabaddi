@@ -245,7 +245,7 @@ void Animation(int now){
 
         if(tflag >=1 && dirflag != up_dir && dirflag != down_dir){
             if(gClients[clientID].anipatnum < 5){
-                chara_rect[clientID].x = gClients[clientID].anipatnum*192;
+                chara_rect[clientID].x += 192;
                 gClients[clientID].anipatnum++;
             }
         }
