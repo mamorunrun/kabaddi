@@ -919,17 +919,17 @@ void DrawChara(int n,int cnum)
         //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
         
-        if(gClients[j].ADsta == 0){
-            touch.x = gClients[j].poi.x + 33;
-            touch.y = gClients[j].poi.y + 57;
-            touch.w = 30;
-            touch.h = 30;
+        if(gClients[j].ADsta == 1){
+            touch.x = gClients[j].poi.x + Atx;
+            touch.y = gClients[j].poi.y + Aty;
+            touch.w = Atw;
+            touch.h = Ath;
         }
         else{
-            touch.x = gClients[j].poi.x;
-            touch.y = gClients[j].poi.y + 42;
-            touch.w = 96;
-            touch.h = 58;
+            touch.x = gClients[j].poi.x + Dfx;
+            touch.y = gClients[j].poi.y + Dfy;
+            touch.w = Dfw;
+            touch.h = Dfh;
 
         }
                 
