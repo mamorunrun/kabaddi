@@ -593,6 +593,7 @@ void WindowEvent(int clientID,int now)
 
                 else if(tflag >10 && tflag<200){//50フレーム動きを止める
                     tflag++;
+                    Move(clientID,befx,befy,now);;
                     break;
                 }
 
@@ -619,7 +620,7 @@ void WindowEvent(int clientID,int now)
             
             if(wiimote.keys.up || wiimote.keys.down || wiimote.keys.left || wiimote.keys.right && tflag==0/*&& mflag*/)
             {    
-                printf("WindowEvent\n\n");
+                //printf("WindowEvent\n\n");
                 if(gClients[clientID].ADsta == 1){
                     if(wiimote.keys.one){//攻撃のダッシュ
                         game.restTime = game.restTime - 20;//ゲージを減らす
