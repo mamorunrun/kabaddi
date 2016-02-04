@@ -586,7 +586,8 @@ void WindowEvent(int clientID,int now)
                     tflag++;
                     break;
                 }
-                else if(gClients[clientID].tackle == 0){//tflagが10以上かつ2が押されていない
+                else {//tflagが10以上かつ2が押されていない
+
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
                     chara_rect[clientID].x=0;
