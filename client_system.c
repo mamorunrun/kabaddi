@@ -160,22 +160,19 @@ int Collision(int clientID,int befx,int befy){
                 //     if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 50 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 50){
                     /*if(gClients[clientID].poi.x+33 < gClients[i].poi.x+33+gClients[i].poi.w-66+20){
                         if(gClients[clientID].poi.y+57 < gClients[i].poi.y+57+gClients[i].poi.h-114+20){
-                            if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
-                                if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
+                        if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
+                        if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
                     */
                 
                 if(gClients[clientID].tackle == 0){//攻守反転していて
                     if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
                         /*if(dirflag == up_dir)       
-                        else if(dirflag == down_dir)
-                        else */
+                          else if(dirflag == down_dir)
+                          else */
                         if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
                             touchx = Tarx;
                         else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
                             touchx = Talx;
-                    
-                        
-                        
                         
                         if(gClients[clientID].poi.x + touchx       < gClients[i].poi.x + Atx + Atw){
                             if(gClients[clientID].poi.x + touchx + Taw > gClients[i].poi.x + Atx){
@@ -214,11 +211,11 @@ int Collision(int clientID,int befx,int befy){
                             }
                         }
                     }
-                }
+                }   
             }
-    
-        
             break;
+            
+    
     case 1:
         for(i=0;i<cnum;i++){
             if(i != clientID){
