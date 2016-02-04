@@ -34,7 +34,7 @@ SDL_Rect serect_gamestart_rect = {405, 297};//Topゲームスタート
 SDL_Rect serect_end_rect = {428, 367};//Topゲーム終了
 static int cID;
 CLIENT gClients[MAX_CLIENTS];
-
+static char data[MAX_DATA];
 
 void DisplayStatus(void);
 int Ax,Ay,Af;//攻撃の移動
@@ -463,8 +463,6 @@ void WindowEvent(int clientID,int now)
     int a = 2;
     int mflag = 1;//moveflag
     int befx,befy;
-    
-    printf("score == %d\n\n\n",gClients[clientID].score);
 
     char	data[MAX_DATA];
     befx = gClients[clientID].poi.x;
@@ -593,6 +591,8 @@ void WindowEvent(int clientID,int now)
                     chara_rect[clientID].x=0;
                     chara_rect[clientID].y=144;
                     chara_rect[clientID].w=96;
+                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,game.restTime,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
+                    SendData(data);
                 }
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ

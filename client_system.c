@@ -241,6 +241,8 @@ int Collision(int clientID,int befx,int befy){
 
 void Animation(int now){
 
+
+
     if(now >= gClients[clientID].anime){
 
         if(tflag >=1 && dirflag != up_dir && dirflag != down_dir){
