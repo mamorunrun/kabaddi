@@ -42,7 +42,11 @@ enum{
     Dfx=33,
     Dfy=57,
     Dfw=30,
-    Dfh=30
+    Dfh=30,
+    Tax=0,
+    Tay=55,
+    Taw=192,
+    Tah=52
 };
 
 /* client_net.c */

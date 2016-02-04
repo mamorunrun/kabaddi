@@ -149,19 +149,26 @@ int Collision(int clientID,int befx,int befy){
                     if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+57)) <= 30 && ((gClients[clientID].poi.y+57) - (gClients[i].poi.y+57)) <= 30){
                         gClients[clientID].poi.x = befx;
                         gClients[clientID].poi.y = befy;
-                        if(gClients[i].ADsta==1){
-                            if(gClients[clientID].tackle == 0){//攻守反転していて
-                                if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
-                                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                    gClients[clientID].tackle = 1;/*自分にもフラグを*/
-                                    if(Af == 0){
-                                        Af = 1;
+                    }
+                }
+            }
+            if(gClients[i].ADsta==1){
+                if(gClients[clientID].tackle == 0){//攻守反転していて
+                    if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
+                        if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
+                            if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
+                                if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
+                                    if(gClients[clientID].poi.y + Dfy + Dfh > gClients[i].poi.y + Aty){
+                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                        gClients[clientID].tackle = 1;/*自分にもフラグを*/
+                                        if(Af == 0){
+                                            Af = 1;
+                                        }
+                                        SendData(data);
                                     }
-                                    SendData(data);
-                                }
-                                
+                                }       
                             }
-                        }
+                            }
                     }
                 }
             }
@@ -175,6 +182,24 @@ int Collision(int clientID,int befx,int befy){
                                 if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
                     */
                                     
+                if(gClients[clientID].tackle == 0){//攻守反転していて
+                    if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
+                        if(gClients[clientID].poi.x + Tax       < gClients[i].poi.x + Atx + Atw){
+                            if(gClients[clientID].poi.x + Tax + Taw > gClients[i].poi.x + Atx){
+                                if(gClients[clientID].poi.y + Tay       < gClients[i].poi.y + Aty + Ath){
+                                    if(gClients[clientID].poi.y + Tay + Tah > gClients[i].poi.y + Aty){
+                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                        gClients[clientID].tackle = 1;/*自分にもフラグを*/
+                                        if(Af == 0){
+                                            Af = 1;
+                                        }
+                                        SendData(data);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
                     if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
                         if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
@@ -196,7 +221,7 @@ int Collision(int clientID,int befx,int befy){
                             }
                         }
                     }
-                }        
+                }
             }
         }
         
