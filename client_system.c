@@ -164,7 +164,7 @@ int Collision(int clientID,int befx,int befy){
                     if(gClients[clientID].poi.x+33 < gClients[i].poi.x+gClients[i].poi.w){
                         if(gClients[clientID].poi.y+57 < gClients[i].poi.y+58){
                             if(gClients[clientID].poi.x+gClients[clientID].poi.w > gClients[i].poi.x+30){
-                                if(gClients[clientID].poi.y + 58 > gClients[i].poi.y){
+                                if(gClients[clientID].poi.y + 58 > gClients[i].poi.y+30){
 
                                     if(gClients[clientID].tackle == 0){//攻守反転していて
                                         if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
@@ -207,10 +207,15 @@ int Collision(int clientID,int befx,int befy){
                 }
                 //       if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+13)) <= 50 && ((gClients[clientID].poi.x+13) - (gClients[i].poi.x+33)) <= 50){
                     //       if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+37)) <= 50 && ((gClients[clientID].poi.y+37) - (gClients[i].poi.y+57)) <= 50){
-                if(gClients[i].poi.x+33 < gClients[clientID].poi.x+33+gClients[clientID].poi.w-66+20){
+                /*if(gClients[i].poi.x+33 < gClients[clientID].poi.x+33+gClients[clientID].poi.w-66+20){
                     if(gClients[i].poi.y+57 < gClients[clientID].poi.y+57+gClients[clientID].poi.h-114+20){
                         if(gClients[i].poi.x+33 + gClients[i].poi.w-66 > gClients[clientID].poi.x+33-20){
-                            if(gClients[i].poi.y+57+gClients[i].poi.h-144 > gClients[clientID].poi.y+57-20){
+                        if(gClients[i].poi.y+57+gClients[i].poi.h-144 > gClients[clientID].poi.y+57-20){*/
+                if(gClients[i].poi.x+33 < gClients[clientID].poi.x+gClients[clientID].poi.w){
+                    if(gClients[i].poi.y+57 < gClients[clientID].poi.y+58){
+                        if(gClients[i].poi.x+gClients[i].poi.w > gClients[clientID].poi.x+30){
+                            if(gClients[i].poi.y + 58 > gClients[clientID].poi.y+30){
+
                                 if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                                 {
                                     // gClients[clientID].Bflag++;
