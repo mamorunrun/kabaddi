@@ -88,7 +88,8 @@ int ExecuteCommand(char *command)
         j = 0;
         if(game.flag == x)
             gClients[id].restart=1;//相手のrestartを1にする
-        
+        else
+            break;
         for(i=0;i<cnum;i++){
             if(gClients[i].restart == 1)
                 j++;
