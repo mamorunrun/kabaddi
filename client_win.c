@@ -578,11 +578,15 @@ void WindowEvent(int clientID,int now)
                         gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                         break;
                     }
-                    Move(clientID,befx,befy,now);
-                    break;   
+                    Move(clientID,befx,befy,now); 
                 }
 
-                else if(tflag >= 200){//tflagが10以上かつ2が押されていない
+
+                if(tflag >=1 && tflag<200){//50フレーム動きを止める
+                    tflag++;
+                    break;
+                }
+                else if(gClients[clientID].tackle != 1){//tflagが10以上かつ2が押されていない
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
                     chara_rect[clientID].x=0;
@@ -592,13 +596,7 @@ void WindowEvent(int clientID,int now)
                     SendData(data);
                     break;
                 }
-
-
-                if(tflag >=1 && tflag<200){//50フレーム動きを止める
-                    tflag++;
-                    break;
-                }
-
+                Move(clientID,befx,befy,now);
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
