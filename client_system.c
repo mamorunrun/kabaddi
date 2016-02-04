@@ -190,23 +190,21 @@ int Collision(int clientID,int befx,int befy){
                         }
                     }
                 }
+            
                 if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
                     if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
                         if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
                             if(gClients[clientID].poi.y + Dfy + Dfh > gClients[i].poi.y + Aty){
-                                
-                                if(gClients[i].ADsta==1){
-                                    if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
+                                if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
                                         
                                         // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
                                         // gClients[clientID].Bflag++;//攻撃側にフラグ
                                         //gClients[i].color=3;//攻撃
                                         //gClients[clientID].color=2;//守備
-                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                        SendData(data);
-                                        
-                                        return i;//攻撃
-                                    }
+                                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                    SendData(data);
+                                    
+                                    return i;//攻撃
                                 }
                             }
                         }
@@ -215,7 +213,7 @@ int Collision(int clientID,int befx,int befy){
             }
             break;
             
-    
+            
     case 1:
         for(i=0;i<cnum;i++){
             if(i != clientID){
