@@ -247,7 +247,7 @@ void Animation(int now){
         
         if(tflag >=1){
             if(dirflag != up_dir && dirflag != down_dir){
-                if(gClients[clientID].anipatnum < 5){
+                if(gClients[clientID].anipatnum < 4){
                     printf("tackle\n");
                     printf("%d   %d   %d  \n\n",chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w );
                     
