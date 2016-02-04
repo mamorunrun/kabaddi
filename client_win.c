@@ -579,6 +579,7 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                     Move(clientID,befx,befy,now); 
+                    break;
                 }
 
 
@@ -596,7 +597,6 @@ void WindowEvent(int clientID,int now)
                     SendData(data);
                     break;
                 }
-                Move(clientID,befx,befy,now);
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
                 printf("tackle=%d tflag=%d\n\n\n",gClients[clientID].tackle,tflag);
