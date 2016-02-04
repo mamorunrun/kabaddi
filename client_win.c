@@ -579,7 +579,7 @@ void WindowEvent(int clientID,int now)
                         break;
                     }
                     Move(clientID,befx,befy,now); 
-                    break;
+                    
                 }
 
 
