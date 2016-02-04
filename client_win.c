@@ -607,6 +607,7 @@ void WindowEvent(int clientID,int now)
                     chara_rect[clientID].w=96;
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
                     SendData(data);
+                    break;
                 }
             }
             else if(gClients[clientID].tackle >= 1){//gClients[clientID].ADsta == 1かつ
