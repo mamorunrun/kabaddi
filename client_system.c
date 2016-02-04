@@ -247,7 +247,7 @@ void Animation(int now){
         
         if(tflag >=1 && gClients[clientID].ADsta==0){
             if(dirflag != up_dir && dirflag != down_dir){
-                if(chara_rect[clientID].x <960){
+                if(chara_rect[clientID].x <768){
                     printf("tackle\n");
                     printf("%d   %d   %d  \n\n",chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w );
                     
