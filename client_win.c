@@ -593,7 +593,7 @@ void WindowEvent(int clientID,int now)
 
                 else if(tflag >10 && tflag<200){//50フレーム動きを止める
                     tflag++;
-                    Move(clientID,befx,befy,now);;
+                    Move(clientID,befx,befy,now);
                     break;
                 }
                 else if(tflag>=200){//tflagが10以上かつ2が押されていない
@@ -605,6 +605,7 @@ void WindowEvent(int clientID,int now)
                     chara_rect[clientID].w=96;
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
                     SendData(data);
+                    Move(clientID,befx,befy,now);
                     break;
                 }
             }
