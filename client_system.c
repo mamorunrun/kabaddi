@@ -266,6 +266,8 @@ void Animation(int now){
         }
 
         else if(dirflag == right_dir || dirflag == left_dir){
+            printf("right \n\n");
+
             if(gClients[clientID].anipatnum<6){
                 gClients[clientID].ADsta ? (chara_rect[clientID].y=288) : (chara_rect[clientID].y=432);
                 gClients[clientID].anipatnum++;

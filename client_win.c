@@ -551,8 +551,8 @@ void WindowEvent(int clientID,int now)
                             break;
                         }
                         gClients[clientID].anipatnum=0;
-                        Move(clientID,befx,befy,now);
                         tflag++;
+                        Move(clientID,befx,befy,now);
                         break;
                     }
                 }
