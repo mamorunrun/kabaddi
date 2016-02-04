@@ -245,7 +245,7 @@ void Animation(int now){
 
     if(now >= gClients[clientID].anime){
         
-        if(tflag >=1){
+        if(tflag >=1 && gClients[clientID].ADsta==0){
             if(dirflag != up_dir && dirflag != down_dir){
                 if(gClients[clientID].anipatnum < 4){
                     printf("tackle\n");
