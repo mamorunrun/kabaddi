@@ -925,13 +925,20 @@ void DrawChara(int n,int cnum)
             touch.w = Atw;
             touch.h = Ath;
         }
-        else{
+        else if(tflag == 0){
+            
             touch.x = gClients[j].poi.x + Dfx;
             touch.y = gClients[j].poi.y + Dfy;
             touch.w = Dfw;
             touch.h = Dfh;
 
-        }
+        }else{
+            touch.x = gClients[j].poi.x + Tax;
+            touch.y = gClients[j].poi.y + Tay;
+            touch.w = Taw;
+            touch.h = Tah;
+}
+
                 
         SDL_FillRect(buffer,&touch,color[0]);
         //文字表示
