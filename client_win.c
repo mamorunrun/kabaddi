@@ -926,10 +926,10 @@ void DrawChara(int n,int cnum)
             touch.h = 30;
         }
         else{
-            touch.x = gClients[j].poi.x + 13;
-            touch.y = gClients[j].poi.y + 32;
-            touch.w = 70;
-            touch.h = 70;
+            touch.x = gClients[j].poi.x;
+            touch.y = gClients[j].poi.y + 42;
+            touch.w = 96;
+            touch.h = 58;
 
         }
                 
