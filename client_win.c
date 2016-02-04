@@ -505,6 +505,7 @@ void WindowEvent(int clientID,int now)
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             break;
                         case up_right_dir:
+                            printf("right tackle\n\n");
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             chara_rect[clientID].x=0;
@@ -513,6 +514,7 @@ void WindowEvent(int clientID,int now)
                             break;
                         case right_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
+                            printf("right tackle\n\n");
                             chara_rect[clientID].x=0;
                             chara_rect[clientID].y =1008;
                             chara_rect[clientID].w=192;
