@@ -70,7 +70,7 @@ int ExecuteCommand(char *command)
             gClients[id].score = gClients[id].score + gClients[x].Bflag;
             if(chara_rect[x].w ==192)
                 chara_rect[x].y += 288;
-            else 
+            else if(chara_rect[x].x <=480)
                 chara_rect[x].x+=576;
         }
             /*for(i=0;i<cnum;i++){
