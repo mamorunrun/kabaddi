@@ -45,9 +45,14 @@ enum{
     Dfh=30,
     Talx=0,
     Tarx=70,
-    Tay=55,
-    Taw=122,
-    Tah=52
+    Talry=55,
+    Talrw=122,
+    Talrh=52,
+    Taudx=24,
+    Tauy=22,
+    Tady=52,
+    Taudw=53,
+    Taudh=65
 };
 
 /* client_net.c */

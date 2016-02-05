@@ -932,18 +932,28 @@ void DrawChara(int n,int cnum)
             touch.w = Dfw;
             touch.h = Dfh;
             
-        }else{
+        }else if(dirflag == up_dir || dirflag == down_dir){
+            if(dirflag == up_dir)
+                touch.y = gClients[j].poi.y + Tauy;
+            else if(dirflag == down_dir)
+                touch.y = gClients[j].poi.y + Tady;
+            touch.x = gClients[j].poi.x + Taudx;
+            touch.w = Taudw;
+            touch.h = Taudh;
+        }
+        else{
             if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
                 touch.x = gClients[j].poi.x + Tarx;
             else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
                 touch.x = gClients[j].poi.x + Talx;
-            touch.y = gClients[j].poi.y + Tay;
-            touch.w = Taw;
-            touch.h = Tah;
+            touch.y = gClients[j].poi.y + Talry;
+            touch.w = Talrw;
+            touch.h = Talrh;
         }
+    
 
                 
-        SDL_FillRect(buffer,&touch,color[0]);
+    SDL_FillRect(buffer,&touch,color[0]);
         //文字表示
         PNAME_rrect[j].x = gClients[j].poi.x;
         PNAME_rrect[j].y = gClients[j].poi.y - 5;
