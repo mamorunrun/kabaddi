@@ -941,7 +941,7 @@ void DrawChara(int n,int cnum)
             }
         }
     }
-    SDL_Rect touch;
+    //SDL_Rect touch;
     
     for(i=0;i<cnum;i++){
         j=s[i];
@@ -949,7 +949,7 @@ void DrawChara(int n,int cnum)
         //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
         
-        if(gClients[j].ADsta == 1){
+        /*   if(gClients[j].ADsta == 1){
             touch.x = gClients[j].poi.x + Dfx;
             touch.y = gClients[j].poi.y + Dfy;
             touch.w = Dfw;
@@ -983,7 +983,7 @@ void DrawChara(int n,int cnum)
     
 
                 
-    SDL_FillRect(buffer,&touch,color[0]);
+        SDL_FillRect(buffer,&touch,color[0]);*/
         //文字表示
         PNAME_rrect[j].x = gClients[j].poi.x;
         PNAME_rrect[j].y = gClients[j].poi.y - 5;
