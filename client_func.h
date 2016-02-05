@@ -35,7 +35,7 @@ enum{
 };
 
 enum{
-    Atx=-15,
+    Atx=-25,
     Aty=42,
     Atw=96,
     Ath=58,
