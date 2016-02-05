@@ -576,7 +576,7 @@ void WindowEvent(int clientID,int now)
                     printf("tflag==0\n\n");
 
                     tflag = 0;
-                    gClients[clientID].anipatnum=0;
+                    //gClients[clientID].anipatnum=0;
                     gClients[clientID].Bflag ? (chara_rect[clientID].x=576) : (chara_rect[clientID].x=0);
                     chara_rect[clientID].y=144;
                     chara_rect[clientID].w=96;
