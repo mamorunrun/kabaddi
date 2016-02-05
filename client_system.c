@@ -162,7 +162,7 @@ int Collision(int clientID,int befx,int befy){
                   if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
                 */
                 
-                if(gClients[clientID].tackle == 0){//攻守反転していて
+                //        if(gClients[clientID].tackle == 0){//攻守反転していて
                     if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
 
                         if(dirflag == up_dir || dirflag == down_dir){
@@ -184,7 +184,7 @@ int Collision(int clientID,int befx,int befy){
                                     }
                                 }
                             }
-                        }
+                            //      }
                         else{// dirflag != up_dir,down_dir
                             if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
                                 touchx = Tarx;
@@ -207,8 +207,8 @@ int Collision(int clientID,int befx,int befy){
                             }
                         }
                     }
-                }
-                
+                }//ここまで
+            
                 if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
                     if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
                         if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
