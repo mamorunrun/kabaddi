@@ -343,7 +343,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             else{
                 gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*200;
+                gClients[i].poi.y=100 + i*100;
                 chara_rect[i].y=144;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
                 gClients[i].color=0;
@@ -911,13 +911,49 @@ void DrawChara(int n,int cnum)
             }
         }
     }
-
+    SDL_Rect touch;
+    
     for(i=0;i<cnum;i++){
         j=s[i];
         //printf("s[%d]=%d\n",i,j);
         //printf("ID%d = %d  %d\n",i,gClients[i].poi.x,gClients[i].poi.y);
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
-        //SDL_FillRect(buffer,&gClients[i].poi,color[0]);
+        
+        if(gClients[j].ADsta == 1){
+            touch.x = gClients[j].poi.x + Dfx;
+            touch.y = gClients[j].poi.y + Dfy;
+            touch.w = Dfw;
+            touch.h = Dfh;
+        }
+        else if(gClients[j].tackle == 0){
+            
+            touch.x = gClients[j].poi.x + Dfx;
+            touch.y = gClients[j].poi.y + Dfy;
+            touch.w = Dfw;
+            touch.h = Dfh;
+            
+        }else if(dirflag == up_dir || dirflag == down_dir){
+            if(dirflag == up_dir)
+                touch.y = gClients[j].poi.y + Tauy;
+            else if(dirflag == down_dir)
+                touch.y = gClients[j].poi.y + Tady;
+            touch.x = gClients[j].poi.x + Taudx;
+            touch.w = Taudw;
+            touch.h = Taudh;
+        }
+        else{
+            if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
+                touch.x = gClients[j].poi.x + Tarx;
+            else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
+                touch.x = gClients[j].poi.x + Talx;
+            touch.y = gClients[j].poi.y + Talry;
+            touch.w = Talrw;
+            touch.h = Talrh;
+        }
+    
+
+                
+    SDL_FillRect(buffer,&touch,color[0]);
         //文字表示
         PNAME_rrect[j].x = gClients[j].poi.x;
         PNAME_rrect[j].y = gClients[j].poi.y - 5;

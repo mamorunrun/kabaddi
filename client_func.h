@@ -34,6 +34,27 @@ enum{
     left_up_dir     = 7
 };
 
+enum{
+    Atx=0,
+    Aty=42,
+    Atw=96,
+    Ath=58,
+    Dfx=33,
+    Dfy=57,
+    Dfw=30,
+    Dfh=30,
+    Talx=0,
+    Tarx=70,
+    Talry=55,
+    Talrw=122,
+    Talrh=52,
+    Taudx=24,
+    Tauy=22,
+    Tady=52,
+    Taudw=53,
+    Taudh=65
+};
+
 /* client_net.c */
 extern int SetUpClient(char* hostName,int *clientID,char clientName[][MAX_NAME_SIZE]);
 extern void CloseSoc(void);

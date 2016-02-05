@@ -139,10 +139,11 @@ int Collision(int clientID,int befx,int befy){
     char	data[MAX_DATA];
 
     int i,j;
+    int touchx,touchy;
     //グローバル変数で全体人数を設定
 
     switch(gClients[clientID].ADsta){
-    case 0:
+    case 0://守備
         for(i=0;i<cnum;i++){
             if(i != clientID){
                 if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+33)) <= 30 && ((gClients[clientID].poi.x+33) - (gClients[i].poi.x+33)) <= 30){
@@ -151,17 +152,28 @@ int Collision(int clientID,int befx,int befy){
                         gClients[clientID].poi.y = befy;
                     }
                 }
-                        //printf("color\n");
-                if(gClients[i].ADsta==1){//相手が攻撃なら
-                    //  if(((gClients[clientID].poi.x+33) - (gClients[i].poi.x+13)) <= 50 && ((gClients[i].poi.x+13) - (gClients[clientID].poi.x+33)) <= 50){//大きめの範囲で
-                    //     if(((gClients[clientID].poi.y+57) - (gClients[i].poi.y+37)) <= 50 && ((gClients[i].poi.y+37) - (gClients[clientID].poi.y+50)) <= 50){
-                    if(gClients[clientID].poi.x+33 < gClients[i].poi.x+33+gClients[i].poi.w-66+20){
-                        if(gClients[clientID].poi.y+57 < gClients[i].poi.y+57+gClients[i].poi.h-114+20){
-                            if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
-                                if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
-
-                                    if(gClients[clientID].tackle == 0){//攻守反転していて
-                                        if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
+            }
+            
+            //printf("color\n");
+            if(gClients[i].ADsta==1){//相手が攻撃なら
+                /*if(gClients[clientID].poi.x+33 < gClients[i].poi.x+33+gClients[i].poi.w-66+20){
+                  if(gClients[clientID].poi.y+57 < gClients[i].poi.y+57+gClients[i].poi.h-114+20){
+                  if(gClients[clientID].poi.x+33 + gClients[clientID].poi.w-66 > gClients[i].poi.x+33-20){
+                  if(gClients[clientID].poi.y+57 + gClients[clientID].poi.h-114 > gClients[i].poi.y+57-20){
+                */
+                
+                if(gClients[clientID].tackle == 0){//攻守反転していて
+                    if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
+                        
+                        if(dirflag == up_dir || dirflag == down_dir){
+                            if(dirflag == up_dir)
+                                touchy = Tauy;
+                            else if(dirflag == down_dir)
+                                touchy = Tady;
+                            if(gClients[clientID].poi.x + Taudx       < gClients[i].poi.x + Dfx + Dfw){
+                                if(gClients[clientID].poi.x + Taudx + Taudw > gClients[i].poi.x + Dfx){
+                                    if(gClients[clientID].poi.y + touchy       < gClients[i].poi.y + Dfy + Dfh){
+                                        if(gClients[clientID].poi.y + touchy + Taudh > gClients[i].poi.y + Dfy){
                                             sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                             gClients[clientID].tackle = 1;/*自分にもフラグを*/
                                             if(Af == 0){
@@ -169,26 +181,59 @@ int Collision(int clientID,int befx,int befy){
                                             }
                                             SendData(data);
                                         }
-                                    } 
-                                    if(gClients[clientID].Bflag==0)//自分(守備)に当たり判定がなければ
-                                    {
-                                        // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
-                                        // gClients[clientID].Bflag++;//攻撃側にフラグ
-                                        //gClients[i].color=3;//攻撃
-                                        //gClients[clientID].color=2;//守備
-                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                        SendData(data);
-                                        
-                                        return i;//攻撃
+                                    }
+                                }
+                            }
+                        }
+                        
+                        else{// dirflag != up_dir,down_dir
+                            if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
+                                touchx = Tarx;
+                            else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
+                                touchx = Talx;
+                            
+                            if(gClients[clientID].poi.x + touchx       < gClients[i].poi.x + Dfx + Dfw){
+                                if(gClients[clientID].poi.x + touchx + Talrw > gClients[i].poi.x + Dfx){
+                                    if(gClients[clientID].poi.y + Talry       < gClients[i].poi.y + Dfy + Dfh){
+                                        if(gClients[clientID].poi.y + Talry + Talrh > gClients[i].poi.y + Dfy){
+                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                            gClients[clientID].tackle = 1;/*自分にもフラグを*/
+                                            if(Af == 0){
+                                                Af = 1;
+                                            }
+                                            SendData(data);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+            
+                if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
+                    if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
+                        if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
+                            if(gClients[clientID].poi.y + Dfy + Dfh > gClients[i].poi.y + Aty){
+                                if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
+                                        
+                                        // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
+                                        // gClients[clientID].Bflag++;//攻撃側にフラグ
+                                        //gClients[i].color=3;//攻撃
+                                        //gClients[clientID].color=2;//守備
+                                    sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                    SendData(data);
+                                    
+                                    return i;//攻撃
+                                }
+                            }
+                        }
+                    }
+                }   
             }
         }
-            break;
+        break;
+            
+            
     case 1:
         for(i=0;i<cnum;i++){
             if(i != clientID){
@@ -199,12 +244,16 @@ int Collision(int clientID,int befx,int befy){
                         gClients[clientID].poi.y = befy;
                     }
                 }
-                //       if(((gClients[i].poi.x+33) - (gClients[clientID].poi.x+13)) <= 50 && ((gClients[clientID].poi.x+13) - (gClients[i].poi.x+33)) <= 50){
-                    //       if(((gClients[i].poi.y+57) - (gClients[clientID].poi.y+37)) <= 50 && ((gClients[clientID].poi.y+37) - (gClients[i].poi.y+57)) <= 50){
-                if(gClients[i].poi.x+33 < gClients[clientID].poi.x+33+gClients[clientID].poi.w-66+20){
+                /*if(gClients[i].poi.x+33 < gClients[clientID].poi.x+33+gClients[clientID].poi.w-66+20){
                     if(gClients[i].poi.y+57 < gClients[clientID].poi.y+57+gClients[clientID].poi.h-114+20){
                         if(gClients[i].poi.x+33 + gClients[i].poi.w-66 > gClients[clientID].poi.x+33-20){
-                            if(gClients[i].poi.y+57+gClients[i].poi.h-144 > gClients[clientID].poi.y+57-20){
+                        if(gClients[i].poi.y+57+gClients[i].poi.h-144 > gClients[clientID].poi.y+57-20){*/
+                if(gClients[i].poi.x+ Dfx < gClients[clientID].poi.x+ Atx + Atw){
+                    if(gClients[i].poi.x + Dfx + Dfw > gClients[clientID].poi.x + Atx){
+                        if(gClients[i].poi.y + Dfy < gClients[clientID].poi.y+ Aty+ Ath){
+                            if(gClients[i].poi.y + Dfy +Dfh > gClients[clientID].poi.y + Aty){
+                                
+                                
                                 if(gClients[i].Bflag==0)//相手(守備)にフラグがなければ
                                 {
                                     // gClients[clientID].Bflag++;
