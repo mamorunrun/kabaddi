@@ -925,7 +925,7 @@ void DrawChara(int n,int cnum)
             touch.w = Atw;
             touch.h = Ath;
         }
-        else if(tflag == 0){
+        else if(gClients[j].tackle == 0){
             
             touch.x = gClients[j].poi.x + Dfx;
             touch.y = gClients[j].poi.y + Dfy;
@@ -933,9 +933,7 @@ void DrawChara(int n,int cnum)
             touch.h = Dfh;
             
         }else{
-            /*if(dirflag == up_dir)       
-            else if(dirflag == down_dir)
-            else */if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
+            if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
                 touch.x = gClients[j].poi.x + Tarx;
             else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
                 touch.x = gClients[j].poi.x + Talx;

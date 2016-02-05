@@ -44,9 +44,9 @@ enum{
     Dfw=30,
     Dfh=30,
     Talx=0,
-    Tarx=112,
+    Tarx=70,
     Tay=55,
-    Taw=80,
+    Taw=122,
     Tah=52
 };
 
