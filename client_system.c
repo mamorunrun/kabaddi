@@ -220,6 +220,7 @@ int Collision(int clientID,int befx,int befy){
                                         // gClients[clientID].Bflag++;//攻撃側にフラグ
                                         //gClients[i].color=3;//攻撃
                                         //gClients[clientID].color=2;//守備
+                                    
                                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                     SendData(data);
                                     

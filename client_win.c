@@ -460,21 +460,21 @@ void WindowEvent(int clientID,int now)
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             chara_rect[clientID].x=0;
-                            chara_rect[clientID].y =1008;
+                            gClients[clientID].Bflag ? (chara_rect[clientID].y =1296) :(chara_rect[clientID].y =1008);
                             chara_rect[clientID].w=192;
                             break;
                         case right_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             printf("right tackle\n\n");
                             chara_rect[clientID].x=0;
-                            chara_rect[clientID].y =1008;
+                            gClients[clientID].Bflag ? (chara_rect[clientID].y =1296) :(chara_rect[clientID].y =1008);
                             chara_rect[clientID].w=192;
                             break;
                         case right_down_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x+5;
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             chara_rect[clientID].x=0;
-                            chara_rect[clientID].y =1008;
+                            gClients[clientID].Bflag ? (chara_rect[clientID].y =1296) :(chara_rect[clientID].y =1008);
                             chara_rect[clientID].w=192;
                             break;
                         case down_dir:
@@ -484,20 +484,20 @@ void WindowEvent(int clientID,int now)
                             gClients[clientID].poi.y = gClients[clientID].poi.y+5;
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             chara_rect[clientID].x=0;
-                            chara_rect[clientID].y =864;
+                            gClients[clientID].Bflag ? (chara_rect[clientID].y = 1152) :(chara_rect[clientID].y =864);
                             chara_rect[clientID].w=192;
                             break;
                         case left_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             chara_rect[clientID].x=0;
-                            chara_rect[clientID].y =864;
+                            gClients[clientID].Bflag ? (chara_rect[clientID].y = 1152) :(chara_rect[clientID].y =864);
                             chara_rect[clientID].w=192;
                             break;
                         case left_up_dir:
                             gClients[clientID].poi.x = gClients[clientID].poi.x-5;
                             gClients[clientID].poi.y = gClients[clientID].poi.y-5;
                             chara_rect[clientID].x=0;
-                            chara_rect[clientID].y =864;
+                            gClients[clientID].Bflag ? (chara_rect[clientID].y = 1152) :(chara_rect[clientID].y =864);
                             chara_rect[clientID].w=192;
                             break;
                         }
@@ -555,7 +555,7 @@ void WindowEvent(int clientID,int now)
 
                     tflag = 0;
                     gClients[clientID].anipatnum=0;
-                    chara_rect[clientID].x=0;
+                    gClients[clientID].Bflag ? (chara_rect[clientID].x=576) : (chara_rect[clientID].x=0);
                     chara_rect[clientID].y=144;
                     chara_rect[clientID].w=96;
                     //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",CDRAW,clientID,gClients[clientID].poi.x,gClients[clientID].poi.y,-1,chara_rect[clientID].x,chara_rect[clientID].y,chara_rect[clientID].w);
