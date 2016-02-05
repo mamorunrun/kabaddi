@@ -297,14 +297,14 @@ int EndWindow(void)
 
         if(i-1>=0)
             if(gClients[t[i]].score!=gClients[t[i-1]].score){
-                sprintf(rank,"%d",i+1);
+                sprintf(rank,"%d位",i+1);
                 bef=i+1;
             }
             else{
-                sprintf(rank,"%d",bef);
+                sprintf(rank,"%d位",bef);
             } 
         else{
-            sprintf(rank,"%d",i+1);
+            sprintf(rank,"%d位",i+1);
             bef=i+1; 
         }
 
