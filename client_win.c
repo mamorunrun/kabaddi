@@ -265,6 +265,7 @@ int EndWindow(void)
     SDL_Rect explain_rect={800,620};
 
     int i,j;
+    int bef;//並び替え時に必要
     int t[]={0,1,2,3,4,5,6,7};
     int tmp;
     char rank[64];
@@ -289,7 +290,20 @@ int EndWindow(void)
     }
     for(i=0;i<cnum;i++){
         j=t[i];
-        sprintf(rank,"%d",i+1);
+
+        if(i-1>=0)
+            if(gClients[t[i]].score!=gClients[t[i-1]].score){
+                sprintf(rank,"%d",i+1);
+                bef=i+1;
+            }
+            else{
+                sprintf(rank,"%d",bef);
+            } 
+        else{
+            sprintf(rank,"%d",i+1);
+            bef=i+1; 
+        }
+
         gMessage_rank_on[j] = TTF_RenderUTF8_Blended(font2, rank,colB);//各プレイヤーの順位
         SDL_Rect src_rank_on_rect = { 0, 0, gMessage_rank_on[j]->w,gMessage_rank_on[j]->h };
         SDL_BlitSurface(gMessage_rank_on[j], &src_rank_on_rect, gMainWindow, &game_rank_on_rect);
