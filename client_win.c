@@ -371,7 +371,7 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             }
             else{
                 gClients[i].poi.x=200;
-                gClients[i].poi.y=100 + i*100;
+                gClients[i].poi.y=50 + i*70;
                 chara_rect[i].y=144;
                 gClients[i].ADsta = 0;/*最後二人は守備*/
                 gClients[i].color=0;
@@ -529,7 +529,7 @@ void WindowEvent(int clientID,int now)
                             chara_rect[clientID].w=192;
                             break;
                         }
-                        gClients[clientID].anipatnum=0;
+                        //gClients[clientID].anipatnum=0;
                         tflag++;
                         Move(clientID,befx,befy,now);
                         break;

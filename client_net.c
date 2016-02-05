@@ -167,13 +167,13 @@ printf("clientnum=%d\n",cnum);
 int SendRecvManager(void)
 {
     recv(recvsock, buf, sizeof(buf), 0);
-    printf("%s\n",buf);
+    printf("buf=%s\n",buf);
 
     int		endFlag = 1;
 
     	/* コマンドに対する処理を行う */
 		endFlag = ExecuteCommand(buf);
-                printf("%d\n",endFlag);
+                printf("endflag=%d\n",endFlag);
     // }
     return endFlag;
 }
