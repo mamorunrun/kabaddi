@@ -116,6 +116,7 @@ int ExecuteCommand(char *command)
                 }
                 else {
                     game.flag = 4;
+                    game.restTime = 1;
                 }
             }
                 break;
