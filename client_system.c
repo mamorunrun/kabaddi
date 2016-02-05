@@ -163,51 +163,51 @@ int Collision(int clientID,int befx,int befy){
                 */
                 
                 //        if(gClients[clientID].tackle == 0){//攻守反転していて
-                    if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
+                if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
 
-                        if(dirflag == up_dir || dirflag == down_dir){
-                            if(dirflag == up_dir)
-                                touchy = Tauy;
-                            else if(dirflag == down_dir)
-                                touchy = Tady;
-                            if(gClients[clientID].poi.x + Taudx       < gClients[i].poi.x + Dfx + Dfw){
-                                if(gClients[clientID].poi.x + Taudx + Taudw > gClients[i].poi.x + Dfx){
-                                    if(gClients[clientID].poi.y + touchy       < gClients[i].poi.y + Dfy + Dfh){
-                                        if(gClients[clientID].poi.y + touchy + Taudh > gClients[i].poi.y + Dfy){
-                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                            gClients[clientID].tackle = 1;/*自分にもフラグを*/
-                                            if(Af == 0){
-                                                Af = 1;
-                                            }
-                                            SendData(data);
+                    if(dirflag == up_dir || dirflag == down_dir){
+                        if(dirflag == up_dir)
+                            touchy = Tauy;
+                        else if(dirflag == down_dir)
+                            touchy = Tady;
+                        if(gClients[clientID].poi.x + Taudx       < gClients[i].poi.x + Dfx + Dfw){
+                            if(gClients[clientID].poi.x + Taudx + Taudw > gClients[i].poi.x + Dfx){
+                                if(gClients[clientID].poi.y + touchy       < gClients[i].poi.y + Dfy + Dfh){
+                                    if(gClients[clientID].poi.y + touchy + Taudh > gClients[i].poi.y + Dfy){
+                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                        gClients[clientID].tackle = 1;/*自分にもフラグを*/
+                                        if(Af == 0){
+                                            Af = 1;
                                         }
-                                    }
-                                }
-                            }
-                            //      }
-                        else{// dirflag != up_dir,down_dir
-                            if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
-                                touchx = Tarx;
-                            else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
-                                touchx = Talx;
-                            
-                            if(gClients[clientID].poi.x + touchx       < gClients[i].poi.x + Dfx + Dfw){
-                                if(gClients[clientID].poi.x + touchx + Talrw > gClients[i].poi.x + Dfx){
-                                    if(gClients[clientID].poi.y + Talry       < gClients[i].poi.y + Dfy + Dfh){
-                                        if(gClients[clientID].poi.y + Talry + Talrh > gClients[i].poi.y + Dfy){
-                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
-                                            gClients[clientID].tackle = 1;/*自分にもフラグを*/
-                                            if(Af == 0){
-                                                Af = 1;
-                                            }
-                                            SendData(data);
-                                        }
+                                        SendData(data);
                                     }
                                 }
                             }
                         }
                     }
-                }//ここまで
+                        //      }
+                    else{// dirflag != up_dir,down_dir
+                        if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
+                            touchx = Tarx;
+                        else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
+                            touchx = Talx;
+                        
+                        if(gClients[clientID].poi.x + touchx       < gClients[i].poi.x + Dfx + Dfw){
+                            if(gClients[clientID].poi.x + touchx + Talrw > gClients[i].poi.x + Dfx){
+                                if(gClients[clientID].poi.y + Talry       < gClients[i].poi.y + Dfy + Dfh){
+                                    if(gClients[clientID].poi.y + Talry + Talrh > gClients[i].poi.y + Dfy){
+                                        sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",TACKLE,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                        gClients[clientID].tackle = 1;/*自分にもフラグを*/
+                                        if(Af == 0){
+                                            Af = 1;
+                                        }
+                                        SendData(data);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             
                 if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
                     if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
@@ -230,7 +230,7 @@ int Collision(int clientID,int befx,int befy){
                 }   
             }
         }
-            break;
+        break;
             
             
     case 1:
