@@ -41,7 +41,9 @@ int SetUpClient(char *hostName,int *clientID,char clientNames[][MAX_NAME_SIZE])
 
 struct hostent *servHost;
 int	len;
-char	str[100];
+char	str[16];//name入力
+int     namelen;//(/n)以外の長さ
+int     err;//エラー
 int i=0;
 char *ipad;
 
@@ -75,8 +77,22 @@ return -1;
     bind(recvsock, (struct sockaddr *)&recv_addr, sizeof(recv_addr));
 
     fprintf(stderr,"connected\n");
-    printf("名前を入力してください\n");
-    scanf("%s",str);
+    do{
+        err = 0;//指定文字数以内で入力されるまで繰り返す
+        printf("名前を入力してください\n");
+        fgets(str, sizeof(str), stdin);//文字列の読み込み
+        *strchr(str,'\n') = '\0';//含まれた改行を消す
+        namelen = strlen(str);
+
+        if(namelen == 0){//なにも入力されてないときのエラーメッセージ
+            printf("1文字以上で");
+            err=1;
+        }
+        else if(namelen > 8){//指定文字数以上のときのエラーメッセージ
+            printf("8文字以内で");
+            err = 1;
+        }
+    }while(err);
 
     InitWindows();
 

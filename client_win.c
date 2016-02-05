@@ -257,11 +257,12 @@ int EndWindow(void)
     SDL_Surface *gMessage_name_on[MAX_CLIENTS];
     SDL_Surface *gMessage_score_on[MAX_CLIENTS];
     SDL_Surface *gMessage_explain;
-    SDL_Rect game_name_rect={700,400};
-    SDL_Rect game_score_rect={850,400};
-    SDL_Rect game_rank_on_rect={650,500};
-    SDL_Rect game_name_on_rect={705,500};
-    SDL_Rect game_score_on_rect={855,500};
+
+    SDL_Rect game_name_rect={700,380};
+    SDL_Rect game_score_rect={850,380};
+    SDL_Rect game_rank_on_rect={650,470};
+    SDL_Rect game_name_on_rect={705,470};
+    SDL_Rect game_score_on_rect={855,470};
     SDL_Rect explain_rect={800,620};
 
     int i,j;
@@ -271,6 +272,7 @@ int EndWindow(void)
     char rank[64];
     char name[64];
     char score[64];
+
     SDL_BlitSurface(endsur, NULL, gMainWindow, NULL);
     gMessage_name = TTF_RenderUTF8_Blended(font, "You",colB);//Youの名前
     SDL_Rect src_name_rect = { 0, 0, gMessage_name->w,gMessage_name->h };
@@ -279,6 +281,7 @@ int EndWindow(void)
     gMessage_score = TTF_RenderUTF8_Blended(font, score,colB);
     SDL_Rect src_score_rect = { 0, 0, gMessage_score->w,gMessage_score->h };
     SDL_BlitSurface(gMessage_score, &src_score_rect, gMainWindow, &game_score_rect);
+
     for(i=0;i<cnum;++i){
         for(j=i+1;j<cnum;++j){
             if(gClients[t[i]].score < gClients[t[j]].score){
@@ -288,6 +291,7 @@ int EndWindow(void)
             }
         }
     }
+
     for(i=0;i<cnum;i++){
         j=t[i];
 
@@ -315,6 +319,7 @@ int EndWindow(void)
         gMessage_score_on[j] = TTF_RenderUTF8_Blended(font2, score,colB);
         SDL_Rect src_score_on_rect = { 0, 0, gMessage_score_on[j]->w,gMessage_score_on[j]->h };
         SDL_BlitSurface(gMessage_score_on[j], &src_score_on_rect, gMainWindow, &game_score_on_rect);
+
         game_rank_on_rect.y+=20;
         game_name_on_rect.y+=20;
         game_score_on_rect.y+=20;
@@ -325,6 +330,7 @@ int EndWindow(void)
     SDL_BlitSurface(gMessage_explain, &src_explain_rect, gMainWindow, &explain_rect);
 
     SDL_Flip(gMainWindow);
+
     return 0;
 }
 
