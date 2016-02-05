@@ -215,7 +215,7 @@ int main(int argc,char *argv[])
             EndWindow();
             for(i=0;i<cnum;i++){
                 gClients[i].score=0;
-                gClients[i].restart=0;
+                //gClients[i].restart=0;
                 // gametimes=3;
             }
             while(game.flag == 4){

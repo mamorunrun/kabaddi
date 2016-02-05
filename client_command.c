@@ -109,11 +109,11 @@ int ExecuteCommand(char *command)
             case 3: {//各ピリオド終了からゲームへ
                 if(loop % (cnum*gametimes) != 0){
                     game.flag = 1;
+                    loop++; 
                 }
                 else {
                     game.flag = 4;
                 }
-                loop++;
             }
                 break;
             case 4: game.flag = 0;//エンドからメイン画面へ
