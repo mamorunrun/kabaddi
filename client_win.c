@@ -920,10 +920,10 @@ void DrawChara(int n,int cnum)
         SDL_BlitSurface(gCharaImage,&chara_rect[j],buffer,&gClients[j].poi);
         
         if(gClients[j].ADsta == 1){
-            touch.x = gClients[j].poi.x + Atx;
-            touch.y = gClients[j].poi.y + Aty;
-            touch.w = Atw;
-            touch.h = Ath;
+            touch.x = gClients[j].poi.x + Dfx;
+            touch.y = gClients[j].poi.y + Dfy;
+            touch.w = Dfw;
+            touch.h = Dfh;
         }
         else if(gClients[j].tackle == 0){
             
