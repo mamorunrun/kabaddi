@@ -185,10 +185,10 @@ int Collision(int clientID,int befx,int befy){
                                 }
                             }
                         
-                            if(gClients[clientID].poi.x + Taudx       < gClients[i].poi.x + Dfx + Dfw){
-                                if(gClients[clientID].poi.x + Taudx + Taudw > gClients[i].poi.x + Dfx){
-                                    if(gClients[clientID].poi.y + touchy       < gClients[i].poi.y + Dfy + Dfh){
-                                        if(gClients[clientID].poi.y + touchy + Taudh > gClients[i].poi.y + Dfy){
+                            if(gClients[clientID].poi.x + Taudx       < gClients[i].poi.x + Atx + Atw){
+                                if(gClients[clientID].poi.x + Taudx + Taudw > gClients[i].poi.x + Atx){
+                                    if(gClients[clientID].poi.y + touchy       < gClients[i].poi.y + Aty + Ath){
+                                        if(gClients[clientID].poi.y + touchy + Taudh > gClients[i].poi.y + Aty){
                                             if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
                                                 
                                                 // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
