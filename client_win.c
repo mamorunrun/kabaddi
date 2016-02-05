@@ -225,7 +225,7 @@ int TopWindow(void)
     else if(serectflag==2)
         SDL_BlitSurface(serect, NULL, gMainWindow, &serect_end_rect);
 
-    gMessage_explain_2 = TTF_RenderUTF8_Blended(font3, "Enter -> Please Pless Button 2",colB);
+    gMessage_explain_2 = TTF_RenderUTF8_Blended(font3, "Select -> Please Pless Button A",colB);
     SDL_Rect src_explain_2_rect = { 0, 0, gMessage_explain_2->w,gMessage_explain_2->h };
     SDL_BlitSurface(gMessage_explain_2, &src_explain_2_rect, gMainWindow, &explain_2_rect);
 
@@ -244,7 +244,7 @@ int TopWindow(void)
 }
 /*****************************************************************
 関数名 : EndWindows
-機能 : スタート画面の表示を行う
+機能 : エンド画面の表示を行う
 引数 : なし
 出力 : 正常に設定できたとき0，失敗したとき-1
 *****************************************************************/
@@ -256,11 +256,14 @@ int EndWindow(void)
     SDL_Surface *gMessage_rank_on[MAX_CLIENTS];
     SDL_Surface *gMessage_name_on[MAX_CLIENTS];
     SDL_Surface *gMessage_score_on[MAX_CLIENTS];
+    SDL_Surface *gMessage_explain;
     SDL_Rect game_name_rect={700,400};
     SDL_Rect game_score_rect={850,400};
     SDL_Rect game_rank_on_rect={650,500};
     SDL_Rect game_name_on_rect={705,500};
     SDL_Rect game_score_on_rect={855,500};
+    SDL_Rect explain_rect={800,620};
+
     int i,j;
     int t[]={0,1,2,3,4,5,6,7};
     int tmp;
@@ -302,6 +305,11 @@ int EndWindow(void)
         game_name_on_rect.y+=20;
         game_score_on_rect.y+=20;
     }
+
+    gMessage_explain = TTF_RenderUTF8_Blended(font3, "Next -> Please Pless Button 2",colB);//操作説明
+    SDL_Rect src_explain_rect = { 0, 0, gMessage_explain->w,gMessage_explain->h };
+    SDL_BlitSurface(gMessage_explain, &src_explain_rect, gMainWindow, &explain_rect);
+
     SDL_Flip(gMainWindow);
     return 0;
 }
@@ -749,7 +757,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 }
             }
             if(serectflag == 1){
-                if(wiimote.keys.two){
+                if(wiimote.keys.a){
                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0,0);
                     SendData(data);
 //wiimote_speaker_free(&wiimote);
@@ -759,7 +767,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
                 }
             }
             else if(serectflag == 2){
-                if(wiimote.keys.two){
+                if(wiimote.keys.a){
 //sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d\0",RESTART,clientID,0,0,0,0,0);
 //SendData(data);
                     wiimote_speaker_free(&wiimote);
@@ -852,7 +860,7 @@ game.flag: 0メイン画面 1ゲーム画面　2ゲームループ 3各ピリオ
         else if(game.flag == 4){
                 
             /*Aボタン（リスタート）*/
-            if(wiimote.keys.a)
+            if(wiimote.keys.two)
             {
                 /*
                   char comment[64];
