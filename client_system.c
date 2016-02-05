@@ -184,8 +184,28 @@ int Collision(int clientID,int befx,int befy){
                                     }
                                 }
                             }
-                        }
                         
+                            if(gClients[clientID].poi.x + Taudx       < gClients[i].poi.x + Dfx + Dfw){
+                                if(gClients[clientID].poi.x + Taudx + Taudw > gClients[i].poi.x + Dfx){
+                                    if(gClients[clientID].poi.y + touchy       < gClients[i].poi.y + Dfy + Dfh){
+                                        if(gClients[clientID].poi.y + touchy + Taudh > gClients[i].poi.y + Dfy){
+                                            if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
+                                                
+                                                // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
+                                                // gClients[clientID].Bflag++;//攻撃側にフラグ
+                                                //gClients[i].color=3;//攻撃
+                                                //gClients[clientID].color=2;//守備
+                                                
+                                                sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                                SendData(data);
+                                                
+                                                return i;//攻撃
+                                            }
+                                        } 
+                                    }
+                                }
+                            }
+                        }
                         else{// dirflag != up_dir,down_dir
                             if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
                                 touchx = Tarx;
@@ -207,19 +227,40 @@ int Collision(int clientID,int befx,int befy){
                                 }
                             }
                         }
+                        
+                        if(gClients[clientID].poi.x + touchx       < gClients[i].poi.x + Atx + Atw){
+                            if(gClients[clientID].poi.x + touchx + Talrw > gClients[i].poi.x + Atx){
+                                if(gClients[clientID].poi.y + Talry       < gClients[i].poi.y + Aty + Ath){
+                                    if(gClients[clientID].poi.y + Talry + Talrh > gClients[i].poi.y + Aty){
+                                        if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
+                                            
+                                            // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
+                                            // gClients[clientID].Bflag++;//攻撃側にフラグ
+                                            //gClients[i].color=3;//攻撃
+                                            //gClients[clientID].color=2;//守備
+                                            
+                                            sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
+                                            SendData(data);
+                                            
+                                            return i;//攻撃
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            
+                
                 if(gClients[clientID].poi.x + Dfx       < gClients[i].poi.x + Atx + Atw){
                     if(gClients[clientID].poi.x + Dfx + Dfw > gClients[i].poi.x + Atx){
                         if(gClients[clientID].poi.y + Dfy       < gClients[i].poi.y + Aty + Ath){
                             if(gClients[clientID].poi.y + Dfy + Dfh > gClients[i].poi.y + Aty){
                                 if(gClients[clientID].Bflag==0){//自分(守備)に当たり判定がなければ
-                                        
-                                        // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
-                                        // gClients[clientID].Bflag++;//攻撃側にフラグ
-                                        //gClients[i].color=3;//攻撃
-                                        //gClients[clientID].color=2;//守備
+                                    
+                                    // gClients[i].Bflag++;//自分に当たり判定のフラグを立てる
+                                    // gClients[clientID].Bflag++;//攻撃側にフラグ
+                                    //gClients[i].color=3;//攻撃
+                                    //gClients[clientID].color=2;//守備
                                     
                                     sprintf(data,"kabaddi,%d,%d,%d,%d,%d,%d,%d,%d\0",BUMP,i/*当たった相手(攻撃)のid*/,clientID,0/*ダミー*/,0,0,0,0);
                                     SendData(data);
