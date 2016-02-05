@@ -164,9 +164,7 @@ int Collision(int clientID,int befx,int befy){
                 
                 if(gClients[clientID].tackle == 0){//攻守反転していて
                     if(tflag >=1 && tflag <= 10){//自分がタックルしてたら
-                        /*if(dirflag == up_dir)       
-                          else if(dirflag == down_dir)
-                          else */
+
                         if(dirflag == up_dir || dirflag == down_dir){
                             if(dirflag == up_dir)
                                 touchy = Tauy;
@@ -187,7 +185,7 @@ int Collision(int clientID,int befx,int befy){
                                 }
                             }
                         }
-                        else{ 
+                        else{// dirflag != up_dir,down_dir
                             if(dirflag == up_right_dir || dirflag == right_dir || dirflag ==right_down_dir)
                                 touchx = Tarx;
                             else if(dirflag == down_left_dir || dirflag == left_dir || dirflag == left_up_dir)
