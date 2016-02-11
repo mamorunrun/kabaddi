@@ -15,29 +15,26 @@
 *****************************************************************/
 int ExecuteCommand(char *command)
 {
-    char *app_id = strtok(command, ",");
-    int com = atoi(strtok(NULL, ","));
 
-    int id=atoi(strtok(NULL, ","));
-    int x=atoi(strtok(NULL, ","));
-    int y=atoi(strtok(NULL, ","));
-    int t=atoi(strtok(NULL, ","));
-    int rect_x=atoi(strtok(NULL, ","));
-    int rect_y=atoi(strtok(NULL, ","));
-    int rect_w=atoi(strtok(NULL, ","));
-    int	endFlag = 1;
+    /*送られてきたデータをコンマごとに区切る*/
+    char *app_id = strtok(command, ",");   //データのID　kabaddi か endkabaddi
+    int com = atoi(strtok(NULL, ","));     //コマンド
+    int id=atoi(strtok(NULL, ","));        //クライアントID
+    int x=atoi(strtok(NULL, ","));         //キャラのx座標
+    int y=atoi(strtok(NULL, ","));         //キャラのy座標
+    int t=atoi(strtok(NULL, ","));         //残り時間
+    int rect_x=atoi(strtok(NULL, ","));    //画像を貼り付けるx座標
+    int rect_y=atoi(strtok(NULL, ","));    //画像を貼り付けるy座標
+    int rect_w=atoi(strtok(NULL, ","));    //画像を貼り付ける長さ
+    int	endFlag = 1;              
 
     int i;
     int j;
 
-    /*printf("%s\n",app_id);
-    printf("app_id = %s\n",app_id);
-    printf("id=%d\n",id);
-    printf("x=%d\n",x);
-    printf("y=%d\n",y);*/
-
+    /*データの先頭が"endkabaddi"であればゲーム終了*/
     if(strcmp("endkabaddi",app_id)==0)
         return 0;
+    /*データの先頭が"kabaddi"でないならそれは間違ったデータなのでリターンする*/
     else if(strcmp("kabaddi",app_id)!=0)
         return endFlag;
 
@@ -51,7 +48,7 @@ int ExecuteCommand(char *command)
         endFlag = 0;
         game.flag=0;
         break;
-/*キャラを描画*/
+    /*キャラを描画*/
     case CDRAW:
         printf("pos");
         if(id != clientID)
@@ -61,9 +58,8 @@ int ExecuteCommand(char *command)
         gametimes=x;
         buttonflag=1;
         break;
-    case BUMP:
+    case BUMP://当たり判定
         if(gClients[x].color==0){
-            
             gClients[id].Bflag++;
             gClients[x].Bflag++; 
             gClients[x].color=4;
@@ -72,19 +68,6 @@ int ExecuteCommand(char *command)
                 chara_rect[x].y += 288;
             else if(chara_rect[x].x <=480)
                 chara_rect[x].x+=576;
-        }
-            /*for(i=0;i<cnum;i++){
-              if(gClients[i].tackle == 0){
-              gClients[i].tackle = 1;
-              printf("gclients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
-              }
-              }*/
-        break;
-    case WIN:
-        if(gClients[x].color==2)//守備の色が2なら
-        {
-            gClients[id].score = gClients[id].score + gClients[x].Bflag;
-            gClients[x].color=4;//2と同じ色でWINコマンドをループするのを防ぐため
         }
         break;
     case RESTART:
@@ -129,7 +112,6 @@ int ExecuteCommand(char *command)
         for(i=0;i<cnum;i++){
             if(gClients[i].ADsta == 1){//攻撃の人間に
                 gClients[i].tackle++;
-                gClients[i].cflag++;
                 printf("receive tackle command\ngClients[%d].tackle=%d\n\n\n",i,gClients[i].tackle);
             }
         }
