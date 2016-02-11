@@ -270,10 +270,12 @@ BUMPコマンド 攻撃と守備の当たり判定のみ TACLEコマンド タ�
     return -1;
 }
 
+/*アニメーションの関数*/
 void Animation(int now){
 
 
-
+    /*キャラの向きや、タックルによって描写を変える*/
+    /*現在時間nowが指定した時間を超えたら貼り付ける画像を変える*/
     if(now >= gClients[clientID].anime){
         
         if(tflag >=1 && gClients[clientID].ADsta==0){
@@ -330,7 +332,7 @@ void Animation(int now){
             else
                 chara_rect[clientID].x=0;
         }
-
+        /*次の描写の時間を指定する*/
         gClients[clientID].anime=now+25;
 
     }

@@ -108,8 +108,6 @@ int main(int argc,char *argv[])
     while(endflag){
         recv(recvsock, buf, sizeof(buf), 0);
 
-        printf("%s\n",buf);
-
         sendto(sendsock, buf, sizeof(buf), 0, (struct sockaddr *)&send_addr, sizeof(send_addr));
 
         /*データの先頭が「endkabaddi」であればループを抜け終了*/
