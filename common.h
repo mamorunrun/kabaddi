@@ -31,14 +31,13 @@
 #define CDRAW           'C'                             /*charadrawコマンド*/
 #define TIMES           'T'                             /*ゲーム回数コマンド*/
 #define BUMP            'B'                             /*当たり判定のコマンド*/
-#define WIN             'W'                             /*勝ちコマンド*/
-#define LOSE            'L'                             /*負けコマンド   いる？*/
-#define SCORE           'S'
+#define SCORE           'S'                             /*スコア画面を表示するためのコマンド*/
 #define TACKLE          'A'                             /*タックルコマンド*/
 #define RESTART         'R'                             /*リスタートコマンド*/
 
 
 extern int clientID; 
+
 typedef struct {
     int restTime;               /* 残り時間 */
     int flag;                   /* ゲームの状態 */
@@ -56,10 +55,9 @@ typedef struct{
         int             ADsta;//攻撃守備のフラグ　ATK1 DEF0
         int             Bflag;//当たり判定のフラグ
         int             score;//得点の保存
-        int             color;
+        int             color;//守備の色が変わるフラグ
         int             restart;
-        int             tackle;
-        int cflag;
+        int             tackle;//タックルが成功したときのフラグ
 }CLIENT;
 
 extern CLIENT	gClients[MAX_CLIENTS];
