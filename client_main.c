@@ -11,7 +11,7 @@
 #include <libcwiimote/wiimote.h>
 #include <libcwiimote/wiimote_api.h>
 
-// タイマー関数でスタミナを管理
+// タイマー関数でスタミナを管理 
 Uint32 callbackfunc(Uint32 interval, void *param){
     game.restTime = game.restTime - 100;
     return interval;
