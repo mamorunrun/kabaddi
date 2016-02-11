@@ -382,7 +382,6 @@ int GameWindows(int clientID,char name[][MAX_NAME_SIZE], int loop)
             gClients[i].poi.w=30;
             gClients[i].poi.h=30;
             gClients[i].tackle = 0;
-            gClients[i].cflag=0;
             chara_rect[i].w=96;
             chara_rect[i].h=144;
             gClients[i].restart=0;
